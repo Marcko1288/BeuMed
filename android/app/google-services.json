@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "581527734374",
+    "project_id": "beumed-97c9e",
+    "storage_bucket": "beumed-97c9e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:581527734374:android:38ef5d6bb8461b02a1c5a7",
+        "android_client_info": {
+          "package_name": "com.example.beumed"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsgqE0IUmN-0-ppg2SvVhZe9haoS8Uq1g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
