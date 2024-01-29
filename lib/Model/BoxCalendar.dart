@@ -1,6 +1,7 @@
 import 'package:beumed/Class/Model/Enum_Hour.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:beumed/Library/Extension_Date.dart';
 
 import '../Class/EVENT.dart';
 import '../Class/Master.dart';
@@ -46,7 +47,7 @@ class _BoxCalendarState extends State<BoxCalendar> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text('${element.value}'),
-                                    Text('Paziente')
+                                    RowCalendar(hour: element)
                                   ],
                                 ),
                               ))
@@ -101,9 +102,9 @@ class _BoxCalendarState extends State<BoxCalendar> {
 }
 
 class RowCalendar extends StatefulWidget {
-  RowCalendar({super.key, required this.event});
+  RowCalendar({super.key, required this.hour});
 
-  late EVENT event;
+  late SelectionHour hour;
 
   @override
   State<RowCalendar> createState() => _RowCalendarState();
@@ -113,9 +114,29 @@ class _RowCalendarState extends State<RowCalendar> {
   @override
   Widget build(BuildContext context) {
     var master = Provider.of<Master>(context, listen: false);
+    var event = master.array_event.firstWhere((element) =>
+            element.hour == widget.hour &&
+            element.data_inizio.changeDateToString() ==
+                DateTime.now().changeDateToString()) ??
+        EVENT.standard();
     var user = master.array_user
-        .firstWhere((element) => element.uid == widget.event.uidBUT000);
+            .firstWhere((element) => element.uid == event.uidBUT000) ??
+        BUT000.standard();
 
-    return const Placeholder();
+    if (user.cf == '') {
+      return ElevatedButton(
+        onPressed: () {},
+        child: Text('Crea Appuntamento'),
+      );
+    } else {
+      return ElevatedButton(
+          onPressed: () {},
+          child: Column(
+            children: [
+              Text('${user.nome} ${user.cognome}'),
+              Text('${user.cf}', style: ThemeData().textTheme.bodySmall),
+            ],
+          ));
+    }
   }
 }
