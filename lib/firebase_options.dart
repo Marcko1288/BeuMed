@@ -45,11 +45,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyAFmR6ROp2Dj7xA8fKSdKIi5Xg-fxnnAu4',
-    appId: '1:581527734374:web:87f688e9423ea7efa1c5a7',
-    messagingSenderId: '581527734374',
-    projectId: 'beumed-97c9e',
     authDomain: 'beumed-97c9e.firebaseapp.com',
+    projectId: 'beumed-97c9e',
     storageBucket: 'beumed-97c9e.appspot.com',
+    messagingSenderId: '581527734374',
+    appId: '1:581527734374:web:87f688e9423ea7efa1c5a7'
   );
 
   static const FirebaseOptions android = FirebaseOptions(

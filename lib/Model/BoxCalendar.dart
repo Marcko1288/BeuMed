@@ -8,7 +8,6 @@ import '../Class/BUT000.dart';
 import 'EtichettaCard.dart';
 import 'RowDetail.dart';
 
-
 class BoxCalendar extends StatefulWidget {
   BoxCalendar({super.key});
 
@@ -19,7 +18,6 @@ class BoxCalendar extends StatefulWidget {
 class _BoxCalendarState extends State<BoxCalendar> {
   @override
   Widget build(BuildContext context) {
-
     var master = Provider.of<Master>(context, listen: false);
     var array_hour = SelectionHour.arrayElement();
 
@@ -27,7 +25,8 @@ class _BoxCalendarState extends State<BoxCalendar> {
       width: double.infinity,
       child: Card(
           margin: EdgeInsets.all(20),
-          shape: RoundedRectangleBorder(  borderRadius: BorderRadius.circular(20) ),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           child: Stack(
             children: [
               Padding(
@@ -37,22 +36,20 @@ class _BoxCalendarState extends State<BoxCalendar> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        for(var element in array_hour)
+                        for (var element in array_hour)
                           Container(
-                            padding: EdgeInsets.all(10),
-                            child: ElevatedButton(
-                                onPressed: (){},
+                              padding: EdgeInsets.all(10),
+                              child: ElevatedButton(
+                                onPressed: () {},
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text('${element.value}'),
                                     Text('Paziente')
                                   ],
                                 ),
-                            )
-                          )
-                        
-                          
+                              ))
 
                         // for(var element in widget.array)
                         //   ElevatedButton(
@@ -91,16 +88,14 @@ class _BoxCalendarState extends State<BoxCalendar> {
                         // ),
                       ],
                     ),
-                  )
-              ),
-              EtichettaCard(title: 'Agenda' )
+                  )),
+              EtichettaCard(title: 'Agenda')
             ],
-          )
-      ),
+          )),
     );
   }
 
-  void routeDettaglio(){
+  void routeDettaglio() {
     //Navigator.pushNamed(context, SelectionView.SubContract_Dettaglio.route, arguments: RouteElement(SelectionView.SubContract_Dettaglio.value, element)).then((value) {widget.onRefresh();});
   }
 }
@@ -115,16 +110,12 @@ class RowCalendar extends StatefulWidget {
 }
 
 class _RowCalendarState extends State<RowCalendar> {
-
   @override
   Widget build(BuildContext context) {
     var master = Provider.of<Master>(context, listen: false);
-    var user = master.array_user.firstWhere((element) => element.uid == widget.event.uidBUT000);
-
-
-
+    var user = master.array_user
+        .firstWhere((element) => element.uid == widget.event.uidBUT000);
 
     return const Placeholder();
   }
 }
-

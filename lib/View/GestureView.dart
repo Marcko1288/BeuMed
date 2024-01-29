@@ -41,24 +41,24 @@ class _GestureViewState extends State<GestureView> {
       theme: size_width > 500 ? themeWeb() : themeMobile(),
       home: StreamBuilder(
         stream: Auth().authStateChanges,
-        builder: (context, snapshot){
-          if (!snapshot.hasData){
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
             return LoginView();
           } else {
             return FutureBuilder(
                 future: getData(),
                 builder: (context, snapshot) {
-                  if(snapshot.hasData){
+                  if (snapshot.hasData) {
                     return HomeView();
-                  } else if (snapshot.hasError){
-                    return TextButton(onPressed: logOut, child: Text('Dati non scaricati!')) ;
+                  } else if (snapshot.hasError) {
+                    return TextButton(
+                        onPressed: logOut, child: Text('Dati non scaricati!'));
                   }
                   return Container(
                     alignment: Alignment.center,
                     child: CircularProgressIndicator(),
                   );
-                }
-            );
+                });
           }
         },
       ),
@@ -82,8 +82,14 @@ class _GestureViewState extends State<GestureView> {
       //   if(user.uid == Auth().currentUser!.uid) master.user = user;
       // });
 
-      master.user = BUT000(mail: 'marc.costigliola@gmail.com', nome: 'Marco', cognome: 'Costigliola', cf: 'CSTMRC', piva: '123456789');
-      master.array_user = BUT000.arrayElement();
+      master.user = BUT000(
+          mail: 'marc.costigliola@gmail.com',
+          nome: 'Marco',
+          cognome: 'Costigliola',
+          cf: 'CSTMRC',
+          piva: '123456789',
+          uidBUT000: '');
+      master.array_user = BUT000.arrayElement(master.user.uid);
       master.array_event = EVENT.arrayElement(master.array_user[0].uid);
 
       print('Estrazione OK');
@@ -93,7 +99,8 @@ class _GestureViewState extends State<GestureView> {
     } on FirebaseException catch (error) {
       print('${error.toString()}');
       setState(() {
-        master.gestion_Message('Autentificazione Fallita! Verificare Email/Passord inseriti. \n ${error.toString()}');
+        master.gestion_Message(
+            'Autentificazione Fallita! Verificare Email/Passord inseriti. \n ${error.toString()}');
       });
       return false;
     }

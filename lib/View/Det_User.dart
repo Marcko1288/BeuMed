@@ -66,91 +66,89 @@ class _Det_UserViewState extends State<Det_UserView> {
       ),
       body: Form(
         key: _formKey,
-        child:
-        GridView.count(childAspectRatio: 8,
+        child: GridView.count(
+            childAspectRatio: 8,
             crossAxisCount: size_height > 300 ? 2 : 1,
             children: [
-          TextFieldCustom(
-              text: 'Nome',
-              modify_text: nome,
-              enabled: widget.state == TypeState.read ? false : true,
-              decoration: TypeDecoration.labolBord,
-              onStringChanged: (String value) {
-                nome = value;
-              },
-              listValidator: [
-                TypeValidator.required,
-              ]),
-          TextFieldCustom(
-              text: 'Cognome',
-              modify_text: cognome,
-              enabled: widget.state == TypeState.read ? false : true,
-              decoration: TypeDecoration.labolBord,
-              onStringChanged: (String value) {
-                cognome = value;
-              },
-              listValidator: [
-                TypeValidator.required,
-              ]),
-          TextFieldCustom(
-              text: 'Mail',
-              modify_text: mail,
-              enabled: widget.state == TypeState.read ? false : true,
-              decoration: TypeDecoration.labolBord,
-              onStringChanged: (String value) {
-                mail = value;
-              },
-              listValidator: [TypeValidator.required, TypeValidator.email]),
-          TextFieldCustom(
-              text: 'Codice Fiscale',
-              modify_text: cf,
-              enabled: widget.state == TypeState.read ? false : true,
-              decoration: TypeDecoration.labolBord,
-              onStringChanged: (String value) {
-                cf = value;
-              },
-              listValidator: [TypeValidator.required, TypeValidator.cf]),
-          TextFieldCustom(
-              text: 'Indirizzo',
-              modify_text: indirizzo,
-              enabled: widget.state == TypeState.read ? false : true,
-              decoration: TypeDecoration.labolBord,
-              onStringChanged: (String value) {
-                indirizzo = value;
-              },
-              listValidator: []),
-          TextFieldCustom(
-              text: 'CAP',
-              modify_text: cap,
-              enabled: widget.state == TypeState.read ? false : true,
-              decoration: TypeDecoration.labolBord,
-              limit_char: 5,
-              onStringChanged: (String value) {
-                cap = value;
-              },
-              listValidator: []),
-          TextFieldCustom(
-              text: 'Città',
-              modify_text: citta,
-              enabled: widget.state == TypeState.read ? false : true,
-              decoration: TypeDecoration.labolBord,
-              onStringChanged: (String value) {
-                citta = value;
-              },
-              listValidator: []),
-          TextFieldCustom(
-              text: 'Provincia',
-              modify_text: provincia,
-              enabled: widget.state == TypeState.read ? false : true,
-              decoration: TypeDecoration.labolBord,
-              limit_char: 2,
-              onStringChanged: (String value) {
-                provincia = value;
-              },
-              listValidator: []),
-
-        ]),
-
+              TextFieldCustom(
+                  text: 'Nome',
+                  modify_text: nome,
+                  enabled: widget.state == TypeState.read ? false : true,
+                  decoration: TypeDecoration.labolBord,
+                  onStringChanged: (String value) {
+                    nome = value;
+                  },
+                  listValidator: [
+                    TypeValidator.required,
+                  ]),
+              TextFieldCustom(
+                  text: 'Cognome',
+                  modify_text: cognome,
+                  enabled: widget.state == TypeState.read ? false : true,
+                  decoration: TypeDecoration.labolBord,
+                  onStringChanged: (String value) {
+                    cognome = value;
+                  },
+                  listValidator: [
+                    TypeValidator.required,
+                  ]),
+              TextFieldCustom(
+                  text: 'Mail',
+                  modify_text: mail,
+                  enabled: widget.state == TypeState.read ? false : true,
+                  decoration: TypeDecoration.labolBord,
+                  onStringChanged: (String value) {
+                    mail = value;
+                  },
+                  listValidator: [TypeValidator.required, TypeValidator.email]),
+              TextFieldCustom(
+                  text: 'Codice Fiscale',
+                  modify_text: cf,
+                  enabled: widget.state == TypeState.read ? false : true,
+                  decoration: TypeDecoration.labolBord,
+                  onStringChanged: (String value) {
+                    cf = value;
+                  },
+                  listValidator: [TypeValidator.required, TypeValidator.cf]),
+              TextFieldCustom(
+                  text: 'Indirizzo',
+                  modify_text: indirizzo,
+                  enabled: widget.state == TypeState.read ? false : true,
+                  decoration: TypeDecoration.labolBord,
+                  onStringChanged: (String value) {
+                    indirizzo = value;
+                  },
+                  listValidator: []),
+              TextFieldCustom(
+                  text: 'CAP',
+                  modify_text: cap,
+                  enabled: widget.state == TypeState.read ? false : true,
+                  decoration: TypeDecoration.labolBord,
+                  limit_char: 5,
+                  onStringChanged: (String value) {
+                    cap = value;
+                  },
+                  listValidator: []),
+              TextFieldCustom(
+                  text: 'Città',
+                  modify_text: citta,
+                  enabled: widget.state == TypeState.read ? false : true,
+                  decoration: TypeDecoration.labolBord,
+                  onStringChanged: (String value) {
+                    citta = value;
+                  },
+                  listValidator: []),
+              TextFieldCustom(
+                  text: 'Provincia',
+                  modify_text: provincia,
+                  enabled: widget.state == TypeState.read ? false : true,
+                  decoration: TypeDecoration.labolBord,
+                  limit_char: 2,
+                  onStringChanged: (String value) {
+                    provincia = value;
+                  },
+                  listValidator: []),
+            ]),
       ),
       floatingActionButton: action_button(context),
     );
@@ -211,8 +209,8 @@ class _Det_UserViewState extends State<Det_UserView> {
   Future<void> actionElement() async {
     var master = Provider.of<Master>(context, listen: false);
 
-    if(_formKey.currentState!.validate()){
-      if(widget.state != TypeState.read){
+    if (_formKey.currentState!.validate()) {
+      if (widget.state != TypeState.read) {
         if (widget.state == TypeState.insert) {
           await insertElement();
         } else if (widget.state == TypeState.modify) {
@@ -249,7 +247,8 @@ class _Det_UserViewState extends State<Det_UserView> {
           indirizzo: indirizzo,
           citta: citta,
           cap: cap.changeStringToInt(),
-          provincia: provincia);
+          provincia: provincia,
+          uidBUT000: master.user.uid);
 
       try {
         var dirDB = FireStore()

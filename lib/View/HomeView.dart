@@ -19,27 +19,25 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-
-  late List<BUT000> array_user = BUT000.arrayElement(); //widget.extractSubContract(context, type: SelectionSubContractStor.DaRinnovare);
+  //late List<BUT000> array_user = BUT000.arrayElement(); //widget.extractSubContract(context, type: SelectionSubContractStor.DaRinnovare);
 
   _getRequests() {
     setState(() {
       //actionButton = !actionButton;
       //Inserire i dati che devono essere aggiornati
-      array_user = BUT000.arrayElement(); //widget.extractSubContract(context, type: SelectionSubContractStor.DaRinnovare);
+      //array_user = BUT000.arrayElement(); //widget.extractSubContract(context, type: SelectionSubContractStor.DaRinnovare);
     });
   }
 
   bool actionButton = false;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-
     var master = Provider.of<Master>(context, listen: false);
 
     return Scaffold(
@@ -50,8 +48,7 @@ class _HomeViewState extends State<HomeView> {
             alignment: Alignment.center,
             child: Text(
               master.selectionView.value,
-              style: const TextStyle(
-                  fontSize: 30, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
           ),
         ),
@@ -61,10 +58,12 @@ class _HomeViewState extends State<HomeView> {
               child: Column(
                 children: [
                   IconButton(
-                      onPressed: (){Auth().singOut();}, icon: Icon(Icons.logout)),
+                      onPressed: () {
+                        Auth().singOut();
+                      },
+                      icon: Icon(Icons.logout)),
                 ],
-              )
-          )
+              ))
         ],
       ),
       drawer: DrawerMenu(),
@@ -78,7 +77,6 @@ class _HomeViewState extends State<HomeView> {
                 children: [
                   BoxCalendar(),
 
-
                   // Box(
                   //   title_card: 'Pazienti',
                   //   array: array_user,
@@ -88,14 +86,13 @@ class _HomeViewState extends State<HomeView> {
                 ],
               ),
             ),
-          )
-      ),
+          )),
       floatingActionButton: ExpandableFab(
         initialOpen: actionButton,
         distance: 112,
         children: [
           FloatingActionButton(
-          heroTag: 'btn1',
+            heroTag: 'btn1',
             onPressed: () {
               routeAddUser(context);
             }, //() => {},
@@ -115,31 +112,22 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  void routeAddUser(BuildContext contextT){
+  void routeAddUser(BuildContext contextT) {
     setState(() {
-      Navigator.pushNamed(
-          contextT,
-          SelectionView.User_Add.route,
-          arguments: RouteElement(
-              SelectionView.User_Add.value, null
-          )
-      ).then((val)=>{_getRequests()});
+      Navigator.pushNamed(contextT, SelectionView.User_Add.route,
+              arguments: RouteElement(SelectionView.User_Add.value, null))
+          .then((val) => {_getRequests()});
     });
   }
 
-  void routeAddEvent(BuildContext contextT){
+  void routeAddEvent(BuildContext contextT) {
     setState(() {
-      Navigator.pushNamed(
-          contextT,
-          SelectionView.Event_Add.route, //SelectionView.User_Add.route,
-          arguments: RouteElement(
-              SelectionView.Event_Add.value, null //SelectionView.User_Add.value, null
-          )
-      ).then((val)=>{_getRequests()});
+      Navigator.pushNamed(contextT,
+              SelectionView.Event_Add.route, //SelectionView.User_Add.route,
+              arguments: RouteElement(SelectionView.Event_Add.value,
+                  null //SelectionView.User_Add.value, null
+                  ))
+          .then((val) => {_getRequests()});
     });
   }
-
-
-
 }
-
