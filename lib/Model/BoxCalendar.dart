@@ -39,18 +39,15 @@ class _BoxCalendarState extends State<BoxCalendar> {
                       children: [
                         for (var element in array_hour)
                           Container(
-                              padding: EdgeInsets.all(10),
-                              child: ElevatedButton(
-                                onPressed: () {},
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text('${element.value}'),
-                                    RowCalendar(hour: element)
-                                  ],
-                                ),
-                              ))
+                            padding: EdgeInsets.all(10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text('${element.value}'),
+                                RowCalendar(hour: element)
+                              ],
+                            ),
+                          )
 
                         // for(var element in widget.array)
                         //   ElevatedButton(
@@ -114,29 +111,32 @@ class _RowCalendarState extends State<RowCalendar> {
   @override
   Widget build(BuildContext context) {
     var master = Provider.of<Master>(context, listen: false);
-    var event = master.array_event.firstWhere((element) =>
-            element.hour == widget.hour &&
-            element.data_inizio.changeDateToString() ==
-                DateTime.now().changeDateToString()) ??
-        EVENT.standard();
-    var user = master.array_user
-            .firstWhere((element) => element.uid == event.uidBUT000) ??
-        BUT000.standard();
+    var now = DateTime.now().changeDateToString();
+    var array_day_event = master.array_event
+        .where((element) => (element.data_inizio.changeDateToString() == now));
+    var event =
+        array_day_event.firstWhere((element) => element.hour == widget.hour);
 
-    if (user.cf == '') {
-      return ElevatedButton(
-        onPressed: () {},
-        child: Text('Crea Appuntamento'),
-      );
-    } else {
-      return ElevatedButton(
-          onPressed: () {},
-          child: Column(
-            children: [
-              Text('${user.nome} ${user.cognome}'),
-              Text('${user.cf}', style: ThemeData().textTheme.bodySmall),
-            ],
-          ));
-    }
+    print('event: ${event.uidBUT000};');
+
+    // var user = event.uidBUT000 != ''
+    //     ? master.array_user
+    //             .firstWhere((element) => element.uid == event.uidBUT000) ??
+    //         BUT000.standard()
+    //     : BUT000.standard();
+
+    //print('event: ${event.uidBUT000}; user: ${user.cf}');
+
+    return Text('');
+    //  ElevatedButton(
+    //     onPressed: () {},
+    //     child: Column(
+    //       children: [
+    //         if (user.cf != '') Text('${user.nome} ${user.cognome}'),
+    //         //Text('${user.cf}', style: ThemeData().textTheme.bodySmall),
+    //         if (user.cf == '') Text('Crea Appuntamento'),
+    //       ],
+    //     )
+    // );
   }
 }
