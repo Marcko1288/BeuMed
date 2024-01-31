@@ -2,6 +2,9 @@ import 'package:beumed/Library/Enum_TypeFormatDate.dart';
 import 'package:beumed/Library/Extension_Date.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../Class/Master.dart';
 
 class DatePickerCustom extends StatefulWidget {
   DatePickerCustom(
@@ -10,7 +13,7 @@ class DatePickerCustom extends StatefulWidget {
       required this.selection_date,
       required this.min_year,
       required this.max_year,
-        List<String>? array_nodate,
+      List<String>? array_nodate,
       this.modify = true,
       required this.onDateTimeChanged})
       : this.array_nodate = array_nodate ?? [];
@@ -67,7 +70,8 @@ class _DatePickerCustomState extends State<DatePickerCustom>
           firstDate: DateTime(firstDate),
           lastDate: DateTime(lastDate),
           selectableDayPredicate: (selectDate) {
-            if(widget.array_nodate.isEmpty) array_no_date.addAll(widget.array_nodate);
+            if (widget.array_nodate.isEmpty)
+              array_no_date.addAll(widget.array_nodate);
             if (selectDate.compareTo(DateTime.now().add(Duration(days: -1))) <=
                     0 ||
                 selectDate.weekday == 6 ||
@@ -102,6 +106,7 @@ class _DatePickerCustomState extends State<DatePickerCustom>
 
   @override
   Widget build(BuildContext context) {
+    var master = Provider.of<Master>(context, listen: false);
     var size = MediaQuery.of(context).size;
     double size_text = defaultTargetPlatform == TargetPlatform.iOS ||
             defaultTargetPlatform == TargetPlatform.android
@@ -111,10 +116,10 @@ class _DatePickerCustomState extends State<DatePickerCustom>
       padding: const EdgeInsets.only(top: 10, bottom: 10),
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
-            padding: EdgeInsets.only(
-                left: size_text, right: size_text, top: 20, bottom: 20),
-            backgroundColor: Colors.lightGreen.shade100,
-            side: BorderSide(color: Colors.lightGreen),
+            // padding: EdgeInsets.only(
+            //   left: size_text, right: size_text, top: 20, bottom: 20),
+            backgroundColor: master.theme(size).primaryColor, //.shade100,
+            side: BorderSide(color: master.theme(size).primaryColor),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(50))),
         onPressed: widget.modify
@@ -127,7 +132,7 @@ class _DatePickerCustomState extends State<DatePickerCustom>
           alignment: Alignment.center,
           child: Text(
             "${_selectedDate.value.changeDateToString(type: TypeFormatDate.DD_MM_AAAA)}",
-            style: ThemeData().textTheme.bodyMedium,
+            //style: master.theme(size).textTheme.bodyMedium,
           ),
         ),
       ),

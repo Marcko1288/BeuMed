@@ -32,7 +32,7 @@ class _BoxCalendarState extends State<BoxCalendar> {
           child: Stack(
             children: [
               Padding(
-                  padding: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(5),
                   child: Align(
                     alignment: Alignment.center,
                     child: Column(
@@ -44,25 +44,25 @@ class _BoxCalendarState extends State<BoxCalendar> {
                             child: Container(
                               padding: EdgeInsets.all(10),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   ElevatedButton(
-                                      onPressed: (){},
-                                      child: Text('${element.value}')
-                                  ),
-                                  Container(
-                                    alignment: Alignment.center,
+                                      onPressed: () {},
+                                      child: Text('${element.value}')),
+                                  Expanded(
+                                      child: Padding(
+                                    padding:
+                                        EdgeInsets.only(left: 50, right: 10),
                                     child: RowCalendar(hour: element),
-                                      constraints: BoxConstraints(
-                                        minWidth: size.width * 0.5,
-                                      ),
-                                  )
+                                  )),
                                 ],
                               ),
                               decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  border: Border.all(color: Colors.lightGreen),
-                                  borderRadius: BorderRadius.circular(8),
+                                color: Colors.white,
+                                border: Border.all(
+                                    color: master.theme(size).primaryColor),
+                                borderRadius: BorderRadius.circular(8),
                               ),
                             ),
                           )
@@ -93,19 +93,28 @@ class _RowCalendarState extends State<RowCalendar> {
   @override
   Widget build(BuildContext context) {
     var master = Provider.of<Master>(context, listen: false);
+    var size = MediaQuery.of(context).size;
 
-    var event = master.array_event.firstWhere((element) => element.data_inizio.changeDateToString() == DateTime.now().changeDateToString() && element.hour == widget.hour, orElse: EVENT.standard);
-    var user = master.array_user.firstWhere((element) => element.uid == event.uidBUT000, orElse: BUT000.standard);
+    var event = master.array_event.firstWhere(
+        (element) =>
+            element.data_inizio.changeDateToString() ==
+                DateTime.now().changeDateToString() &&
+            element.hour == widget.hour,
+        orElse: EVENT.standard);
+    var user = master.array_user.firstWhere(
+        (element) => element.uid == event.uidBUT000,
+        orElse: BUT000.standard);
 
-     return ElevatedButton(
+    return ElevatedButton(
         onPressed: () {},
         child: Column(
           children: [
             if (user.cf != '') Text('${user.nome} ${user.cognome}'),
-            if (user.cf != '') Text('${user.cf}', style: master.themeWeb().textTheme.bodySmall),
+            if (user.cf != '')
+              Text('${user.cf}',
+                  style: master.theme(size).textTheme.displaySmall),
             if (user.cf == '') Text('Crea Appuntamento'),
           ],
-        )
-    );
+        ));
   }
 }

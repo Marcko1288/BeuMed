@@ -54,6 +54,7 @@ class _Det_EventViewState extends State<Det_EventView> {
   @override
   Widget build(BuildContext context) {
     var master = Provider.of<Master>(context, listen: false);
+    var size = MediaQuery.of(context).size;
     var size_width = MediaQuery.of(context).size.width;
 
     return Scaffold(
@@ -76,99 +77,104 @@ class _Det_EventViewState extends State<Det_EventView> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(children: [
-              DropdownSearch<BUT000>(
+            DropdownSearch<BUT000>(
                 enabled: widget.state == TypeState.read ? false : true,
-                items:
-                master.array_user.where((element) => element.cf != '').toList(),
+                items: master.array_user
+                    .where((element) => element.cf != '')
+                    .toList(),
                 itemAsString: (BUT000 element) => element.cf == ''
                     ? 'Seleziona Paziente'
                     : element.nome + ' ' + element.cognome + ' - ' + element.cf,
                 popupProps: PopupProps.menu(
                   showSearchBox: true,
                 ),
-                dropdownButtonProps:
-                DropdownButtonProps(color: Colors.lightGreen), //Bottone
+                dropdownButtonProps: DropdownButtonProps(
+                    color: master.theme(size).primaryColor), //Bottone
                 dropdownDecoratorProps: DropDownDecoratorProps(
                   //Testo mostrato nel campo
-                  baseStyle: ThemeData().textTheme.bodyMedium,
+                  baseStyle: master.theme(size).textTheme.bodyMedium,
                   //textAlign: TextAlign.center,
                   textAlignVertical: TextAlignVertical.center,
                   dropdownSearchDecoration: InputDecoration(
-                    enabledBorder: defaultBorder(),
-                    focusedBorder: defaultBorder(),
-                    errorBorder: defaultBorder(),
-                    disabledBorder: defaultBorder(),
-                    focusedErrorBorder: defaultBorder(),
+                    enabledBorder:
+                        defaultBorder(master.theme(size).primaryColor),
+                    focusedBorder:
+                        defaultBorder(master.theme(size).primaryColor),
+                    errorBorder: defaultBorder(master.theme(size).primaryColor),
+                    disabledBorder:
+                        defaultBorder(master.theme(size).primaryColor),
+                    focusedErrorBorder:
+                        defaultBorder(master.theme(size).primaryColor),
                   ),
                 ),
                 onChanged: (value) {
                   userSelected = value!;
                 },
                 selectedItem: userSelected,
-                  validator: (valid) {
-                  if(valid is BUT000 && valid.cf == '')
+                validator: (valid) {
+                  if (valid is BUT000 && valid.cf == '')
                     return 'Selezionare un Paziente!';
-                  }
-              ),
-              DatePickerCustom(
-                selection_date: data_inizio,
-                min_year: DateTime.now().year,
-                max_year: DateTime.now().add(Duration(days: 730)).year,
-                array_nodate: nodateSelect(),
-                modify: widget.state == TypeState.read ? false : true,
-                onDateTimeChanged: (DateTime value) {
-                  setState(() {
-                    data_inizio = value;
-                    create_arrayHour(data_inizio);
-                  });
-                },
-              ),
-
-              if(widget.state == TypeState.read)
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Center(
-                    child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: InkWell(
-                          onTap: () { },
-                          child: Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                color: Colors.lightGreen.shade100,
-                                border: Border.all(color: Colors.lightGreen),
-                                borderRadius: BorderRadius.circular(20)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Radio(
-                                  focusColor: Colors.white,
-                                  groupValue: 0,
-                                  onChanged: (timeSelected) {},
-                                  value: 0,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 10, right: 20),
-                                  child: Text(
-                                    hour.value,
-                                    //style: TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ],
+                }),
+            DatePickerCustom(
+              selection_date: data_inizio,
+              min_year: DateTime.now().year,
+              max_year: DateTime.now().add(Duration(days: 730)).year,
+              array_nodate: nodateSelect(),
+              modify: widget.state == TypeState.read ? false : true,
+              onDateTimeChanged: (DateTime value) {
+                setState(() {
+                  data_inizio = value;
+                  create_arrayHour(data_inizio);
+                });
+              },
+            ),
+            if (widget.state == TypeState.read)
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: InkWell(
+                      onTap: () {},
+                      child: Container(
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            color: master.theme(size).primaryColor, //.shade100,
+                            border: Border.all(
+                                color: master.theme(size).primaryColor),
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Radio(
+                              focusColor: Colors.white,
+                              groupValue: 0,
+                              onChanged: (timeSelected) {},
+                              value: 0,
                             ),
-                          ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 10, right: 20),
+                              child: Text(
+                                hour.value,
+                                //style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ],
                         ),
+                      ),
                     ),
                   ),
                 ),
-              if(widget.state != TypeState.read)
+              ),
+            if (widget.state != TypeState.read)
               Expanded(
                 child: GridView.count(
                   crossAxisCount: size_width > 500 ? 3 : 2,
                   childAspectRatio: size_width > 500 ? 6 : 4.5,
                   children: List<Widget>.generate(
                     isTime.length,
-                        (index) => Padding(
+                    (index) => Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: InkWell(
                         onTap: () {
@@ -181,9 +187,10 @@ class _Det_EventViewState extends State<Det_EventView> {
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                               color: hourSelected == index
-                                  ? Colors.lightGreen.shade100
+                                  ? master.theme(size).primaryColor //.shade100
                                   : null,
-                              border: Border.all(color: Colors.lightGreen),
+                              border: Border.all(
+                                  color: master.theme(size).primaryColor),
                               borderRadius: BorderRadius.circular(20)),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -200,7 +207,8 @@ class _Det_EventViewState extends State<Det_EventView> {
                                 value: index,
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(left: 10, right: 20),
+                                padding:
+                                    const EdgeInsets.only(left: 10, right: 20),
                                 child: Text(
                                   isTime[index].value,
                                 ),
@@ -213,28 +221,28 @@ class _Det_EventViewState extends State<Det_EventView> {
                   ),
                 ),
               ),
-              Expanded(
-                child: TextFormField(
-                  initialValue: note,
-                  enabled: widget.state == TypeState.read ? false : true,
-                  maxLines: 10,
-                  decoration: InputDecoration(
-                    //labelStyle: TextStyle(color: Colors.lightGreen, fontSize: 15.0),
-                    labelText: "Note",
-                    //fillColor: Colors.white,
-                    focusedBorder: defaultBorder(),
-                    enabledBorder: defaultBorder(),
-                    disabledBorder: defaultBorder(),
-                  ),
-                  onChanged: (String value) {
-                    setState(() {
-                      note = value;
-                    });
-                  },
+            Expanded(
+              child: TextFormField(
+                initialValue: note,
+                enabled: widget.state == TypeState.read ? false : true,
+                maxLines: 10,
+                decoration: InputDecoration(
+                  //labelStyle: TextStyle(color: Colors.lightGreen, fontSize: 15.0),
+                  labelText: "Note",
+                  //fillColor: Colors.white,
+                  focusedBorder: defaultBorder(master.theme(size).primaryColor),
+                  enabledBorder: defaultBorder(master.theme(size).primaryColor),
+                  disabledBorder:
+                      defaultBorder(master.theme(size).primaryColor),
                 ),
+                onChanged: (String value) {
+                  setState(() {
+                    note = value;
+                  });
+                },
               ),
-            ]),
-
+            ),
+          ]),
         ),
       ),
       floatingActionButton: action_button(context),
@@ -277,8 +285,8 @@ class _Det_EventViewState extends State<Det_EventView> {
       if (selectDate != element.data_inizio.changeDateToString()) {
         var length = master.array_event
             .where((elem) =>
-        elem.data_inizio.changeDateToString() ==
-            element.data_inizio.changeDateToString())
+                elem.data_inizio.changeDateToString() ==
+                element.data_inizio.changeDateToString())
             .length;
         if (length >= 9) {
           array_output.add(element.data_inizio.changeDateToString());
@@ -299,7 +307,7 @@ class _Det_EventViewState extends State<Det_EventView> {
       }
     }
 
-    if(!isTime.contains(widget.event?.hour) && widget.event?.hour != null)
+    if (!isTime.contains(widget.event?.hour) && widget.event?.hour != null)
       isTime.add(widget.event!.hour);
 
     isTime.sort((a, b) => a.number.compareTo(b.number));
@@ -358,8 +366,8 @@ class _Det_EventViewState extends State<Det_EventView> {
   Future<void> actionElement() async {
     var master = Provider.of<Master>(context, listen: false);
 
-    if(_formKey.currentState!.validate()){
-      if(widget.state != TypeState.read){
+    if (_formKey.currentState!.validate()) {
+      if (widget.state != TypeState.read) {
         if (widget.state == TypeState.insert) {
           await insertElement();
         } else if (widget.state == TypeState.modify) {
@@ -382,8 +390,7 @@ class _Det_EventViewState extends State<Det_EventView> {
           uidBUT000: userSelected.uid,
           data_inizio: data_inizio,
           hour: hour,
-        note: note
-      );
+          note: note);
 
       try {
         var dirDB = FireStore()
@@ -448,11 +455,9 @@ class _Det_EventViewState extends State<Det_EventView> {
   }
 }
 
-OutlineInputBorder defaultBorder() {
+OutlineInputBorder defaultBorder(Color color) {
   return OutlineInputBorder(
     borderRadius: BorderRadius.all(Radius.circular(20)),
-    borderSide: BorderSide(color: Colors.lightGreen),
+    borderSide: BorderSide(color: color),
   );
 }
-
-
