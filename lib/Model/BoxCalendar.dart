@@ -20,6 +20,7 @@ class _BoxCalendarState extends State<BoxCalendar> {
   @override
   Widget build(BuildContext context) {
     var master = Provider.of<Master>(context, listen: false);
+    var size = MediaQuery.of(context).size;
     var array_hour = SelectionHour.arrayElement();
 
     return SizedBox(
@@ -38,52 +39,33 @@ class _BoxCalendarState extends State<BoxCalendar> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         for (var element in array_hour)
-                          Container(
-                            padding: EdgeInsets.all(10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text('${element.value}'),
-                                RowCalendar(hour: element)
-                              ],
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              padding: EdgeInsets.all(10),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  ElevatedButton(
+                                      onPressed: (){},
+                                      child: Text('${element.value}')
+                                  ),
+                                  Container(
+                                    alignment: Alignment.center,
+                                    child: RowCalendar(hour: element),
+                                      constraints: BoxConstraints(
+                                        minWidth: size.width * 0.5,
+                                      ),
+                                  )
+                                ],
+                              ),
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  border: Border.all(color: Colors.lightGreen),
+                                  borderRadius: BorderRadius.circular(8),
+                              ),
                             ),
                           )
-
-                        // for(var element in widget.array)
-                        //   ElevatedButton(
-                        //     onPressed: () { routeDettaglio(); }, //() => { /* DA COMPLETARE */ },
-                        //     style: ButtonStyle(
-                        //         backgroundColor: MaterialStateProperty.all(Colors.transparent),
-                        //         foregroundColor: MaterialStateProperty.all(Colors.black),
-                        //         elevation:  MaterialStateProperty.all(0),
-                        //         overlayColor:  MaterialStateProperty.all(Colors.grey[200]),
-                        //         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        //             RoundedRectangleBorder(
-                        //                 borderRadius:BorderRadius.circular(18.0),
-                        //                 side: BorderSide(color: Colors.transparent)
-                        //             )
-                        //         )
-                        //     ),
-                        //     child: RowDetail(
-                        //         title:
-                        //         '${element.nome} ${element.cognome}',
-                        //         body:
-                        //         'Appuntamento: 12/01/2024 12:30 \nCF: ${element.cf} \n@: ${element.mail}',
-                        //         iconrow: Icons.connected_tv_outlined
-                        //     ),
-                        //   ),
-
-                        // Padding(
-                        //   padding: const EdgeInsets.only(top: 20),
-                        //   child: ElevatedButton(
-                        //     onPressed: widget.onPressed, //() => { /* DA COMPLETARE */ },
-                        //     child: Text('Dettagli'),
-                        //     style: ButtonStyle(
-                        //       padding: MaterialStateProperty.all( EdgeInsets.only(left: 80, right: 80, top: 20, bottom: 20) ),
-                        //       shape: MaterialStateProperty.all( RoundedRectangleBorder(  borderRadius: BorderRadius.circular(20) ) ),
-                        //     ),
-                        //   ),
-                        // ),
                       ],
                     ),
                   )),
@@ -111,32 +93,19 @@ class _RowCalendarState extends State<RowCalendar> {
   @override
   Widget build(BuildContext context) {
     var master = Provider.of<Master>(context, listen: false);
-    var now = DateTime.now().changeDateToString();
-    var array_day_event = master.array_event
-        .where((element) => (element.data_inizio.changeDateToString() == now));
-    var event =
-        array_day_event.firstWhere((element) => element.hour == widget.hour);
 
-    print('event: ${event.uidBUT000};');
+    var event = master.array_event.firstWhere((element) => element.data_inizio.changeDateToString() == DateTime.now().changeDateToString() && element.hour == widget.hour, orElse: EVENT.standard);
+    var user = master.array_user.firstWhere((element) => element.uid == event.uidBUT000, orElse: BUT000.standard);
 
-    // var user = event.uidBUT000 != ''
-    //     ? master.array_user
-    //             .firstWhere((element) => element.uid == event.uidBUT000) ??
-    //         BUT000.standard()
-    //     : BUT000.standard();
-
-    //print('event: ${event.uidBUT000}; user: ${user.cf}');
-
-    return Text('');
-    //  ElevatedButton(
-    //     onPressed: () {},
-    //     child: Column(
-    //       children: [
-    //         if (user.cf != '') Text('${user.nome} ${user.cognome}'),
-    //         //Text('${user.cf}', style: ThemeData().textTheme.bodySmall),
-    //         if (user.cf == '') Text('Crea Appuntamento'),
-    //       ],
-    //     )
-    // );
+     return ElevatedButton(
+        onPressed: () {},
+        child: Column(
+          children: [
+            if (user.cf != '') Text('${user.nome} ${user.cognome}'),
+            if (user.cf != '') Text('${user.cf}', style: master.themeWeb().textTheme.bodySmall),
+            if (user.cf == '') Text('Crea Appuntamento'),
+          ],
+        )
+    );
   }
 }

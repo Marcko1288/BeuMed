@@ -101,6 +101,54 @@ class Master with ChangeNotifier {
     this.array_event.clear();
   }
 
+  ThemeData themeWeb() {
+    return ThemeData(
+      colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+      primaryColor: Colors.lightGreen,
+      textTheme: TextTheme(
+        titleLarge: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
+        titleMedium: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
+        titleSmall: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
+        displayLarge: TextStyle(fontSize: 15.0, color: Colors.yellow),
+        displayMedium: TextStyle(fontSize: 12.0, color: Colors.yellow),
+        displaySmall: TextStyle(fontSize: 10.0, color: Colors.yellow),
+        headlineLarge: TextStyle(fontSize: 15.0, color: Colors.red),
+        headlineMedium: TextStyle(fontSize: 12.0, color: Colors.red),
+        headlineSmall: TextStyle(fontSize: 10.0, color: Colors.red),
+        bodyLarge: TextStyle(fontSize: 15.0, color: Colors.green),
+        bodyMedium: TextStyle(fontSize: 12.0, color: Colors.green),
+        bodySmall: TextStyle(fontSize: 10.0, color: Colors.green),
+        labelLarge: TextStyle(fontSize: 15.0, color: Colors.blue),
+        labelMedium: TextStyle(fontSize: 12.0, color: Colors.blue),
+        labelSmall: TextStyle(fontSize: 10.0, color: Colors.blue),
+      ),
+    );
+  }
+
+  ThemeData themeMobile() {
+    return ThemeData(
+      colorScheme: ColorScheme.fromSeed(seedColor: Colors.pink),
+      primaryColor: Colors.lightGreen,
+      textTheme: TextTheme(
+        titleLarge: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+        titleMedium: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+        titleSmall: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+        displayLarge: TextStyle(fontSize: 10.0, color: Colors.yellow),
+        displayMedium: TextStyle(fontSize: 6.0, color: Colors.yellow),
+        displaySmall: TextStyle(fontSize: 4.0, color: Colors.yellow),
+        headlineLarge: TextStyle(fontSize: 10.0, color: Colors.red),
+        headlineMedium: TextStyle(fontSize: 6.0, color: Colors.red),
+        headlineSmall: TextStyle(fontSize: 4.0, color: Colors.red),
+        bodyLarge: TextStyle(fontSize: 10.0, color: Colors.green),
+        bodyMedium: TextStyle(fontSize: 6.0, color: Colors.green),
+        bodySmall: TextStyle(fontSize: 4.0, color: Colors.green),
+        labelLarge: TextStyle(fontSize: 10.0, color: Colors.blue),
+        labelMedium: TextStyle(fontSize: 6.0, color: Colors.blue),
+        labelSmall: TextStyle(fontSize: 4.0, color: Colors.blue),
+      ),
+    );
+  }
+
 }
 
 class RouteElement {
