@@ -11,8 +11,7 @@ enum SelectionHour {
   H8,
   H9;
 
-  static SelectionHour code(String s) =>
-      switch (s) {
+  static SelectionHour code(String s) => switch (s) {
         'H1' => H1,
         'H2' => H2,
         "H3" => H3,
@@ -23,10 +22,9 @@ enum SelectionHour {
         'H8' => H8,
         "H9" => H9,
         _ => H1
-  };
+      };
 
-  static SelectionHour numer(int s) =>
-      switch (s) {
+  static SelectionHour numer(int s) => switch (s) {
         1 => H1,
         2 => H2,
         3 => H3,
@@ -103,5 +101,14 @@ extension ExtSelectionProfile on SelectionHour {
       default:
         return 0;
     }
+  }
+
+  bool detIntevalDate(DateTime date_now) {
+
+    DateTime().
+
+    return false;
+
+
   }
 }

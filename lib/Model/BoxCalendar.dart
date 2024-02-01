@@ -78,6 +78,13 @@ class _BoxCalendarState extends State<BoxCalendar> {
   void routeDettaglio() {
     //Navigator.pushNamed(context, SelectionView.SubContract_Dettaglio.route, arguments: RouteElement(SelectionView.SubContract_Dettaglio.value, element)).then((value) {widget.onRefresh();});
   }
+
+  List<SelectionHour> array_hour() {
+    List<SelectionHour> array_output = [];
+    for (var element in SelectionHour.arrayElement()) {}
+
+    return array_output;
+  }
 }
 
 class RowCalendar extends StatefulWidget {
