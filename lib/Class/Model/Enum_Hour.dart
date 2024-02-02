@@ -50,6 +50,17 @@ enum SelectionHour {
       SelectionHour.H9
     ];
   }
+
+  static SelectionHour hour(DateTime date) {
+    var element_out = SelectionHour.H1;
+    for(var element in SelectionHour.arrayElement()){
+      if(date.compareTo(element.hourDA(date)) >= 0 && date.compareTo(element.hourA(date)) <= 0){
+        element_out = element;
+        break;
+      }
+    }
+    return element_out;
+  }
 }
 
 extension ExtSelectionProfile on SelectionHour {
@@ -103,12 +114,93 @@ extension ExtSelectionProfile on SelectionHour {
     }
   }
 
-  bool detIntevalDate(DateTime date_now) {
+  DateTime hourDA(DateTime date) {
+    switch (this) {
+      case SelectionHour.H1:
+        var now = DateTime.now();
+        var da = DateTime(date.year, date.month, date.day, 9, 0);
+        return da;
+      case SelectionHour.H2:
+        var now = DateTime.now();
+        var da = DateTime(date.year, date.month, date.day, 10, 0);
+        return da;
+      case SelectionHour.H3:
+        var now = DateTime.now();
+        var da = DateTime(date.year, date.month, date.day, 11, 0);
+        return da;
+      case SelectionHour.H4:
+        var now = DateTime.now();
+        var da = DateTime(date.year, date.month, date.day, 12, 0);
+        return da;
+      case SelectionHour.H5:
+        var now = DateTime.now();
+        var da = DateTime(date.year, date.month, date.day, 14, 0);
+        return da;
+      case SelectionHour.H6:
+        var now = DateTime.now();
+        var da = DateTime(date.year, date.month, date.day, 15, 0);
+        return da;
+      case SelectionHour.H7:
+        var now = DateTime.now();
+        var da = DateTime(date.year, date.month, date.day, 16, 0);
+        return da;
+      case SelectionHour.H8:
+        var now = DateTime.now();
+        var da = DateTime(date.year, date.month, date.day, 17, 0);
+        return da;
+      case SelectionHour.H9:
+        var now = DateTime.now();
+        var da = DateTime(date.year, date.month, date.day, 18, 0);
+        return da;
+      default:
+        var now = DateTime.now();
+        var da = DateTime(date.year, date.month, date.day, 0, 0);
+        return da;
+    }
+  }
 
-    DateTime().
-
-    return false;
-
-
+  DateTime hourA (DateTime date) {
+    switch (this) {
+      case SelectionHour.H1:
+        var now = DateTime.now();
+        var a = DateTime(date.year, date.month, date.day, 9, 59);
+        return a;
+      case SelectionHour.H2:
+        var now = DateTime.now();
+        var a = DateTime(date.year, date.month, date.day, 10, 59);
+        return a;
+      case SelectionHour.H3:
+        var now = DateTime.now();
+        var a = DateTime(date.year, date.month, date.day, 11, 59);
+        return a;
+      case SelectionHour.H4:
+        var now = DateTime.now();
+        var a = DateTime(date.year, date.month, date.day, 12, 59);
+        return a;
+      case SelectionHour.H5:
+        var now = DateTime.now();
+        var a = DateTime(date.year, date.month, date.day, 14, 59);
+        return a;
+      case SelectionHour.H6:
+        var now = DateTime.now();
+        var a = DateTime(date.year, date.month, date.day, 15, 59);
+        return a;
+      case SelectionHour.H7:
+        var now = DateTime.now();
+        var a = DateTime(date.year, date.month, date.day, 16, 59);
+        return a;
+      case SelectionHour.H8:
+        var now = DateTime.now();
+        var a = DateTime(date.year, date.month, date.day, 17, 59);
+        return a;
+      case SelectionHour.H9:
+        var now = DateTime.now();
+        var a = DateTime(date.year, date.month, date.day, 18, 59);
+        return a;
+      default:
+        var now = DateTime.now();
+        var a = DateTime(date.year, date.month, date.day, 0, 0);
+        return a;
+    }
   }
 }
