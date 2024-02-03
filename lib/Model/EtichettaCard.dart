@@ -31,7 +31,7 @@ class _EtichettaCardState extends State<EtichettaCard> {
             ),
         child: Text(
           widget.title,
-          style: master.theme(size).textTheme.displayMedium,
+          style: master.theme(size).textTheme.labelMedium,
         ),
       ),
     );

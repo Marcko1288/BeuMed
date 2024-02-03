@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'Enum_TypeFormatDate.dart';
 
 extension ExtString on String {
-  DateTime changeStringToDate({ TypeFormatDate type = TypeFormatDate.DD_MM_AAAA_HH_MM }){
+  DateTime changeStringToDate({ TypeFormatDate type = TypeFormatDate.DD_MM_AAAA }){
     return new DateFormat(type.value).parse(this);
   }
 

@@ -21,7 +21,7 @@ class _BoxCalendarState extends State<BoxCalendar> {
   Widget build(BuildContext context) {
     var master = Provider.of<Master>(context, listen: false);
     var size = MediaQuery.of(context).size;
-    var array_hour = SelectionHour.arrayElement();
+    var array_hour = array_SelectionHour();
 
     return SizedBox(
       width: double.infinity,
@@ -35,40 +35,55 @@ class _BoxCalendarState extends State<BoxCalendar> {
                   padding: const EdgeInsets.all(5),
                   child: Align(
                     alignment: Alignment.center,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        for (var element in array_hour)
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              padding: EdgeInsets.all(10),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  ElevatedButton(
-                                      onPressed: () {},
-                                      child: Text('${element.value}')),
-                                  Expanded(
-                                      child: Padding(
-                                    padding:
-                                        EdgeInsets.only(left: 50, right: 10),
-                                    child: RowCalendar(hour: element),
-                                  )),
-                                ],
-                              ),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                border: Border.all(
-                                    color: master.theme(size).primaryColor),
-                                borderRadius: BorderRadius.circular(8),
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 20.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          for (var element in array_hour)
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                padding: EdgeInsets.all(10),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    ElevatedButton(
+                                        onPressed: () {},
+                                        child: Text('${element.value}')),
+                                    Expanded(
+                                        child: Padding(
+                                      padding:
+                                          EdgeInsets.only(left: 50, right: 10),
+                                      child: RowCalendar(hour: element),
+                                    )),
+                                  ],
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  border: Border.all(
+                                      color: master.theme(size).primaryColor),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
                               ),
                             ),
+                          Container(
+                            width: size.width * 0.5,
+                           child: ElevatedButton(
+                             onPressed: (){},
+                             child: Text('Visualizza Agenda'),
+                             style: ButtonStyle(
+                               textStyle: MaterialStateProperty.all(master.theme(size).textTheme.labelLarge),
+                                 backgroundColor: MaterialStateProperty.all(master.theme(size).primaryColor),
+                             ),
+                           ),
                           )
-                      ],
+                        ],
+                      ),
                     ),
-                  )),
+                  )
+              ),
               EtichettaCard(title: 'Agenda')
             ],
           )),
@@ -79,10 +94,12 @@ class _BoxCalendarState extends State<BoxCalendar> {
     //Navigator.pushNamed(context, SelectionView.SubContract_Dettaglio.route, arguments: RouteElement(SelectionView.SubContract_Dettaglio.value, element)).then((value) {widget.onRefresh();});
   }
 
-  List<SelectionHour> array_hour() {
+  List<SelectionHour> array_SelectionHour() {
     List<SelectionHour> array_output = [];
-    for (var element in SelectionHour.arrayElement()) {}
-
+    var now_hour = SelectionHour.hour(DateTime.now());
+    for (var element in SelectionHour.arrayElement()) {
+      if (element.number >= now_hour.number) array_output.add(element);
+    }
     return array_output;
   }
 }

@@ -1,5 +1,7 @@
+import 'package:beumed/Library/Enum_TypeDate.dart';
 import 'package:beumed/Library/Enum_TypeFormatDate.dart';
 import 'package:beumed/Library/Extension_Date.dart';
+import 'package:beumed/Library/Extension_String.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -36,9 +38,10 @@ class _DatePickerCustomState extends State<DatePickerCustom>
     with RestorationMixin {
   @override
   String? get restorationId => widget.restorationId;
+  late DateTime select_date = detSelectionDate();
 
   late RestorableDateTime _selectedDate =
-      RestorableDateTime(widget.selection_date);
+      RestorableDateTime(select_date); //widget.selection_date);
   late int _min_year = widget.min_year;
   late int _max_year = widget.max_year + 1;
   late final RestorableRouteFuture<DateTime?> _restorableDatePickerRouteFuture =
@@ -70,11 +73,8 @@ class _DatePickerCustomState extends State<DatePickerCustom>
           firstDate: DateTime(firstDate),
           lastDate: DateTime(lastDate),
           selectableDayPredicate: (selectDate) {
-            if (widget.array_nodate.isEmpty)
-              array_no_date.addAll(widget.array_nodate);
-            if (selectDate.compareTo(DateTime.now().add(Duration(days: -1))) <=
-                    0 ||
-                selectDate.weekday == 6 ||
+            if (widget.array_nodate.isEmpty) array_no_date.addAll(widget.array_nodate);
+            if (selectDate.weekday == 6 ||
                 selectDate.weekday == 7 ||
                 array_no_date.contains(selectDate.changeDateToString()) ||
                 widget.array_nodate.contains(selectDate.changeDateToString())) {
@@ -137,6 +137,23 @@ class _DatePickerCustomState extends State<DatePickerCustom>
         ),
       ),
     );
+  }
+
+  DateTime detSelectionDate(){
+    print('detSelectionDate');
+    var array_noDate = array_no_date;
+    array_noDate.addAll(widget.array_nodate);
+    var date_output = widget.selection_date;
+    array_noDate.sort((a,b) => a.compareTo(b));
+
+    if (date_output.weekday == 6) date_output = date_output.add(Duration(days: 2));
+    if (date_output.weekday == 7) date_output = date_output.add(Duration(days: 1));
+
+    for(var element in array_noDate){
+      if (element.changeStringToDate().year > date_output.year) break;
+      if (element == date_output.changeDateToString()) date_output.add(Duration(days: 1));
+    }
+    return date_output;
   }
 }
 

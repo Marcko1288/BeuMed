@@ -126,9 +126,9 @@ class EVENT {
         EVENT(uidBUT000: uid, data_inizio: DateTime.now().add(Duration(days: 3)), hour: SelectionHour.H8)
     );
 
-    array.add(
-        EVENT(uidBUT000: uid, data_inizio: DateTime.now().add(Duration(days: 3)), hour: SelectionHour.H9)
-    );
+    // array.add(
+    //     EVENT(uidBUT000: uid, data_inizio: DateTime.now().add(Duration(days: 3)), hour: SelectionHour.H9)
+    // );
 
     array.add(
         EVENT(uidBUT000: uid, data_inizio: DateTime.now().add(Duration(days: 10)), hour: SelectionHour.H3)
