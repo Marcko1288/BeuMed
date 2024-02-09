@@ -340,8 +340,10 @@ class _Det_EventViewState extends State<Det_EventView> {
     isTime = SelectionHour.arrayElement();
 
     for (var element in array_app) {
-      if (widget.event?.uidBUT000 != null &&
+      print('widget.event?.uidBUT000: ${widget.event?.uidBUT000}');
+      if (widget.event?.uidBUT000 == null ||
           widget.event?.uidBUT000 != element.uidBUT000) {
+        print('widget.event?.uidBUT000: ${widget.event?.uidBUT000}, VERO');
         for (var hour in element.hours)
           isTime.removeWhere((eleTime) => eleTime == hour);
       }
@@ -367,6 +369,8 @@ class _Det_EventViewState extends State<Det_EventView> {
         isTimeSelection = widget.event!.hours;
       }
       isTime = create_arrayHour(data_inizio);
+      print(
+          'isTimeSelection: ${isTimeSelection.length}, isTime: ${isTime.length}');
     });
   }
 
