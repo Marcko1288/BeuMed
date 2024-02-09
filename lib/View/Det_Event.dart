@@ -26,7 +26,7 @@ class Det_EventView extends StatefulWidget {
 class _Det_EventViewState extends State<Det_EventView> {
   late String title;
   late DateTime data_inizio = DateTime.now();
-  late SelectionHour hour = SelectionHour.H1;
+  //late SelectionHour hour = SelectionHour.H1;
   late String note = '';
 
   final _formKey = GlobalKey<FormState>();
@@ -136,117 +136,120 @@ class _Det_EventViewState extends State<Det_EventView> {
                   });
                 },
               ),
-              if (widget.state == TypeState.read)
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: InkWell(
-                        onTap: () {},
-                        child: Container(
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              color:
-                                  master.theme(size).primaryColorLight, //.shade100,
-                              border: Border.all(
-                                  color: master.theme(size).primaryColor),
-                              borderRadius: BorderRadius.circular(20)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Radio(
-                                focusColor: Colors.white,
-                                groupValue: 0,
-                                onChanged: (timeSelected) {},
-                                value: 0,
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 10, right: 20),
-                                child: Text(
-                                  hour.value,
-                                  //style: TextStyle(fontWeight: FontWeight.bold),
+              // if (widget.state == TypeState.read)
+              //   Padding(
+              //     padding: const EdgeInsets.all(8.0),
+              //     child: Center(
+              //       child: Padding(
+              //         padding: const EdgeInsets.all(8.0),
+              //         child: InkWell(
+              //           onTap: () {},
+              //           child: Container(
+              //             alignment: Alignment.center,
+              //             decoration: BoxDecoration(
+              //                 color:
+              //                     master.theme(size).primaryColorLight, //.shade100,
+              //                 border: Border.all(
+              //                     color: master.theme(size).primaryColor),
+              //                 borderRadius: BorderRadius.circular(20)),
+              //             child: Row(
+              //               mainAxisAlignment: MainAxisAlignment.center,
+              //               children: <Widget>[
+              //                 Radio(
+              //                   focusColor: Colors.white,
+              //                   groupValue: 0,
+              //                   onChanged: (timeSelected) {},
+              //                   value: 0,
+              //                 ),
+              //                 Padding(
+              //                   padding:
+              //                       const EdgeInsets.only(left: 10, right: 20),
+              //                   child: Text(
+              //                     hour.value,
+              //                     //style: TextStyle(fontWeight: FontWeight.bold),
+              //                   ),
+              //                 ),
+              //               ],
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              //if (widget.state != TypeState.read)
+              Expanded(
+                child: GridView.count(
+                    crossAxisCount: size_width > 500 ? 3 : 2,
+                    childAspectRatio: size_width > 500 ? 6 : 4.5,
+                    children: List<Widget>.generate(isTime.length, (index) {
+                      if (isTimeSelection!.contains(isTime[index])) {
+                        hourSelected = index + 1;
+                      }
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: InkWell(
+                          onTap: widget.state == TypeState.read
+                              ? () {}
+                              : () {
+                                  setState(() {
+                                    if (!isTimeSelection!
+                                        .contains(isTime[index])) {
+                                      if (isTimeSelection!.length < 3) {
+                                        isTimeSelection!.add(isTime[index]);
+                                        hourSelected = index + 1;
+                                        setState(() {});
+                                        print(isTimeSelection);
+                                      } else {
+                                        master.gestion_Message(
+                                            'Non è possibile selezionare più di tre slot');
+                                      }
+                                    } else {
+                                      isTimeSelection!.removeWhere((element) =>
+                                          element == isTime[index]);
+                                      hourSelected = 0;
+                                      setState(() {});
+                                      print(isTimeSelection);
+                                    }
+                                  });
+                                },
+                          child: Container(
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                color: hourSelected == index + 1
+                                    ? master
+                                        .theme(size)
+                                        .primaryColorLight //.shade100
+                                    : null,
+                                border: Border.all(
+                                    color: master.theme(size).primaryColor),
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Radio(
+                                  focusColor: Colors.white,
+                                  groupValue: hourSelected,
+                                  onChanged: (timeSelected) {
+                                    setState(() {
+                                      hourSelected = timeSelected!;
+                                    });
+                                  },
+                                  value: index + 1,
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              if (widget.state != TypeState.read)
-                Expanded(
-                  child: GridView.count(
-                      crossAxisCount: size_width > 500 ? 3 : 2,
-                      childAspectRatio: size_width > 500 ? 6 : 4.5,
-                      children: List<Widget>.generate(isTime.length, (index) {
-                        if (isTimeSelection!.contains(isTime[index])) {
-                          hourSelected = index + 1;
-                        }
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: InkWell(
-                            onTap: () {
-                              setState(() {
-                                if (!isTimeSelection!.contains(isTime[index])) {
-                                  if (isTimeSelection!.length < 3) {
-                                    isTimeSelection!.add(isTime[index]);
-                                    hourSelected = index + 1;
-                                    setState(() {});
-                                    print(isTimeSelection);
-                                  } else {
-                                    master.gestion_Message(
-                                        'Non è possibile selezionare più di tre slot');
-                                  }
-                                } else {
-                                  isTimeSelection!.removeWhere(
-                                      (element) => element == isTime[index]);
-                                  hourSelected = 0;
-                                  setState(() {});
-                                  print(isTimeSelection);
-                                }
-                              });
-                            },
-                            child: Container(
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                  color: hourSelected == index + 1
-                                      ? master
-                                          .theme(size)
-                                          .primaryColorLight //.shade100
-                                      : null,
-                                  border: Border.all(
-                                      color: master.theme(size).primaryColor),
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Radio(
-                                    focusColor: Colors.white,
-                                    groupValue: hourSelected,
-                                    onChanged: (timeSelected) {
-                                      setState(() {
-                                        hourSelected = timeSelected!;
-                                      });
-                                    },
-                                    value: index + 1,
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 10, right: 20),
+                                  child: Text(
+                                    isTime[index].value,
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 10, right: 20),
-                                    child: Text(
-                                      isTime[index].value,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
-                        );
-                      })),
-                ),
+                        ),
+                      );
+                    })),
+              ),
               Expanded(
                 child: TextFormField(
                   initialValue: note,
@@ -329,24 +332,22 @@ class _Det_EventViewState extends State<Det_EventView> {
   List<SelectionHour> create_arrayHour(DateTime now_date) {
     var master = Provider.of<Master>(context, listen: false);
     var now_hour = SelectionHour.hour(DateTime.now());
-    var array_app = master.array_event.where((element) => element.data_inizio.changeDateToString() == now_date.changeDateToString()).toList();
+    var array_app = master.array_event
+        .where((element) =>
+            element.data_inizio.changeDateToString() ==
+            now_date.changeDateToString())
+        .toList();
     isTime = SelectionHour.arrayElement();
 
-    // for (var element in master.array_event) {
-      // if (element.data_inizio.changeDateToString() ==
-      //     now_date.changeDateToString() ) {
-      //   isTime.removeWhere((eleTime) => eleTime == element.hour);
-      // }
-    // }
-
-    for(var element in array_app){
-      isTime.removeWhere((eleTime) => eleTime == element.hour);
+    for (var element in array_app) {
+      if (widget.event?.uidBUT000 != null &&
+          widget.event?.uidBUT000 != element.uidBUT000) {
+        for (var hour in element.hours)
+          isTime.removeWhere((eleTime) => eleTime == hour);
+      }
     }
 
     isTime.removeWhere((element) => element.number <= now_hour.number);
-
-    if (!isTime.contains(widget.event?.hour) && widget.event?.hour != null)
-      isTime.add(widget.event!.hour);
 
     isTime.sort((a, b) => a.number.compareTo(b.number));
 
@@ -359,11 +360,11 @@ class _Det_EventViewState extends State<Det_EventView> {
       if (widget.state == TypeState.insert) {
         data_inizio = DateTime.now();
         note = '';
-        hour = SelectionHour.H1;
+        isTimeSelection = [];
       } else {
         data_inizio = widget.event!.data_inizio;
         note = widget.event!.note;
-        hour = widget.event!.hour;
+        isTimeSelection = widget.event!.hours;
       }
       isTime = create_arrayHour(data_inizio);
     });
@@ -427,7 +428,7 @@ class _Det_EventViewState extends State<Det_EventView> {
       var event = EVENT(
           uidBUT000: userSelected.uid,
           data_inizio: data_inizio,
-          hour: hour,
+          hours: isTimeSelection,
           note: note);
 
       try {
@@ -464,7 +465,7 @@ class _Det_EventViewState extends State<Det_EventView> {
         .indexWhere((element) => element.uid == widget.event!.uid);
     master.array_event[index].uidBUT000 = userSelected.uid;
     master.array_event[index].data_inizio = data_inizio;
-    master.array_event[index].hour = hour;
+    master.array_event[index].hours = isTimeSelection;
     master.array_event[index].note = note;
 
     try {

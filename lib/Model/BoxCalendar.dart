@@ -70,20 +70,21 @@ class _BoxCalendarState extends State<BoxCalendar> {
                             ),
                           Container(
                             width: size.width * 0.5,
-                           child: ElevatedButton(
-                             onPressed: (){},
-                             child: Text('Visualizza Agenda'),
-                             style: ButtonStyle(
-                               textStyle: MaterialStateProperty.all(master.theme(size).textTheme.labelLarge),
-                                 backgroundColor: MaterialStateProperty.all(master.theme(size).primaryColor),
-                             ),
-                           ),
+                            child: ElevatedButton(
+                              onPressed: () {},
+                              child: Text('Visualizza Agenda'),
+                              style: ButtonStyle(
+                                textStyle: MaterialStateProperty.all(
+                                    master.theme(size).textTheme.labelLarge),
+                                backgroundColor: MaterialStateProperty.all(
+                                    master.theme(size).primaryColor),
+                              ),
+                            ),
                           )
                         ],
                       ),
                     ),
-                  )
-              ),
+                  )),
               EtichettaCard(title: 'Agenda')
             ],
           )),
@@ -122,8 +123,7 @@ class _RowCalendarState extends State<RowCalendar> {
     var event = master.array_event.firstWhere(
         (element) =>
             element.data_inizio.changeDateToString() ==
-                DateTime.now().changeDateToString() &&
-            element.hour == widget.hour,
+            DateTime.now().changeDateToString(),
         orElse: EVENT.standard);
     var user = master.array_user.firstWhere(
         (element) => element.uid == event.uidBUT000,
