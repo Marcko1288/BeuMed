@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:beumed/Class/Model/Enum_Hour.dart';
 import 'package:beumed/Library/Extension_Date.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -37,6 +39,7 @@ class _Det_EventViewState extends State<Det_EventView> {
   List<String> array_nodate = [];
 
   int hourSelected = 0;
+
   List<SelectionHour> isTime = [];
   List<SelectionHour> isTimeSelection = [];
 
@@ -79,205 +82,177 @@ class _Det_EventViewState extends State<Det_EventView> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              DropdownSearch<BUT000>(
-                  enabled: widget.state == TypeState.read ? false : true,
-                  items: master.array_user
-                      .where((element) => element.cf != '')
-                      .toList(),
-                  itemAsString: (BUT000 element) => element.cf == ''
-                      ? 'Seleziona Paziente'
-                      : element.nome +
-                          ' ' +
-                          element.cognome +
-                          ' - ' +
-                          element.cf,
-                  popupProps: PopupProps.menu(
-                    showSearchBox: true,
-                  ),
-                  dropdownButtonProps: DropdownButtonProps(
-                      color: master.theme(size).primaryColor),
-                  //Bottone
-                  dropdownDecoratorProps: DropDownDecoratorProps(
-                    //Testo mostrato nel campo
-                    baseStyle: master.theme(size).textTheme.bodyMedium,
-                    //textAlign: TextAlign.center,
-                    textAlignVertical: TextAlignVertical.center,
-                    dropdownSearchDecoration: InputDecoration(
-                      enabledBorder:
-                          defaultBorder(master.theme(size).primaryColor),
-                      focusedBorder:
-                          defaultBorder(master.theme(size).primaryColor),
-                      errorBorder:
-                          defaultBorder(master.theme(size).primaryColor),
-                      disabledBorder:
-                          defaultBorder(master.theme(size).primaryColor),
-                      focusedErrorBorder:
-                          defaultBorder(master.theme(size).primaryColor),
-                    ),
-                  ),
-                  onChanged: (value) {
-                    userSelected = value!;
-                  },
-                  selectedItem: userSelected,
-                  validator: (valid) {
-                    if (valid is BUT000 && valid.cf == '')
-                      return 'Selezionare un Paziente!';
-                  }),
-              DatePickerCustom(
-                selection_date: data_inizio,
-                min_year: DateTime.now().year,
-                max_year: DateTime.now().add(Duration(days: 730)).year,
-                array_nodate: nodateSelect(),
-                modify: widget.state == TypeState.read ? false : true,
-                onDateTimeChanged: (DateTime value) {
-                  setState(() {
-                    data_inizio = value;
-                    create_arrayHour(data_inizio);
-                  });
-                },
-              ),
-              // if (widget.state == TypeState.read)
-              //   Padding(
-              //     padding: const EdgeInsets.all(8.0),
-              //     child: Center(
-              //       child: Padding(
-              //         padding: const EdgeInsets.all(8.0),
-              //         child: InkWell(
-              //           onTap: () {},
-              //           child: Container(
-              //             alignment: Alignment.center,
-              //             decoration: BoxDecoration(
-              //                 color:
-              //                     master.theme(size).primaryColorLight, //.shade100,
-              //                 border: Border.all(
-              //                     color: master.theme(size).primaryColor),
-              //                 borderRadius: BorderRadius.circular(20)),
-              //             child: Row(
-              //               mainAxisAlignment: MainAxisAlignment.center,
-              //               children: <Widget>[
-              //                 Radio(
-              //                   focusColor: Colors.white,
-              //                   groupValue: 0,
-              //                   onChanged: (timeSelected) {},
-              //                   value: 0,
-              //                 ),
-              //                 Padding(
-              //                   padding:
-              //                       const EdgeInsets.only(left: 10, right: 20),
-              //                   child: Text(
-              //                     hour.value,
-              //                     //style: TextStyle(fontWeight: FontWeight.bold),
-              //                   ),
-              //                 ),
-              //               ],
-              //             ),
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              //if (widget.state != TypeState.read)
-              Expanded(
-                child: GridView.count(
-                    crossAxisCount: size_width > 500 ? 3 : 2,
-                    childAspectRatio: size_width > 500 ? 6 : 4.5,
-                    children: List<Widget>.generate(isTime.length, (index) {
-                      if (isTimeSelection!.contains(isTime[index])) {
-                        hourSelected = index + 1;
-                      }
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: InkWell(
-                          onTap: widget.state == TypeState.read
-                              ? () {}
-                              : () {
-                                  setState(() {
-                                    if (!isTimeSelection!
-                                        .contains(isTime[index])) {
-                                      if (isTimeSelection!.length < 3) {
-                                        isTimeSelection!.add(isTime[index]);
-                                        hourSelected = index + 1;
-                                        setState(() {});
-                                        print(isTimeSelection);
-                                      } else {
-                                        master.gestion_Message(
-                                            'Non è possibile selezionare più di tre slot');
-                                      }
-                                    } else {
-                                      isTimeSelection!.removeWhere((element) =>
-                                          element == isTime[index]);
-                                      hourSelected = 0;
-                                      setState(() {});
-                                      print(isTimeSelection);
-                                    }
-                                  });
-                                },
-                          child: Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                color: hourSelected == index + 1
-                                    ? master
-                                        .theme(size)
-                                        .primaryColorLight //.shade100
-                                    : null,
-                                border: Border.all(
-                                    color: master.theme(size).primaryColor),
-                                borderRadius: BorderRadius.circular(20)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Radio(
-                                  focusColor: Colors.white,
-                                  groupValue: hourSelected,
-                                  onChanged: (timeSelected) {
-                                    setState(() {
-                                      hourSelected = timeSelected!;
-                                    });
-                                  },
-                                  value: index + 1,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 10, right: 20),
-                                  child: Text(
-                                    isTime[index].value,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-                    })),
-              ),
-              Expanded(
-                child: TextFormField(
-                  initialValue: note,
-                  enabled: widget.state == TypeState.read ? false : true,
-                  maxLines: 10,
-                  decoration: InputDecoration(
-                    //labelStyle: TextStyle(color: Colors.lightGreen, fontSize: 15.0),
-                    labelText: "Note",
-                    //fillColor: Colors.white,
-                    focusedBorder:
-                        defaultBorder(master.theme(size).primaryColor),
-                    enabledBorder:
-                        defaultBorder(master.theme(size).primaryColor),
-                    disabledBorder:
-                        defaultBorder(master.theme(size).primaryColor),
-                  ),
-                  onChanged: (String value) {
-                    setState(() {
-                      note = value;
-                    });
-                  },
-                ),
-              ),
+              SelectUser(context),
+              SelectDataEvent(context),
+              SelectHour(context),
+              InsertNote(context),
             ],
           ),
         ),
       ),
       floatingActionButton: action_button(context),
+    );
+  }
+
+  //Seleziona User
+  Widget SelectUser(BuildContext context) {
+    var master = Provider.of<Master>(context, listen: false);
+    var size = MediaQuery.of(context).size;
+    var size_width = MediaQuery.of(context).size.width;
+
+    return DropdownSearch<BUT000>(
+        enabled: widget.state == TypeState.read ? false : true,
+        items: master.array_user.where((element) => element.cf != '').toList(),
+        itemAsString: (BUT000 element) => element.cf == ''
+            ? 'Seleziona Paziente'
+            : element.nome + ' ' + element.cognome + ' - ' + element.cf,
+        popupProps: PopupProps.menu(
+          showSearchBox: true,
+        ),
+        dropdownButtonProps: DropdownButtonProps(color: master.theme(size).primaryColor),
+        dropdownDecoratorProps: DropDownDecoratorProps(     //Bottone
+          baseStyle: master.theme(size).textTheme.bodyMedium, //Testo mostrato nel campo
+          textAlignVertical: TextAlignVertical.center,
+          dropdownSearchDecoration: InputDecoration(
+            enabledBorder: defaultBorder(master.theme(size).primaryColor),
+            focusedBorder: defaultBorder(master.theme(size).primaryColor),
+            errorBorder: defaultBorder(master.theme(size).primaryColor),
+            disabledBorder: defaultBorder(master.theme(size).primaryColor),
+            focusedErrorBorder: defaultBorder(master.theme(size).primaryColor),
+          ),
+        ),
+        onChanged: (value) {
+          userSelected = value!;
+          create_arrayHour(data_inizio);
+        },
+        selectedItem: userSelected,
+        validator: (valid) {
+          if (valid is BUT000 && valid.cf == '')
+            return 'Selezionare un Paziente!';
+        });
+  }
+
+  //Seleziona Data
+  Widget SelectDataEvent(BuildContext context) {
+    var master = Provider.of<Master>(context, listen: false);
+    var size = MediaQuery.of(context).size;
+    var size_width = MediaQuery.of(context).size.width;
+    return DatePickerCustom(
+      selection_date: data_inizio,
+      min_year: DateTime.now().year,
+      max_year: DateTime.now().add(Duration(days: 730)).year,
+      array_nodate: nodateSelect(),
+      modify: widget.state == TypeState.read ? false : true,
+      onDateTimeChanged: (DateTime value) {
+        setState(() {
+          data_inizio = value;
+          create_arrayHour(data_inizio);
+        });
+      },
+    );
+  }
+
+  //Seleziona Hour
+  Widget SelectHour(BuildContext context) {
+    var master = Provider.of<Master>(context, listen: false);
+    var size = MediaQuery.of(context).size;
+    var size_width = MediaQuery.of(context).size.width;
+
+    return Expanded(
+      child: GridView.count(
+          crossAxisCount: size_width > 500 ? 3 : 2,
+          childAspectRatio: size_width > 500 ? 6 : 4.5,
+          children: List<Widget>.generate(isTime.length, (index) {
+            var indexSelect = isTimeSelection!.contains(isTime[index]) ? 1 : 0;
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Stack(children: [
+                InkWell(
+                  onTap: widget.state == TypeState.read
+                      ? () {}
+                      : () {
+                          setState(() {
+                            if (!isTimeSelection!.contains(isTime[index])) {
+                              if (isTimeSelection!.length < 3) {
+                                isTimeSelection!.add(isTime[index]);
+                                indexSelect = 1;
+                                //setState(() {});
+                                print(isTimeSelection);
+                              } else {
+                                master.gestion_Message(
+                                    'Non è possibile selezionare più di tre slot');
+                              }
+                            } else {
+                              isTimeSelection!.removeWhere(
+                                  (element) => element == isTime[index]);
+                              indexSelect = 0;
+                              setState(() {});
+                              print(isTimeSelection);
+                            }
+                          });
+                        },
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        color: indexSelect == 1
+                            ? master.theme(size).primaryColorLight //.shade100
+                            : null,
+                        border:
+                            Border.all(color: master.theme(size).primaryColor),
+                        borderRadius: BorderRadius.circular(20)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Radio(
+                          focusColor: Colors.white,
+                          groupValue: indexSelect,
+                          onChanged: null,
+                          value: 1,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10, right: 20),
+                          child: Text(
+                            isTime[index].value,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ]),
+            );
+          })),
+    );
+  }
+
+  //Inserimento Note
+  Widget InsertNote(BuildContext context) {
+    var master = Provider.of<Master>(context, listen: false);
+    var size = MediaQuery.of(context).size;
+    var size_width = MediaQuery.of(context).size.width;
+
+    return Expanded(
+      child: TextFormField(
+        initialValue: note,
+        enabled: widget.state == TypeState.read ? false : true,
+        maxLines: 10,
+        decoration: InputDecoration(
+          //labelStyle: TextStyle(color: Colors.lightGreen, fontSize: 15.0),
+          labelText: "Note",
+          //fillColor: Colors.white,
+          focusedBorder:
+          defaultBorder(master.theme(size).primaryColor),
+          enabledBorder:
+          defaultBorder(master.theme(size).primaryColor),
+          disabledBorder:
+          defaultBorder(master.theme(size).primaryColor),
+        ),
+        onChanged: (String value) {
+          setState(() {
+            note = value;
+          });
+        },
+      ),
     );
   }
 
@@ -329,31 +304,33 @@ class _Det_EventViewState extends State<Det_EventView> {
     return array_output;
   }
 
-  List<SelectionHour> create_arrayHour(DateTime now_date) {
+  void create_arrayHour(DateTime now_date) {
     var master = Provider.of<Master>(context, listen: false);
     var now_hour = SelectionHour.hour(DateTime.now());
-    var array_app = master.array_event
-        .where((element) =>
-            element.data_inizio.changeDateToString() ==
-            now_date.changeDateToString())
-        .toList();
+    var array_app = master.array_event.where((element) =>
+            element.data_inizio.changeDateToString() == now_date.changeDateToString()).toList();
     isTime = SelectionHour.arrayElement();
 
-    for (var element in array_app) {
-      print('widget.event?.uidBUT000: ${widget.event?.uidBUT000}');
-      if (widget.event?.uidBUT000 == null ||
-          widget.event?.uidBUT000 != element.uidBUT000) {
-        print('widget.event?.uidBUT000: ${widget.event?.uidBUT000}, VERO');
-        for (var hour in element.hours)
-          isTime.removeWhere((eleTime) => eleTime == hour);
-      }
+    for(var element in array_app){
+      for(var hour in element.hours)
+        isTime.removeWhere((eleTime) => eleTime == hour);
     }
 
-    isTime.removeWhere((element) => element.number <= now_hour.number);
+    if (DateTime.now().changeDateToString() == now_date.changeDateToString())
+      isTime.removeWhere((element) => element.number <= now_hour.number);
+
+    // if (widget.event?.hours != null)
+    //   isTime.addAll(widget.event!.hours);
+
+    isTimeSelection.clear();
+    if (widget.event != null){
+      isTime.addAll(widget.event!.hours);
+      isTimeSelection.addAll(widget.event!.hours);
+    }
 
     isTime.sort((a, b) => a.number.compareTo(b.number));
 
-    return isTime;
+    //return isTime;
   }
 
   void refreshDate() {
@@ -362,13 +339,13 @@ class _Det_EventViewState extends State<Det_EventView> {
       if (widget.state == TypeState.insert) {
         data_inizio = DateTime.now();
         note = '';
-        isTimeSelection = [];
+        //isTimeSelection = [];
       } else {
         data_inizio = widget.event!.data_inizio;
         note = widget.event!.note;
-        isTimeSelection = widget.event!.hours;
+        //isTimeSelection = widget.event!.hours;
       }
-      isTime = create_arrayHour(data_inizio);
+      create_arrayHour(data_inizio);
       print(
           'isTimeSelection: ${isTimeSelection.length}, isTime: ${isTime.length}');
     });
@@ -504,3 +481,124 @@ OutlineInputBorder defaultBorder(Color color) {
     borderSide: BorderSide(color: color),
   );
 }
+
+// if (widget.state == TypeState.read)
+//   Padding(
+//     padding: const EdgeInsets.all(8.0),
+//     child: Center(
+//       child: Padding(
+//         padding: const EdgeInsets.all(8.0),
+//         child: InkWell(
+//           onTap: () {},
+//           child: Container(
+//             alignment: Alignment.center,
+//             decoration: BoxDecoration(
+//                 color:
+//                     master.theme(size).primaryColorLight, //.shade100,
+//                 border: Border.all(
+//                     color: master.theme(size).primaryColor),
+//                 borderRadius: BorderRadius.circular(20)),
+//             child: Row(
+//               mainAxisAlignment: MainAxisAlignment.center,
+//               children: <Widget>[
+//                 Radio(
+//                   focusColor: Colors.white,
+//                   groupValue: 0,
+//                   onChanged: (timeSelected) {},
+//                   value: 0,
+//                 ),
+//                 Padding(
+//                   padding:
+//                       const EdgeInsets.only(left: 10, right: 20),
+//                   child: Text(
+//                     hour.value,
+//                     //style: TextStyle(fontWeight: FontWeight.bold),
+//                   ),
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ),
+//       ),
+//     ),
+//   ),
+//if (widget.state != TypeState.read)
+// Expanded(
+//   child: GridView.count(
+//       crossAxisCount: size_width > 500 ? 3 : 2,
+//       childAspectRatio: size_width > 500 ? 6 : 4.5,
+//       children: List<Widget>.generate(isTime.length, (index) {
+//         if (isTimeSelection!.contains(isTime[index])) {
+//           print('hourSelected: ${hourSelected}, index: ${index}');
+//           hourSelected = index + 1;
+//         }
+//         return Padding(
+//           padding: const EdgeInsets.all(8.0),
+//           child: Stack(
+//             children: [
+//               InkWell(
+//                 onTap: widget.state == TypeState.read
+//                     ? () {}
+//                     : () {
+//                   setState(() {
+//                     if (!isTimeSelection!
+//                         .contains(isTime[index])) {
+//                       if (isTimeSelection!.length < 3) {
+//                         isTimeSelection!.add(isTime[index]);
+//                         hourSelected = index + 1;
+//                         //setState(() {});
+//                         print(isTimeSelection);
+//                       } else {
+//                         master.gestion_Message(
+//                             'Non è possibile selezionare più di tre slot');
+//                       }
+//                     } else {
+//                       isTimeSelection!.removeWhere((element) =>
+//                       element == isTime[index]);
+//                       hourSelected = index + 1;
+//                       setState(() {});
+//                       print(isTimeSelection);
+//                     }
+//                   });
+//                 },
+//                 child: Container(
+//                   alignment: Alignment.center,
+//                   decoration: BoxDecoration(
+//                       color: hourSelected == index + 1
+//                           ? master
+//                           .theme(size)
+//                           .primaryColorLight //.shade100
+//                           : null,
+//                       border: Border.all(
+//                           color: master.theme(size).primaryColor),
+//                       borderRadius: BorderRadius.circular(20)),
+//                   child: Row(
+//                     mainAxisAlignment: MainAxisAlignment.center,
+//                     children: <Widget>[
+//                       Radio(
+//                         focusColor: Colors.white,
+//                         groupValue: hourSelected,
+//                         onChanged: (timeSelected) {
+//                           setState(() {
+//                             //   hourSelected = timeSelected!;
+//                           });
+//                         },
+//                         value: index + 1,
+//                       ),
+//                       Padding(
+//                         padding: const EdgeInsets.only(
+//                             left: 10, right: 20),
+//                         child: Text(
+//                           isTime[index].value,
+//                         ),
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//               ),
+//             ]
+//           ),
+//         );
+//       })),
+// ),
+
