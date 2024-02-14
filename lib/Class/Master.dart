@@ -104,10 +104,11 @@ class Master with ChangeNotifier {
   ThemeData theme(Size size) {
     var type_device = size.width > 500 ? true : false;
     var colorPrimary = type_device ? Colors.lightGreen : Colors.lightBlue;
-    var colorSecond = type_device ? Colors.lightGreen.shade100 : Colors.lightBlue.shade100;
+    var colorSecond =
+        type_device ? Colors.lightGreen.shade100 : Colors.lightBlue.shade100;
     var sizeTextLarge = type_device ? 15.0 : 10.0;
-    var sizeTextMedium = type_device ? 12.0 : 6.0;
-    var sizeTextSmall = type_device ? 10.0 : 4.0;
+    var sizeTextMedium = type_device ? 12.0 : 8.0;
+    var sizeTextSmall = type_device ? 10.0 : 6.0;
 
     return ThemeData(
       colorScheme: type_device
@@ -140,9 +141,18 @@ class Master with ChangeNotifier {
         bodyLarge: TextStyle(fontSize: sizeTextLarge),
         bodyMedium: TextStyle(fontSize: sizeTextMedium),
         bodySmall: TextStyle(fontSize: sizeTextSmall),
-        labelLarge: TextStyle(fontSize: sizeTextLarge, color: Colors.white, fontWeight: FontWeight.bold),
-        labelMedium: TextStyle(fontSize: sizeTextMedium, color: Colors.white, fontWeight: FontWeight.bold),
-        labelSmall: TextStyle(fontSize: sizeTextSmall, color: Colors.white, fontWeight: FontWeight.bold),
+        labelLarge: TextStyle(
+            fontSize: sizeTextLarge,
+            color: Colors.white,
+            fontWeight: FontWeight.bold),
+        labelMedium: TextStyle(
+            fontSize: sizeTextMedium,
+            color: Colors.white,
+            fontWeight: FontWeight.bold),
+        labelSmall: TextStyle(
+            fontSize: sizeTextSmall,
+            color: Colors.white,
+            fontWeight: FontWeight.bold),
       ),
       // inputDecorationTheme: InputDecorationTheme(
       //   errorBorder: OutlineInputBorder(

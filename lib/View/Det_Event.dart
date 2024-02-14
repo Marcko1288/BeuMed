@@ -109,9 +109,14 @@ class _Det_EventViewState extends State<Det_EventView> {
         popupProps: PopupProps.menu(
           showSearchBox: true,
         ),
-        dropdownButtonProps: DropdownButtonProps(color: master.theme(size).primaryColor),
-        dropdownDecoratorProps: DropDownDecoratorProps(     //Bottone
-          baseStyle: master.theme(size).textTheme.bodyMedium, //Testo mostrato nel campo
+        dropdownButtonProps:
+            DropdownButtonProps(color: master.theme(size).primaryColor),
+        dropdownDecoratorProps: DropDownDecoratorProps(
+          //Bottone
+          baseStyle: master
+              .theme(size)
+              .textTheme
+              .bodyMedium, //Testo mostrato nel campo
           textAlignVertical: TextAlignVertical.center,
           dropdownSearchDecoration: InputDecoration(
             enabledBorder: defaultBorder(master.theme(size).primaryColor),
@@ -122,8 +127,10 @@ class _Det_EventViewState extends State<Det_EventView> {
           ),
         ),
         onChanged: (value) {
-          userSelected = value!;
-          create_arrayHour(data_inizio);
+          setState(() {
+            userSelected = value!;
+            create_arrayHour(data_inizio);
+          });
         },
         selectedItem: userSelected,
         validator: (valid) {
@@ -240,12 +247,9 @@ class _Det_EventViewState extends State<Det_EventView> {
           //labelStyle: TextStyle(color: Colors.lightGreen, fontSize: 15.0),
           labelText: "Note",
           //fillColor: Colors.white,
-          focusedBorder:
-          defaultBorder(master.theme(size).primaryColor),
-          enabledBorder:
-          defaultBorder(master.theme(size).primaryColor),
-          disabledBorder:
-          defaultBorder(master.theme(size).primaryColor),
+          focusedBorder: defaultBorder(master.theme(size).primaryColor),
+          enabledBorder: defaultBorder(master.theme(size).primaryColor),
+          disabledBorder: defaultBorder(master.theme(size).primaryColor),
         ),
         onChanged: (String value) {
           setState(() {
@@ -307,23 +311,43 @@ class _Det_EventViewState extends State<Det_EventView> {
   void create_arrayHour(DateTime now_date) {
     var master = Provider.of<Master>(context, listen: false);
     var now_hour = SelectionHour.hour(DateTime.now());
-    var array_app = master.array_event.where((element) =>
-            element.data_inizio.changeDateToString() == now_date.changeDateToString()).toList();
+
+    var array_app = master.array_event
+        .where((element) =>
+            element.data_inizio.changeDateToString() ==
+            now_date.changeDateToString())
+        .toList();
     isTime = SelectionHour.arrayElement();
 
-    for(var element in array_app){
-      for(var hour in element.hours)
+    for (var element in array_app) {
+      for (var hour in element.hours)
         isTime.removeWhere((eleTime) => eleTime == hour);
     }
 
     if (DateTime.now().changeDateToString() == now_date.changeDateToString())
       isTime.removeWhere((element) => element.number <= now_hour.number);
 
-    // if (widget.event?.hours != null)
-    //   isTime.addAll(widget.event!.hours);
+    if (userSelected.uidBUT000 != '') {
+      print('userSelected.uid: ${userSelected.uid}');
+      var array_app_2 =
+          array_app.where((element) => element.uidBUT000 == userSelected.uid);
+      print('array_app_2: ${array_app_2.length}');
 
-    isTimeSelection.clear();
-    if (widget.event != null){
+      if (array_app_2.isEmpty) isTimeSelection.clear();
+
+      for (var element in array_app_2) {
+        isTime.addAll(element.hours);
+        isTimeSelection = element.hours;
+        print(
+            'isTime: ${isTime.length},isTimeSelection: ${isTimeSelection.length}, element.hours: ${element.hours.length}');
+        print(element.printLine());
+      }
+    }
+
+    print(
+        'isTime: ${isTime.length},isTimeSelection: ${isTimeSelection.length}');
+
+    if (widget.event != null) {
       isTime.addAll(widget.event!.hours);
       isTimeSelection.addAll(widget.event!.hours);
     }
@@ -601,4 +625,3 @@ OutlineInputBorder defaultBorder(Color color) {
 //         );
 //       })),
 // ),
-
