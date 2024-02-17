@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:beumed/Class/Model/Enum_SelectionView.dart';
 import 'package:provider/provider.dart';
 
+import '../Class/EVENT.dart';
 import '../Class/Master.dart';
 import '../Class/BUT000.dart';
 import '../Library/FireAuth.dart';
@@ -19,17 +20,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  //late List<BUT000> array_user = BUT000.arrayElement(); //widget.extractSubContract(context, type: SelectionSubContractStor.DaRinnovare);
-
-  _getRequests() {
-    setState(() {
-      //actionButton = !actionButton;
-      //Inserire i dati che devono essere aggiornati
-      //array_user = BUT000.arrayElement(); //widget.extractSubContract(context, type: SelectionSubContractStor.DaRinnovare);
-    });
-  }
-
-  bool actionButton = false;
+  //late List<BUT000> array_user = BUT000.arrayElement(); //widget.extractSubContract(context, type: SelectionSubContractStor.DaRinnovare)
 
   @override
   void initState() {
@@ -76,25 +67,17 @@ class _HomeViewState extends State<HomeView> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   BoxCalendar(),
-
-                  // Box(
-                  //   title_card: 'Pazienti',
-                  //   array: array_user,
-                  //   onPressed: () {},
-                  //   onRefresh: _getRequests,
-                  // ),
                 ],
               ),
             ),
           )),
       floatingActionButton: ExpandableFab(
-        initialOpen: actionButton,
         distance: 112,
         children: [
           FloatingActionButton(
             heroTag: 'btn1',
             onPressed: () {
-              routeAddUser(context);
+              routeAddUser();
             }, //() => {},
             tooltip: 'Nuovo Paziente',
             child: const Icon(Icons.add_reaction_outlined),
@@ -102,7 +85,7 @@ class _HomeViewState extends State<HomeView> {
           FloatingActionButton(
             heroTag: 'btn2',
             onPressed: () {
-              routeAddEvent(context);
+              routeAddEvent();
             }, //() => {},
             tooltip: 'Nuovo Appuntamento',
             child: const Icon(Icons.add_comment_outlined),
@@ -112,22 +95,23 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  void routeAddUser(BuildContext contextT) {
+  void routeAddUser() {
     setState(() {
-      Navigator.pushNamed(contextT, SelectionView.User_Add.route,
-              arguments: RouteElement(SelectionView.User_Add.value, null))
-          .then((val) => {_getRequests()});
+      Navigator.pushNamed(
+          context,
+          SelectionView.User.route,
+          arguments: RouteElement(SelectionView.User.value, null)
+      );
     });
   }
 
-  void routeAddEvent(BuildContext contextT) {
+  void routeAddEvent() {
     setState(() {
-      Navigator.pushNamed(contextT,
-              SelectionView.Event_Add.route, //SelectionView.User_Add.route,
-              arguments: RouteElement(SelectionView.Event_Add.value,
-                  null //SelectionView.User_Add.value, null
-                  ))
-          .then((val) => {_getRequests()});
+      Navigator.pushNamed(
+          context,
+          SelectionView.Event.route,
+          arguments: RouteElement(SelectionView.Event.value, null)
+      );
     });
   }
 }

@@ -49,7 +49,6 @@ class _ExpandableFabState extends State<ExpandableFab>
 
   void _toggle() {
     setState(() {
-      print('open: ${_open}');
       _open = !_open;
       if (_open) {
         _controller.forward();

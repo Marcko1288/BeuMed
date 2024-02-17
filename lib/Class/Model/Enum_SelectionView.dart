@@ -8,8 +8,9 @@ enum SelectionView {
   Login,
   ResetPassword,
   Home,
-  User_Add,
-  Event_Add,
+  User,
+  Event,
+  History,
 }
 
 extension ExtSelectionView on SelectionView {
@@ -24,11 +25,14 @@ extension ExtSelectionView on SelectionView {
       case SelectionView.Home:
         return 'BeuMed ®️';
 
-      case SelectionView.User_Add:
-        return 'Nuovo Paziente';
+      case SelectionView.User:
+        return 'Paziente';
 
-      case SelectionView.Event_Add:
-        return 'Nuovo Appuntamento';
+      case SelectionView.Event:
+        return 'Appuntamento';
+
+      case SelectionView.History:
+        return 'Storico';
 
       default:
         return '';
@@ -46,11 +50,14 @@ extension ExtSelectionView on SelectionView {
       case SelectionView.Home:
         return '/home';
 
-      case SelectionView.User_Add:
-        return '/user_add';
+      case SelectionView.User:
+        return '/user';
 
-      case SelectionView.Event_Add:
-        return '/event_add';
+      case SelectionView.Event:
+        return '/event';
+
+      case SelectionView.History:
+        return '/history';
 
       default:
         return '';

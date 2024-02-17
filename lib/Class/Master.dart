@@ -34,56 +34,20 @@ class Master with ChangeNotifier {
         return MaterialPageRoute(builder: (context) => ResetPasswordView());
       case '/home':
         return MaterialPageRoute(builder: (context) => HomeView());
-      case '/user_add':
+      case '/user':
         var element = args.element is BUT000 ? args.element as BUT000 : null;
+        var state = element == null ? TypeState.insert : TypeState.read;
         return MaterialPageRoute(
             builder: (context) =>
-                Det_UserView(state: TypeState.insert, user: element));
-      case '/event_add':
+                Det_UserView(state: state, user: element));
+      case '/event':
         var element = args.element is EVENT ? args.element as EVENT : null;
+        var state = element == null ? TypeState.insert : TypeState.read;
         return MaterialPageRoute(
             builder: (context) =>
-                Det_EventView(state: TypeState.insert, event: element));
-
-      // case '/register':
-      //   return MaterialPageRoute(builder: (context) => RegisterView());
-      // case '/new_password':
-      //   return MaterialPageRoute(builder: (context) => ResetView());
-      // case '/cash':
-      //   return MaterialPageRoute(builder: (context) => CashView());
-      // case '/cash_storico':
-      //   return MaterialPageRoute( builder: (context) => Stor_CashView(type: args.element as SelectionCashStor,));
-      // case '/cash_dettaglio':
-      //   return MaterialPageRoute( builder: (context) => Det_CashView(cash: args.element as Cash));
-      // case '/cash_add':
-      //   var element = args.element is Cash ? args.element as Cash : null;
-      //   return MaterialPageRoute( builder: (context) => Det_CashView(state: TypeState.insert, cash: element));
-      // case '/contract':
-      //   return MaterialPageRoute(builder: (context) => ContractView());
-      // case '/contract_storico':
-      //   return MaterialPageRoute( builder: (context) => Stor_ContractView(type: args.element as SelectionContractStor,));
-      // case '/contract_dettaglio':
-      //   return MaterialPageRoute( builder: (context) => Det_ContractView(contract: args.element as Contract));
-      // case '/contract_add':
-      //   var element = args.element is Contract ? args.element as Contract : null;
-      //   return MaterialPageRoute( builder: (context) => Det_ContractView(state: TypeState.insert, contract: element));
-      // case '/subcontract':
-      //   return MaterialPageRoute(builder: (context) => SubContractView());
-      // case '/subcontract_storico':
-      //   return MaterialPageRoute( builder: (context) => Stor_SubContractView(type: args.element as SelectionSubContractStor,));
-      // case '/subcontract_dettaglio':
-      //   return MaterialPageRoute( builder: (context) => Det_SubContractView(subcontract: args.element as SubContract));
-      // case '/subcontract_add':
-      //   var element = args.element is SubContract ? args.element as SubContract : null;
-      //   return MaterialPageRoute( builder: (context) => Det_SubContractView(state: TypeState.insert, subcontract: element));
-      //
-      // case '/user_add':
-      //   var element = args.element is User
-      //       ? args.element as User
-      //       : null;
-      //   return MaterialPageRoute(builder: (context) =>
-      //       Det_UserView(state: TypeState.insert, user: element));
-
+                Det_EventView(state: state, event: element));
+      case '/history':
+        return MaterialPageRoute(builder: (context) => NavLink());
       default:
         return MaterialPageRoute(builder: (context) => NavLink());
     }
@@ -154,78 +118,8 @@ class Master with ChangeNotifier {
             color: Colors.white,
             fontWeight: FontWeight.bold),
       ),
-      // inputDecorationTheme: InputDecorationTheme(
-      //   errorBorder: OutlineInputBorder(
-      //     borderRadius: BorderRadius.all(Radius.circular(20)),
-      //     borderSide: BorderSide(color: colorPrimary),
-      //   ),
-      //   focusedBorder: OutlineInputBorder(
-      //     borderRadius: BorderRadius.all(Radius.circular(20)),
-      //     borderSide: BorderSide(color: colorPrimary),
-      //   ),
-      //   focusedErrorBorder: OutlineInputBorder(
-      //     borderRadius: BorderRadius.all(Radius.circular(20)),
-      //     borderSide: BorderSide(color: colorPrimary),
-      //   ),
-      //   disabledBorder: OutlineInputBorder(
-      //     borderRadius: BorderRadius.all(Radius.circular(20)),
-      //     borderSide: BorderSide(color: colorPrimary),
-      //   ),
-      //   enabledBorder: OutlineInputBorder(
-      //     borderRadius: BorderRadius.all(Radius.circular(20)),
-      //     borderSide: BorderSide(color: colorPrimary),
-      //   ),
-      // ),
     );
   }
-
-// ThemeData themeWeb() {
-//   return ThemeData(
-//     colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
-//     primaryColor: Colors.lightGreen,
-//     textTheme: TextTheme(
-//       titleLarge: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
-//       titleMedium: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
-//       titleSmall: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
-//       displayLarge: TextStyle(fontSize: 15.0, color: Colors.yellow),
-//       displayMedium: TextStyle(fontSize: 12.0, color: Colors.yellow),
-//       displaySmall: TextStyle(fontSize: 10.0, color: Colors.yellow),
-//       headlineLarge: TextStyle(fontSize: 15.0, color: Colors.red),
-//       headlineMedium: TextStyle(fontSize: 12.0, color: Colors.red),
-//       headlineSmall: TextStyle(fontSize: 10.0, color: Colors.red),
-//       bodyLarge: TextStyle(fontSize: 15.0, color: Colors.green),
-//       bodyMedium: TextStyle(fontSize: 12.0, color: Colors.green),
-//       bodySmall: TextStyle(fontSize: 10.0, color: Colors.green),
-//       labelLarge: TextStyle(fontSize: 15.0, color: Colors.blue),
-//       labelMedium: TextStyle(fontSize: 12.0, color: Colors.blue),
-//       labelSmall: TextStyle(fontSize: 10.0, color: Colors.blue),
-//     ),
-//   );
-// }
-
-// ThemeData themeMobile() {
-//   return ThemeData(
-//     colorScheme: ColorScheme.fromSeed(seedColor: Colors.pink),
-//     primaryColor: Colors.lightGreen,
-//     textTheme: TextTheme(
-//       titleLarge: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-//       titleMedium: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-//       titleSmall: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-//       displayLarge: TextStyle(fontSize: 10.0, color: Colors.yellow),
-//       displayMedium: TextStyle(fontSize: 6.0, color: Colors.yellow),
-//       displaySmall: TextStyle(fontSize: 4.0, color: Colors.yellow),
-//       headlineLarge: TextStyle(fontSize: 10.0, color: Colors.red),
-//       headlineMedium: TextStyle(fontSize: 6.0, color: Colors.red),
-//       headlineSmall: TextStyle(fontSize: 4.0, color: Colors.red),
-//       bodyLarge: TextStyle(fontSize: 10.0, color: Colors.green),
-//       bodyMedium: TextStyle(fontSize: 6.0, color: Colors.green),
-//       bodySmall: TextStyle(fontSize: 4.0, color: Colors.green),
-//       labelLarge: TextStyle(fontSize: 10.0, color: Colors.blue),
-//       labelMedium: TextStyle(fontSize: 6.0, color: Colors.blue),
-//       labelSmall: TextStyle(fontSize: 4.0, color: Colors.blue),
-//     ),
-//   );
-// }
 }
 
 class RouteElement {

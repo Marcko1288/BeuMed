@@ -71,7 +71,7 @@ class EVENT {
   //Stampa Elementi
   String printLine() {
     String hour = '';
-    for (var element in this.hours) hour = hour + ', ' + element.value;
+    for (var element in this.hours) hour = hour + element.value + ', ';
     return '${this.uid};'
         '${this.uidBUT000};'
         '${this.data_inizio.changeDateToString()};'
@@ -106,10 +106,17 @@ class EVENT {
         uidBUT000: uid,
         data_inizio: DateTime.now(),
         hours: [SelectionHour.H1]));
+
+    array.add(EVENT(
+        uidBUT000: uid,
+        data_inizio: DateTime.now().add(Duration(days: 1)),
+        hours: [SelectionHour.H1, SelectionHour.H2, SelectionHour.H3]));
+
     array.add(EVENT(
         uidBUT000: uid,
         data_inizio: DateTime.now().add(Duration(days: 2)),
         hours: [SelectionHour.H5]));
+
     array.add(EVENT(
         uidBUT000: uid,
         data_inizio: DateTime.now().add(Duration(days: 5)),
@@ -117,8 +124,8 @@ class EVENT {
 
     array.add(EVENT(
         uidBUT000: uid,
-        data_inizio: DateTime.now().add(Duration(days: 1)),
-        hours: [SelectionHour.H1, SelectionHour.H2, SelectionHour.H3]));
+        data_inizio: DateTime.now().add(Duration(days: 10)),
+        hours: [SelectionHour.H3]));
     // array.add(
     //     EVENT(uidBUT000: uid, data_inizio: DateTime.now().add(Duration(days: 3)), hour: SelectionHour.H4)
     // );
@@ -139,10 +146,6 @@ class EVENT {
     // //     EVENT(uidBUT000: uid, data_inizio: DateTime.now().add(Duration(days: 3)), hour: SelectionHour.H9)
     // // );
 
-    array.add(EVENT(
-        uidBUT000: uid,
-        data_inizio: DateTime.now().add(Duration(days: 10)),
-        hours: [SelectionHour.H3]));
     return array;
   }
 }

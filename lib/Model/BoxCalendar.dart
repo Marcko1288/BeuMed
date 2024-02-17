@@ -6,6 +6,7 @@ import 'package:beumed/Library/Extension_Date.dart';
 import '../Class/EVENT.dart';
 import '../Class/Master.dart';
 import '../Class/BUT000.dart';
+import '../Class/Model/Enum_SelectionView.dart';
 import 'EtichettaCard.dart';
 import 'RowDetail.dart';
 
@@ -50,8 +51,9 @@ class _BoxCalendarState extends State<BoxCalendar> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     ElevatedButton(
-                                        onPressed: () {},
-                                        child: Text('${element.value}')),
+                                        onPressed: null,
+                                        child: Text('${element.value}'),
+                                    ),
                                     Expanded(
                                         child: Padding(
                                       padding:
@@ -91,10 +93,6 @@ class _BoxCalendarState extends State<BoxCalendar> {
     );
   }
 
-  void routeDettaglio() {
-    //Navigator.pushNamed(context, SelectionView.SubContract_Dettaglio.route, arguments: RouteElement(SelectionView.SubContract_Dettaglio.value, element)).then((value) {widget.onRefresh();});
-  }
-
   List<SelectionHour> array_SelectionHour() {
     List<SelectionHour> array_output = [];
     var now_hour = SelectionHour.hour(DateTime.now());
@@ -130,7 +128,7 @@ class _RowCalendarState extends State<RowCalendar> {
         orElse: BUT000.standard);
 
     return ElevatedButton(
-        onPressed: () {},
+        onPressed: user.cf == '' ? () { routeAddEvent(); } : () {routeSelectUser(user);},
         child: Column(
           children: [
             if (user.cf != '') Text('${user.nome} ${user.cognome}'),
@@ -140,5 +138,26 @@ class _RowCalendarState extends State<RowCalendar> {
             if (user.cf == '') Text('Crea Appuntamento'),
           ],
         ));
+  }
+
+  void routeAddEvent() {
+    setState(() {
+      Navigator.pushNamed(
+          context,
+          SelectionView.Event.route,
+          arguments: RouteElement(SelectionView.Event.value, null)
+      );
+    });
+  }
+
+  void routeSelectUser(BUT000 element){
+    Navigator.pushNamed(
+        context,
+        SelectionView.User.route,
+        arguments: RouteElement(
+            SelectionView.User.value,
+            element
+        )
+    );
   }
 }
