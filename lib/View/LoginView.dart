@@ -53,8 +53,8 @@ class _LoginViewState extends State<LoginView> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       TextFieldCustom(
-                        text: 'Mail',
-                        modify_text: widget.mail,
+                        text_labol: 'Mail',
+                        text_default: widget.mail,
                         keyboardType: TextInputType.emailAddress,
                         onStringChanged: (String value) {
                           setState(() {
@@ -68,33 +68,45 @@ class _LoginViewState extends State<LoginView> {
                           TypeValidator.email
                         ],
                       ),
-
-                      Padding(
-                        padding: const EdgeInsets.only(left: 40),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            TextFieldCustom(
-                              text: 'Password',
-                              modify_text: widget.password,
-                              secure: widget.secure,
-                              onStringChanged: (String value) {
-                                setState(() {
-                                  widget.password = value;
-                                });
-                              },
-                              autofill: [AutofillHints.password],
-                              decoration: TypeDecoration.labolBord,
-                            ),
-
-                            IconButton(
-                                onPressed: changeSecure,
-                                icon: widget.secure
-                                    ? const Icon(Icons.visibility)
-                                    : const Icon(Icons.visibility_off)),
-                          ],
-                        ),
+                      TextFieldCustom(
+                        text_labol: 'Password',
+                        text_default: widget.password,
+                        secure: widget.secure,
+                        onStringChanged: (String value) {
+                          setState(() {
+                            widget.password = value;
+                          });
+                        },
+                        autofill: [AutofillHints.password],
+                        decoration: TypeDecoration.labolBord,
                       ),
+
+                      // Padding(
+                      //   padding: const EdgeInsets.only(left: 40),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.center,
+                      //     children: [
+                      //       TextFieldCustom(
+                      //         text_labol: 'Password',
+                      //         text_default: widget.password,
+                      //         secure: widget.secure,
+                      //         onStringChanged: (String value) {
+                      //           setState(() {
+                      //             widget.password = value;
+                      //           });
+                      //         },
+                      //         autofill: [AutofillHints.password],
+                      //         decoration: TypeDecoration.labolBord,
+                      //       ),
+                      //
+                      //       IconButton(
+                      //           onPressed: changeSecure,
+                      //           icon: widget.secure
+                      //               ? const Icon(Icons.visibility)
+                      //               : const Icon(Icons.visibility_off)),
+                      //     ],
+                      //   ),
+                      // ),
 
                       TextButton(
                           onPressed: () {

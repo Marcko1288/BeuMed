@@ -161,7 +161,7 @@ class BUT000 {
     List<BUT000> array = [];
     array.add(BUT000(
         mail: "niko.ortolani1@gmail.com",
-        cf: "Drago5688",
+        cf: "ABCDEF12A34B123G",
         nome: "Niko",
         cognome: "Ortolani",
         uidBUT000: uidBUT000));
@@ -169,13 +169,14 @@ class BUT000 {
     array.add(BUT000(
         mail: "m.andreotti@aciemmeautomobili.it",
         piva: "Pika86chu",
+        cf: "ABCDEF12A34B123G",
         nome: "Michele",
         cognome: "Andreotti",
         uidBUT000: uidBUT000));
 
     array.add(BUT000(
         mail: "giorgiaasinaro@gmail.com",
-        cf: "Giorgia",
+        cf: "ABCDEF12A34B123G",
         nome: "Giorgia",
         cognome: "Asinaro",
         uidBUT000: uidBUT000));
@@ -183,6 +184,7 @@ class BUT000 {
     array.add(BUT000(
         mail: "sdasfsafsd@gmail.com",
         piva: "Pippo",
+        cf: "ABCDEF12A34B123G",
         nome: "Pippo",
         cognome: "Asinaro",
         uidBUT000: uidBUT000));
@@ -190,6 +192,7 @@ class BUT000 {
     array.add(BUT000(
         mail: "asdwqe3e@gmail.com",
         piva: "Pluto",
+        cf: "ABCDEF12A34B123G",
         nome: "Pluto",
         cognome: "Pluto",
         uidBUT000: uidBUT000));

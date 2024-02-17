@@ -78,7 +78,7 @@ class _HomeViewState extends State<HomeView> {
             heroTag: 'btn1',
             onPressed: () {
               routeAddUser();
-            }, //() => {},
+            },
             tooltip: 'Nuovo Paziente',
             child: const Icon(Icons.add_reaction_outlined),
           ),
@@ -86,7 +86,7 @@ class _HomeViewState extends State<HomeView> {
             heroTag: 'btn2',
             onPressed: () {
               routeAddEvent();
-            }, //() => {},
+            },
             tooltip: 'Nuovo Appuntamento',
             child: const Icon(Icons.add_comment_outlined),
           ),

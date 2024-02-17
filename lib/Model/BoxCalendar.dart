@@ -128,7 +128,7 @@ class _RowCalendarState extends State<RowCalendar> {
         orElse: BUT000.standard);
 
     return ElevatedButton(
-        onPressed: user.cf == '' ? () { routeAddEvent(); } : () {routeSelectUser(user);},
+        onPressed: user.cf == '' ? () {routeAddEvent();} : () {routeSelectUser(user);},
         child: Column(
           children: [
             if (user.cf != '') Text('${user.nome} ${user.cognome}'),

@@ -27,7 +27,6 @@ class Det_EventView extends StatefulWidget {
 }
 
 class _Det_EventViewState extends State<Det_EventView> {
-  late String title;
   late BUT000 userSelected = BUT000.standard();
   late DateTime data_inizio = DateTime.now();
   late String note = '';
@@ -126,6 +125,7 @@ class _Det_EventViewState extends State<Det_EventView> {
     var master = Provider.of<Master>(context, listen: false);
     var size = MediaQuery.of(context).size;
     var size_width = MediaQuery.of(context).size.width;
+
     return DatePickerCustom(
       selection_date: data_inizio,
       min_year: DateTime.now().year,

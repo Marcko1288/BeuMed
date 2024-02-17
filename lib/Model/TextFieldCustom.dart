@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:beumed/Library/Extension_String.dart';
+import 'package:provider/provider.dart';
+
+import '../Class/Master.dart';
 
 class TextFieldCustom extends StatefulWidget {
   TextFieldCustom(
       {super.key,
-      required this.text,
-      required this.modify_text,
+      required this.text_labol,
+      required this.text_default,
       this.secure = false,
       this.actionText = TextInputAction.next,
       List<String>? autofill,
@@ -16,14 +19,16 @@ class TextFieldCustom extends StatefulWidget {
       this.decoration = TypeDecoration.labolBord,
       List<TypeValidator>? listValidator,
       this.limit_char = 99,
-      required this.onStringChanged})
+      required this.onStringChanged })
       : this.autofill = autofill ?? [],
         this.listValidator = listValidator ?? [];
 
-  String text;
+  ///Testo da mostrare come sfondo
+  String text_default;
 
   ///Testo da mostrare come sfondo
-  String modify_text;
+  String text_labol;
+  //String modify_text;
 
   ///Testo digitato
   bool secure;
@@ -58,42 +63,44 @@ class TextFieldCustom extends StatefulWidget {
 class _TextFieldCustomState extends State<TextFieldCustom> {
   @override
   Widget build(BuildContext context) {
+    var master = Provider.of<Master>(context, listen: false);
     var size = MediaQuery.of(context).size;
 
     return Padding(
       padding: const EdgeInsets.all(10.0),
-      child: SizedBox(
-        width: size.width * 0.4,
-        child: TextFormField(
-          textInputAction: widget.actionText,
-          obscureText: widget.secure,
-          keyboardType: widget.keyboardType,
-          textAlign: TextAlign.center,
-          autofillHints: widget.autofill,
-          enabled: widget.enabled,
-          decoration: widget.decoration.value(context, widget.text),
-          inputFormatters: [
-            LengthLimitingTextInputFormatter(widget.limit_char),
-          ],
-          onChanged: (String value) {
-            setState(() {
-              //widget.text = value;
-              widget.onStringChanged(value);
-            });
-          },
-          validator: FormBuilderValidators.compose([
-            for (var element in widget.listValidator)
-              element == TypeValidator.cf
-                  ? (valid) => valid.toString().isCF
-                      ? null
-                      : "Codice Fiscele non valido!"
-                  : element == TypeValidator.piva
-                      ? (valid) => valid.toString().isCF
-                          ? null
-                          : "Codice Fiscele non val"
-                      : element.value,
-          ]),
+      child: TextFormField(
+        initialValue: widget.text_default,
+        enabled: widget.enabled,
+        textInputAction: widget.actionText,
+        obscureText: widget.secure,
+        keyboardType: widget.keyboardType,
+        autofillHints: widget.autofill,
+        decoration: InputDecoration(
+          labelText: widget.text_labol,
+          focusedBorder: defaultBorder(master.theme(size).primaryColor),
+          enabledBorder: defaultBorder(master.theme(size).primaryColor),
+          disabledBorder: defaultBorder(master.theme(size).primaryColor),
         ),
+        inputFormatters: [
+          LengthLimitingTextInputFormatter(widget.limit_char),
+        ],
+        onChanged: (String value) {
+          setState(() {
+            widget.onStringChanged(value);
+          });
+        },
+        validator: FormBuilderValidators.compose([
+          for (var element in widget.listValidator)
+            element == TypeValidator.cf
+                ? (valid) => valid.toString().isCF
+                ? null
+                : "Codice Fiscele non valido!"
+                : element == TypeValidator.piva
+                ? (valid) => valid.toString().isCF
+                ? null
+                : "Codice Fiscele non val"
+                : element.value,
+        ]),
       ),
     );
   }
@@ -162,20 +169,28 @@ extension ExtTypeValidator on TypeValidator {
 enum TypeDecoration { focusBord, labolBord }
 
 extension ExtTypeDecoration on TypeDecoration {
+
   dynamic value(BuildContext context, String value) {
+    var master = Provider.of<Master>(context, listen: false);
+    var size = MediaQuery.of(context).size;
     switch (this) {
       case TypeDecoration.focusBord:
         return InputDecoration(
             hintText: value,
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-            focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                    width: 2, color: Theme.of(context).primaryColor)));
+            border: defaultBorder(master.theme(size).primaryColor),
+        );
       case TypeDecoration.labolBord:
         return InputDecoration(
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+          border: defaultBorder(master.theme(size).primaryColor),
           labelText: value,
         );
     }
   }
+}
+
+OutlineInputBorder defaultBorder(Color color) {
+  return OutlineInputBorder(
+    borderRadius: BorderRadius.all(Radius.circular(20)),
+    borderSide: BorderSide(color: color),
+  );
 }

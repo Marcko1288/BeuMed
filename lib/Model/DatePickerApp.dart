@@ -15,10 +15,12 @@ class DatePickerCustom extends StatefulWidget {
       required this.selection_date,
       required this.min_year,
       required this.max_year,
+      bool? check_date,
       List<String>? array_nodate,
       this.modify = true,
       required this.onDateTimeChanged})
-      : this.array_nodate = array_nodate ?? [];
+      : this.array_nodate = array_nodate ?? [],
+        this.check_date = check_date ?? true;
 
   final ValueChanged<DateTime> onDateTimeChanged;
 
@@ -26,6 +28,7 @@ class DatePickerCustom extends StatefulWidget {
   DateTime selection_date;
   int min_year;
   int max_year;
+  bool check_date;
   List<String> array_nodate;
 
   bool modify;
@@ -73,15 +76,20 @@ class _DatePickerCustomState extends State<DatePickerCustom>
           firstDate: DateTime(firstDate),
           lastDate: DateTime(lastDate),
           selectableDayPredicate: (selectDate) {
-            if (widget.array_nodate.isEmpty) array_holiday.addAll(widget.array_nodate);
-            if (selectDate.weekday == 6 ||
-                selectDate.weekday == 7 ||
-                array_holiday.contains(selectDate.changeDateToString()) ||
-                widget.array_nodate.contains(selectDate.changeDateToString())) {
-              return false;
-            } else {
-              return true;
+            if (widget.check_date) {
+              if (widget.array_nodate.isEmpty)
+                array_holiday.addAll(widget.array_nodate);
+              if (selectDate.weekday == 6 ||
+                  selectDate.weekday == 7 ||
+                  array_holiday.contains(selectDate.changeDateToString()) ||
+                  widget.array_nodate
+                      .contains(selectDate.changeDateToString())) {
+                return false;
+              } else {
+                return true;
+              }
             }
+            return true;
           },
         );
       },
@@ -139,4 +147,3 @@ class _DatePickerCustomState extends State<DatePickerCustom>
     );
   }
 }
-
