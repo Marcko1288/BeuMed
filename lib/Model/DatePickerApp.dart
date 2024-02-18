@@ -117,103 +117,27 @@ class _DatePickerCustomState extends State<DatePickerCustom>
   Widget build(BuildContext context) {
     var master = Provider.of<Master>(context, listen: false);
     var size = MediaQuery.of(context).size;
-    return Padding(
-        padding: const EdgeInsets.only(top: 10, bottom: 10),
-        child: ElevatedButton(
-          onPressed: widget.modify
-              ? () {
-            _restorableDatePickerRouteFuture.present();
-          }
-              : null,
+    return
+      Padding(
+      padding: const EdgeInsets.only(top: 10, bottom: 10),
+      child: OutlinedButton(
+        style: OutlinedButton.styleFrom(
+            side: BorderSide(color: master.theme(size).primaryColor),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20))),
+        onPressed: widget.modify
+            ? () {
+                _restorableDatePickerRouteFuture.present();
+              }
+            : null,
+        child: Container(
+          width: double.infinity,
+          alignment: Alignment.center,
           child: Text(
             "${_selectedDate.value.changeDateToString(type: TypeFormatDate.DD_MM_AAAA)}",
           ),
-          style: ButtonStyle(
-            shape: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20)),
-              borderSide: BorderSide(color: color),
-            );
-          )
-
-
-        )
-
-
-
-
-
-
-        // OutlinedButton(
-        //   style: OutlinedButton.styleFrom(
-        //       side: BorderSide(color: master.theme(size).primaryColor),
-        //       shape: RoundedRectangleBorder(
-        //           borderRadius: BorderRadius.circular(20))),
-        //   onPressed: widget.modify
-        //       ? () {
-        //           _restorableDatePickerRouteFuture.present();
-        //         }
-        //       : null,
-        //   child: Container(
-        //     width: double.infinity,
-        //     alignment: Alignment.center,
-        //     child: InputDecorator(
-        //       decoration: InputDecoration(
-        //         labelText: 'Data di Nascita',
-        //         border: defaultBorder(master.theme(size).primaryColor),
-        //       ),
-        //       child: Text(
-        //         "${_selectedDate.value.changeDateToString(type: TypeFormatDate.DD_MM_AAAA)}",
-        //       ),
-        //     ),
-        //   ),
-        // ),
-      );
-
-
-
-
-
-
-
-
-      //
-      // Container(
-      // width: double.infinity,
-      // alignment: Alignment.center,
-      // child: Text(
-      //   "${_selectedDate.value.changeDateToString(type: TypeFormatDate.DD_MM_AAAA)}",
-      // ),
-      //   decoration: BoxDecoration(
-      //
-      //   ),
-
-
-        // InputDecoration(
-        //   hintText: value,
-        //   border: defaultBorder(master.theme(size).primaryColor),
-        // ),
-   // );
-
-    //   Padding(
-    //   padding: const EdgeInsets.only(top: 10, bottom: 10),
-    //   child: OutlinedButton(
-    //     style: OutlinedButton.styleFrom(
-    //         side: BorderSide(color: master.theme(size).primaryColor),
-    //         shape: RoundedRectangleBorder(
-    //             borderRadius: BorderRadius.circular(20))),
-    //     onPressed: widget.modify
-    //         ? () {
-    //             _restorableDatePickerRouteFuture.present();
-    //           }
-    //         : null,
-    //     child: Container(
-    //       width: double.infinity,
-    //       alignment: Alignment.center,
-    //       child: Text(
-    //         "${_selectedDate.value.changeDateToString(type: TypeFormatDate.DD_MM_AAAA)}",
-    //       ),
-    //     ),
-    //   ),
-    // );
+        ),
+      ),
+    );
   }
 }
