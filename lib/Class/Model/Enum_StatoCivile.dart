@@ -6,14 +6,8 @@ enum SelectionStatoCivile {
   S3,
   S4;
 
-
-  static SelectionStatoCivile code(String s) => switch (s) {
-    'S1' => S1,
-    'S2' => S2,
-    "S3" => S3,
-    'S4' => S4,
-      _ => S1
-  };
+  static SelectionStatoCivile code(String s) =>
+      switch (s) { 'S1' => S1, 'S2' => S2, "S3" => S3, 'S4' => S4, _ => S1 };
 
   static List<SelectionStatoCivile> arrayElement() {
     return [

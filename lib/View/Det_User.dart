@@ -1,6 +1,7 @@
 import 'package:beumed/Class/Model/Enum_Profile.dart';
 import 'package:beumed/Class/Model/Enum_StatoCivile.dart';
 import 'package:beumed/Library/Extension_String.dart';
+import 'package:beumed/Model/DataPickerNew.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/foundation.dart';
@@ -46,18 +47,18 @@ class _Det_UserViewState extends State<Det_UserView> {
 
   late SelectionStatoCivile stato_civile = SelectionStatoCivile.S1;
 
-  late bool? type_1;
-  late bool? type_2;
-  late bool? type_3;
-  late bool? type_4;
-  late bool? type_5;
-  late bool? type_6;
-  late bool? type_7;
-  late bool? type_8;
-  late bool? type_9;
-  late bool? type_10;
-  late bool? type_11;
-  late bool? type_12;
+  late bool type_1 = false;
+  late bool type_2 = false;
+  late bool type_3 = false;
+  late bool type_4 = false;
+  late bool type_5 = false;
+  late bool type_6 = false;
+  late bool type_7 = false;
+  late bool type_8 = false;
+  late bool type_9 = false;
+  late bool type_10 = false;
+  late bool type_11 = false;
+  late bool type_12 = false;
   late String? type_13;
 
   late SelectionProfile profilo = SelectionProfile.paziente;
@@ -91,15 +92,17 @@ class _Det_UserViewState extends State<Det_UserView> {
       ),
       body: Form(
         key: _formKey,
-        child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                TextFiscalDate(context),
-                TextAddress(context),
-                TextContact(context),
-              ],
-            )
+        child: SingleChildScrollView(
+          child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  TextFiscalDate(context),
+                  TextAddress(context),
+                  TextContact(context),
+                  TextAnamnesia(context),
+                ],
+              )),
         ),
       ),
       floatingActionButton: action_button(context),
@@ -145,170 +148,163 @@ class _Det_UserViewState extends State<Det_UserView> {
     var size = MediaQuery.of(context).size;
     var size_width = MediaQuery.of(context).size.width;
 
-    return Expanded(
-      child: GridView.count(
-          crossAxisCount: size_width > 500 ? 3 : 2,
-          childAspectRatio: size_width > 500 ? 4 : 4.5,
-          children: [
-            TextFieldCustom(
-              text_labol: "Nome",
-              text_default: nome,
+    return GridView.count(
+        shrinkWrap: true,
+        crossAxisCount: master.crossGrid(size),
+        childAspectRatio: master.childGrid(size),
+        children: [
+          TextFieldCustom(
+            text_labol: "Nome",
+            text_default: nome,
+            enabled: widget.state == TypeState.read ? false : true,
+            decoration: TypeDecoration.labolBord,
+            onStringChanged: (String value) {
+              nome = value;
+            },
+            listValidator: [
+              TypeValidator.required,
+            ],
+          ),
+          TextFieldCustom(
+              text_labol: 'Cognome',
+              text_default: cognome,
               enabled: widget.state == TypeState.read ? false : true,
               decoration: TypeDecoration.labolBord,
               onStringChanged: (String value) {
-                nome = value;
+                cognome = value;
               },
               listValidator: [
                 TypeValidator.required,
-              ],
-            ),
-            TextFieldCustom(
-                text_labol: 'Cognome',
-                text_default: cognome,
-                enabled: widget.state == TypeState.read ? false : true,
-                decoration: TypeDecoration.labolBord,
-                onStringChanged: (String value) {
-                  cognome = value;
-                },
-                listValidator: [
-                  TypeValidator.required,
-                ]),
-            TextFieldCustom(
-                text_labol: 'Codice Fiscale',
-                text_default: cf,
-                enabled: widget.state == TypeState.read ? false : true,
-                decoration: TypeDecoration.labolBord,
-                onStringChanged: (String value) {
-                  cf = value;
-                },
-                listValidator: [TypeValidator.required, TypeValidator.cf]),
-            TextFieldCustom(
-                text_labol: 'Partita Iva',
-                text_default: piva,
-                enabled: widget.state == TypeState.read ? false : true,
-                decoration: TypeDecoration.labolBord,
-                onStringChanged: (String value) {
-                  piva = value;
-                },
-                listValidator: [TypeValidator.required, TypeValidator.piva]),
-            DatePickerCustom(
-              selection_date: birthday,
-              min_year: DateTime.now().subtract(Duration(days: 365 * 80)).year,
-              max_year: DateTime.now().year,
-              check_date: false,
-              modify: widget.state == TypeState.read ? false : true,
-              onDateTimeChanged: (DateTime value) {
-                setState(() {
-                  birthday = value;
-                });
-              },
-            ),
-            TextFieldCustom(
-              text_labol: 'Luogo di Nascita',
-              text_default: local_birthday,
+              ]),
+          TextFieldCustom(
+              text_labol: 'Codice Fiscale',
+              text_default: cf,
               enabled: widget.state == TypeState.read ? false : true,
               decoration: TypeDecoration.labolBord,
               onStringChanged: (String value) {
-                local_birthday = value;
+                cf = value;
               },
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: DropdownSearch<SelectionStatoCivile>(
-                enabled: widget.state == TypeState.read ? false : true,
-                items: SelectionStatoCivile.arrayElement(),
-                itemAsString: (SelectionStatoCivile element) => element.name,
-                dropdownButtonProps:
-                DropdownButtonProps(color: master.theme(size).primaryColor),
-                dropdownDecoratorProps: DropDownDecoratorProps(
-                  //Bottone
-                  baseStyle: master
-                      .theme(size)
-                      .textTheme
-                      .bodyMedium, //Testo mostrato nel campo
-                  textAlignVertical: TextAlignVertical.center,
-                  dropdownSearchDecoration: InputDecoration(
-                    enabledBorder: defaultBorder(master.theme(size).primaryColor),
-                    focusedBorder: defaultBorder(master.theme(size).primaryColor),
-                    errorBorder: defaultBorder(master.theme(size).primaryColor),
-                    disabledBorder: defaultBorder(master.theme(size).primaryColor),
-                    focusedErrorBorder:
-                    defaultBorder(master.theme(size).primaryColor),
-                  ),
-                ),
-                onChanged: (value) {
-                  setState(() {
-                    stato_civile = value!;
-                  });
-                },
-                selectedItem: stato_civile,
+              listValidator: [TypeValidator.required, TypeValidator.cf]),
+          TextFieldCustom(
+              text_labol: 'Partita Iva',
+              text_default: piva,
+              enabled: widget.state == TypeState.read ? false : true,
+              decoration: TypeDecoration.labolBord,
+              onStringChanged: (String value) {
+                piva = value;
+              },
+              listValidator: [TypeValidator.piva]),
+          DatePickerNew(
+            date: birthday,
+            enabled: widget.state == TypeState.read ? false : true,
+            onDateChanged: (DateTime value) {
+              setState(() {
+                birthday = value;
+              });
+            },
+          ),
+          TextFieldCustom(
+            text_labol: 'Luogo di Nascita',
+            text_default: local_birthday,
+            enabled: widget.state == TypeState.read ? false : true,
+            decoration: TypeDecoration.labolBord,
+            onStringChanged: (String value) {
+              local_birthday = value;
+            },
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: DropdownSearch<SelectionStatoCivile>(
+              enabled: widget.state != TypeState.read,
+              items: SelectionStatoCivile.arrayElement(),
+              itemAsString: (SelectionStatoCivile element) => element.value,
+              dropdownButtonProps: DropdownButtonProps(
+                color: master.theme(size).primaryColor,
               ),
+              dropdownDecoratorProps: DropDownDecoratorProps(
+                baseStyle: master.theme(size).textTheme.bodyMedium,
+                textAlignVertical: TextAlignVertical.center,
+                dropdownSearchDecoration: InputDecoration(
+                  enabledBorder: defaultBorder(master.theme(size).primaryColor),
+                  focusedBorder: defaultBorder(master.theme(size).primaryColor),
+                  errorBorder: defaultBorder(master.theme(size).primaryColor),
+                  disabledBorder:
+                      defaultBorder(master.theme(size).primaryColor),
+                  focusedErrorBorder:
+                      defaultBorder(master.theme(size).primaryColor),
+                ),
+              ),
+              onChanged: (value) {
+                setState(() {
+                  stato_civile = value!;
+                });
+              },
+              selectedItem: stato_civile,
             ),
-          ]
-      ),
-    );
+          ),
+        ]);
   }
 
   Widget TextAddress(BuildContext context) {
     var master = Provider.of<Master>(context, listen: false);
+    var size = MediaQuery.of(context).size;
     var size_width = MediaQuery.of(context).size.width;
 
-    return Expanded(
-      child: GridView.count(
-          crossAxisCount: size_width > 500 ? 3 : 2,
-          childAspectRatio: size_width > 500 ? 6 : 4.5,
-          children: [
-            TextFieldCustom(
-              text_labol: 'Indirizzo',
-              text_default: indirizzo,
-              enabled: widget.state == TypeState.read ? false : true,
-              decoration: TypeDecoration.labolBord,
-              onStringChanged: (String value) {
-                indirizzo = value;
-              },
-            ),
-            TextFieldCustom(
-              text_labol: 'CAP',
-              text_default: cap,
-              enabled: widget.state == TypeState.read ? false : true,
-              decoration: TypeDecoration.labolBord,
-              limit_char: 5,
-              onStringChanged: (String value) {
-                cap = value;
-              },
-            ),
-            TextFieldCustom(
-              text_labol: 'Città',
-              text_default: citta,
-              enabled: widget.state == TypeState.read ? false : true,
-              decoration: TypeDecoration.labolBord,
-              onStringChanged: (String value) {
-                citta = value;
-              },
-            ),
-            TextFieldCustom(
-              text_labol: 'Provincia',
-              text_default: provincia,
-              enabled: widget.state == TypeState.read ? false : true,
-              decoration: TypeDecoration.labolBord,
-              limit_char: 2,
-              onStringChanged: (String value) {
-                provincia = value;
-              },
-            ),
-          ]
-      ),
-    );
+    return GridView.count(
+        shrinkWrap: true,
+        crossAxisCount: master.crossGrid(size),
+        childAspectRatio: master.childGrid(size),
+        children: [
+          TextFieldCustom(
+            text_labol: 'Indirizzo',
+            text_default: indirizzo,
+            enabled: widget.state == TypeState.read ? false : true,
+            decoration: TypeDecoration.labolBord,
+            onStringChanged: (String value) {
+              indirizzo = value;
+            },
+          ),
+          TextFieldCustom(
+            text_labol: 'CAP',
+            text_default: cap,
+            enabled: widget.state == TypeState.read ? false : true,
+            decoration: TypeDecoration.labolBord,
+            limit_char: 5,
+            onStringChanged: (String value) {
+              cap = value;
+            },
+          ),
+          TextFieldCustom(
+            text_labol: 'Città',
+            text_default: citta,
+            enabled: widget.state == TypeState.read ? false : true,
+            decoration: TypeDecoration.labolBord,
+            onStringChanged: (String value) {
+              citta = value;
+            },
+          ),
+          TextFieldCustom(
+            text_labol: 'Provincia',
+            text_default: provincia,
+            enabled: widget.state == TypeState.read ? false : true,
+            decoration: TypeDecoration.labolBord,
+            limit_char: 2,
+            onStringChanged: (String value) {
+              provincia = value;
+            },
+          ),
+        ]);
   }
 
   Widget TextContact(BuildContext context) {
     var master = Provider.of<Master>(context, listen: false);
+    var size = MediaQuery.of(context).size;
     var size_width = MediaQuery.of(context).size.width;
 
-    return Expanded(
-        child: GridView.count(
-      crossAxisCount: size_width > 500 ? 3 : 2,
-      childAspectRatio: size_width > 500 ? 6 : 4.5,
+    return GridView.count(
+      shrinkWrap: true,
+      crossAxisCount: master.crossGrid(size),
+      childAspectRatio: master.childGrid(size),
       children: [
         TextFieldCustom(
             text_labol: 'Mail',
@@ -338,7 +334,30 @@ class _Det_UserViewState extends State<Det_UserView> {
             },
             listValidator: [TypeValidator.number]),
       ],
-    ));
+    );
+  }
+
+  Widget TextAnamnesia(BuildContext context) {
+    var master = Provider.of<Master>(context, listen: false);
+    var size = MediaQuery.of(context).size;
+
+    return GridView.count(
+        shrinkWrap: true,
+        crossAxisCount: master.crossGrid(size),
+        childAspectRatio: master.childGrid(size),
+        children: [
+          Switch(
+            value: type_1,
+            onChanged: (value) {
+              setState(() {
+                type_1 = value;
+              });
+            },
+            activeColor: Colors.blue, // Colore quando è attivo
+            inactiveTrackColor:
+                Colors.grey, // Colore della traccia quando è inattivo
+          ),
+        ]);
   }
 
   void refreshDate() {

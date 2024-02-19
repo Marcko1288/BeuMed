@@ -38,14 +38,12 @@ class Master with ChangeNotifier {
         var element = args.element is BUT000 ? args.element as BUT000 : null;
         var state = element == null ? TypeState.insert : TypeState.read;
         return MaterialPageRoute(
-            builder: (context) =>
-                Det_UserView(state: state, user: element));
+            builder: (context) => Det_UserView(state: state, user: element));
       case '/event':
         var element = args.element is EVENT ? args.element as EVENT : null;
         var state = element == null ? TypeState.insert : TypeState.read;
         return MaterialPageRoute(
-            builder: (context) =>
-                Det_EventView(state: state, event: element));
+            builder: (context) => Det_EventView(state: state, event: element));
       case '/history':
         return MaterialPageRoute(builder: (context) => NavLink());
       default:
@@ -63,6 +61,22 @@ class Master with ChangeNotifier {
     this.user = BUT000.standard();
     this.array_user.clear();
     this.array_event.clear();
+  }
+
+  int crossGrid(Size size) {
+    if (size.width > 1000) {
+      return 2;
+    } else {
+      return 1;
+    }
+  }
+
+  double childGrid(Size size) {
+    if (size.width > 1000) {
+      return 6;
+    } else {
+      return 4.5;
+    }
   }
 
   ThemeData theme(Size size) {

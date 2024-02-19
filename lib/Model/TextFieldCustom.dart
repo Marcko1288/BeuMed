@@ -19,7 +19,8 @@ class TextFieldCustom extends StatefulWidget {
       this.decoration = TypeDecoration.labolBord,
       List<TypeValidator>? listValidator,
       this.limit_char = 99,
-      required this.onStringChanged })
+      required this.onStringChanged,
+      this.onValidator})
       : this.autofill = autofill ?? [],
         this.listValidator = listValidator ?? [];
 
@@ -53,6 +54,7 @@ class TextFieldCustom extends StatefulWidget {
   ///La lista delle validazioni da effetture
 
   final ValueChanged<String> onStringChanged;
+  final ValueChanged<String>? onValidator;
 
   ///Esportare il valore inserito
 
@@ -80,6 +82,8 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
           focusedBorder: defaultBorder(master.theme(size).primaryColor),
           enabledBorder: defaultBorder(master.theme(size).primaryColor),
           disabledBorder: defaultBorder(master.theme(size).primaryColor),
+          focusedErrorBorder: defaultBorder(master.theme(size).primaryColor),
+          errorBorder: defaultBorder(master.theme(size).primaryColor),
         ),
         inputFormatters: [
           LengthLimitingTextInputFormatter(widget.limit_char),
@@ -92,14 +96,12 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
         validator: FormBuilderValidators.compose([
           for (var element in widget.listValidator)
             element == TypeValidator.cf
-                ? (valid) => valid.toString().isCF
-                ? null
-                : "Codice Fiscele non valido!"
+                ? (valid) =>
+                    valid.toString().isCF ? null : "Codice Fiscele non valido!"
                 : element == TypeValidator.piva
-                ? (valid) => valid.toString().isCF
-                ? null
-                : "Codice Fiscele non val"
-                : element.value,
+                    ? (valid) =>
+                        valid.toString().isCF ? null : "Codice Fiscele non val"
+                    : element.value,
         ]),
       ),
     );
@@ -169,15 +171,14 @@ extension ExtTypeValidator on TypeValidator {
 enum TypeDecoration { focusBord, labolBord }
 
 extension ExtTypeDecoration on TypeDecoration {
-
   dynamic value(BuildContext context, String value) {
     var master = Provider.of<Master>(context, listen: false);
     var size = MediaQuery.of(context).size;
     switch (this) {
       case TypeDecoration.focusBord:
         return InputDecoration(
-            hintText: value,
-            border: defaultBorder(master.theme(size).primaryColor),
+          hintText: value,
+          border: defaultBorder(master.theme(size).primaryColor),
         );
       case TypeDecoration.labolBord:
         return InputDecoration(

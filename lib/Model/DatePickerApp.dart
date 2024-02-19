@@ -117,8 +117,7 @@ class _DatePickerCustomState extends State<DatePickerCustom>
   Widget build(BuildContext context) {
     var master = Provider.of<Master>(context, listen: false);
     var size = MediaQuery.of(context).size;
-    return
-      Padding(
+    return Padding(
       padding: const EdgeInsets.only(top: 10, bottom: 10),
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
