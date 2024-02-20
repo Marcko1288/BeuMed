@@ -47,19 +47,19 @@ class _Det_UserViewState extends State<Det_UserView> {
 
   late SelectionStatoCivile stato_civile = SelectionStatoCivile.S1;
 
-  late bool type_1 = false;
-  late bool type_2 = false;
-  late bool type_3 = false;
-  late bool type_4 = false;
-  late bool type_5 = false;
-  late bool type_6 = false;
-  late bool type_7 = false;
-  late bool type_8 = false;
-  late bool type_9 = false;
-  late bool type_10 = false;
-  late bool type_11 = false;
-  late bool type_12 = false;
-  late String? type_13;
+  bool? type_1;
+  bool? type_2;
+  bool? type_3;
+  bool? type_4;
+  bool? type_5;
+  bool? type_6;
+  bool? type_7;
+  bool? type_8;
+  bool? type_9;
+  bool? type_10;
+  bool? type_11;
+  bool? type_12;
+  String? type_13;
 
   late SelectionProfile profilo = SelectionProfile.paziente;
 
@@ -341,23 +341,84 @@ class _Det_UserViewState extends State<Det_UserView> {
     var master = Provider.of<Master>(context, listen: false);
     var size = MediaQuery.of(context).size;
 
-    return GridView.count(
-        shrinkWrap: true,
-        crossAxisCount: master.crossGrid(size),
-        childAspectRatio: master.childGrid(size),
-        children: [
-          Switch(
-            value: type_1,
-            onChanged: (value) {
-              setState(() {
-                type_1 = value;
-              });
-            },
-            activeColor: Colors.blue, // Colore quando è attivo
-            inactiveTrackColor:
-                Colors.grey, // Colore della traccia quando è inattivo
-          ),
-        ]);
+    return InputDecorator(
+      decoration: InputDecoration(
+        labelText: "Anamnesi",
+        focusedBorder: defaultBorder(master.theme(size).primaryColor),
+        enabledBorder: defaultBorder(master.theme(size).primaryColor),
+        disabledBorder: defaultBorder(master.theme(size).primaryColor),
+        focusedErrorBorder: defaultBorder(master.theme(size).primaryColor),
+        errorBorder: defaultBorder(master.theme(size).primaryColor),
+      ),
+      child: GridView.count(
+          shrinkWrap: true,
+          crossAxisCount: 2,
+          childAspectRatio: master.childGrid(size),
+          children: [
+            Container(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [Text('SI'), Text('NO')],
+            ),
+            Container(
+              alignment: Alignment.centerLeft,
+              child: Text('Fuma?'),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Radio(
+                  value: true,
+                  groupValue: type_1,
+                  onChanged: (value) {
+                    setState(() {
+                      type_1 = value;
+                    });
+                  },
+                ),
+                Radio(
+                  value: false,
+                  groupValue: type_1,
+                  onChanged: (value) {
+                    setState(() {
+                      type_1 = value;
+                    });
+                  },
+                ),
+              ],
+            ),
+            Container(
+              alignment: Alignment.centerLeft,
+              child: Text('Beve alcolici? (vino, birra, superalcolici…)'),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Radio(
+                  value: true,
+                  groupValue: type_2,
+                  onChanged: (value) {
+                    setState(() {
+                      type_2 = value!;
+                    });
+                  },
+                ),
+                Radio(
+                  value: false,
+                  groupValue: type_2,
+                  onChanged: (value) {
+                    setState(() {
+                      type_2 = value!;
+                    });
+                  },
+                ),
+              ],
+            ),
+          ]),
+    );
   }
 
   void refreshDate() {
