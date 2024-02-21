@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../View/Det_Event.dart';
-import '../View/Det_User.dart';
+import '../View/Det_User/Det_User.dart';
 import '../View/HomeView.dart';
 import '../View/LoginView.dart';
 import '../View/NavLink.dart';
