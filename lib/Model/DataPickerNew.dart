@@ -1,3 +1,4 @@
+import 'package:beumed/Class/Model/Enum_TypeDecoration.dart';
 import 'package:beumed/Library/Enum_TypeDate.dart';
 import 'package:beumed/Library/Enum_TypeFormatDate.dart';
 import 'package:beumed/Library/Extension_Date.dart';
@@ -185,14 +186,16 @@ class DatePickerNew extends StatefulWidget {
     Key? key,
     required this.date,
     required this.onDateChanged,
+    this.text_labol = '',
     this.enabled = true,
     this.decoration = TypeDecoration.labolBord,
   }) : super(key: key);
 
-  final DateTime date;
+  final DateTime date;                            ///Data Selezionata
+  final String text_labol;                        ///Testo da mostrare sul bordo del campo
+  final bool enabled;                             ///Attiva/Disattiva la DataPicker
+  final TypeDecoration decoration;                ///Determina Decorazione Bordi
   final ValueChanged<DateTime> onDateChanged;
-  final bool enabled;
-  final TypeDecoration decoration;
 
   @override
   State<DatePickerNew> createState() => _DatePickerNewState();
@@ -209,29 +212,17 @@ class _DatePickerNewState extends State<DatePickerNew> {
 
   @override
   Widget build(BuildContext context) {
-    var master = Provider.of<Master>(context, listen: false);
-    var size = MediaQuery.of(context).size;
-
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: InkWell(
         onTap: widget.enabled ? _selectDate : null,
         child: InputDecorator(
-          decoration: InputDecoration(
-            labelText: 'Data di Nascita',
-            labelStyle:
-                TextStyle(color: master.theme(size).colorScheme.primary),
-            border: defaultBorderDate(master.theme(size).primaryColor),
-            focusedBorder: defaultBorder(master.theme(size).primaryColor),
-            enabledBorder: defaultBorder(master.theme(size).primaryColor),
-            disabledBorder: defaultBorder(master.theme(size).primaryColor),
-          ),
+          decoration: widget.decoration.value(context, widget.text_labol),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 "${_selectedDate.changeDateToString(type: TypeFormatDate.DD_MM_AAAA)}",
-                //style: TextStyle(fontSize: 16),
               ),
               Icon(Icons.calendar_today),
             ],
@@ -255,11 +246,4 @@ class _DatePickerNewState extends State<DatePickerNew> {
       });
     }
   }
-}
-
-OutlineInputBorder defaultBorderDate(Color color) {
-  return OutlineInputBorder(
-    borderRadius: BorderRadius.all(Radius.circular(20)),
-    borderSide: BorderSide(color: color),
-  );
 }

@@ -4,6 +4,7 @@ import 'package:beumed/Class/Model/Enum_SelectionView.dart';
 import 'package:provider/provider.dart';
 
 import '../Class/Master.dart';
+import '../Class/Model/Enum_TypeDecoration.dart';
 import '../Library/FireAuth.dart';
 import '../Model/TextFieldCustom.dart';
 
@@ -68,18 +69,35 @@ class _LoginViewState extends State<LoginView> {
                           TypeValidator.email
                         ],
                       ),
-                      TextFieldCustom(
-                        text_labol: 'Password',
-                        text_default: widget.password,
-                        secure: widget.secure,
-                        onStringChanged: (String value) {
-                          setState(() {
-                            widget.password = value;
-                          });
-                        },
-                        autofill: [AutofillHints.password],
-                        decoration: TypeDecoration.labolBord,
+                      Stack(
+                        alignment: Alignment.centerRight,
+                        children: [
+                          TextFieldCustom(
+                            text_labol: 'Password',
+                            text_default: widget.password,
+                            secure: widget.secure,
+                            onStringChanged: (String value) {
+                              setState(() {
+                                widget.password = value;
+                              });
+                            },
+                            autofill: [AutofillHints.password],
+                            decoration: TypeDecoration.labolBord,
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 10.0),
+                            alignment: Alignment.bottomRight,
+                            child: IconButton(
+                                onPressed: changeSecure,
+                                icon: widget.secure
+                                    ? const Icon(Icons.visibility)
+                                    : const Icon(Icons.visibility_off)
+                            ),
+                          )
+
+                        ],
                       ),
+
 
                       // Padding(
                       //   padding: const EdgeInsets.only(left: 40),

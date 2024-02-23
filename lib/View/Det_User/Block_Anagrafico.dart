@@ -5,10 +5,9 @@ import 'package:beumed/Model/TextFieldCustom.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../Class/Model/Enum_TypeDecoration.dart';
 import '../Det_User/Det_User.dart';
-import 'package:beumed/Class/Model/Enum_Profile.dart';
 import 'package:beumed/Class/Model/Enum_StatoCivile.dart';
-import 'package:beumed/Library/Extension_String.dart';
 
 extension BlockAnagrafico on Det_UserViewState {
   Widget TextFiscalDate(BuildContext context) {
@@ -64,6 +63,7 @@ extension BlockAnagrafico on Det_UserViewState {
               listValidator: [TypeValidator.piva]),
           DatePickerNew(
             date: birthday,
+            text_labol: 'Data di Nascita',
             enabled: widget.state == TypeState.read ? false : true,
             onDateChanged: (DateTime value) {
               setState(() {
@@ -81,7 +81,7 @@ extension BlockAnagrafico on Det_UserViewState {
             },
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(10.0),
             child: DropdownSearch<SelectionStatoCivile>(
               enabled: widget.state != TypeState.read,
               items: SelectionStatoCivile.arrayElement(),
@@ -90,17 +90,7 @@ extension BlockAnagrafico on Det_UserViewState {
                 color: master.theme(size).primaryColor,
               ),
               dropdownDecoratorProps: DropDownDecoratorProps(
-                baseStyle: master.theme(size).textTheme.bodyMedium,
-                textAlignVertical: TextAlignVertical.center,
-                dropdownSearchDecoration: InputDecoration(
-                  enabledBorder: defaultBorder(master.theme(size).primaryColor),
-                  focusedBorder: defaultBorder(master.theme(size).primaryColor),
-                  errorBorder: defaultBorder(master.theme(size).primaryColor),
-                  disabledBorder:
-                      defaultBorder(master.theme(size).primaryColor),
-                  focusedErrorBorder:
-                      defaultBorder(master.theme(size).primaryColor),
-                ),
+                dropdownSearchDecoration: TypeDecoration.labolBord.value(context, 'Stato Civile'),
               ),
               onChanged: (value) {
                 setState(() {
@@ -110,6 +100,9 @@ extension BlockAnagrafico on Det_UserViewState {
               selectedItem: stato_civile,
             ),
           ),
-        ]);
+        ]
+    );
   }
 }
+
+

@@ -73,7 +73,7 @@ class Master with ChangeNotifier {
 
   double childGrid(Size size) {
     if (size.width > 1000) {
-      return 6;
+      return 8.5;
     } else {
       return 4.5;
     }

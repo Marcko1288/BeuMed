@@ -5,6 +5,7 @@ import 'package:beumed/Library/Extension_String.dart';
 import 'package:provider/provider.dart';
 
 import '../Class/Master.dart';
+import '../Class/Model/Enum_TypeDecoration.dart';
 
 class TextFieldCustom extends StatefulWidget {
   TextFieldCustom(
@@ -24,39 +25,21 @@ class TextFieldCustom extends StatefulWidget {
       : this.autofill = autofill ?? [],
         this.listValidator = listValidator ?? [];
 
-  ///Testo da mostrare come sfondo
-  String text_default;
+  String text_default;              ///Testo da mostrare come sfondo
+  String text_labol;                ///Testo da mostrare sul bordo del campo
+  bool secure;                      ///Mostra/Nascondi il testo digitato
+  TextInputAction actionText;       ///L'azione da effettuare premendo il tasto INVIO
+  List<String> autofill;            ///Autocompletamento
+  TextInputType keyboardType;       ///Tipologia di tastiera da mostrare
+  bool enabled;                     ///Attiva/Disattiva il TextField
+  TypeDecoration decoration;        ///Determina Decorazione Bordi
 
-  ///Testo da mostrare come sfondo
-  String text_labol;
-  //String modify_text;
+  List<TypeValidator> listValidator;  ///La lista delle validazioni da effetture
 
-  ///Testo digitato
-  bool secure;
-
-  ///Nascondere/Mostrare i dati inseriti
-  TextInputAction actionText;
-
-  ///Azione da effettuare dopo l'inserimento del testo
-  List<String> autofill;
-
-  ///Autocompletamento
-  TextInputType keyboardType; //Tipologia di tastiera da mostrare
-  bool enabled;
-
-  ///Abilitare/Disabilitare il TextField
-  TypeDecoration decoration;
-
-  List<TypeValidator> listValidator;
-
-  int limit_char;
-
-  ///La lista delle validazioni da effetture
+  int limit_char;       ///Limite dei caratteri all'interno della TextField
 
   final ValueChanged<String> onStringChanged;
   final ValueChanged<String>? onValidator;
-
-  ///Esportare il valore inserito
 
   @override
   State<TextFieldCustom> createState() => _TextFieldCustomState();
@@ -77,14 +60,7 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
         obscureText: widget.secure,
         keyboardType: widget.keyboardType,
         autofillHints: widget.autofill,
-        decoration: InputDecoration(
-          labelText: widget.text_labol,
-          focusedBorder: defaultBorder(master.theme(size).primaryColor),
-          enabledBorder: defaultBorder(master.theme(size).primaryColor),
-          disabledBorder: defaultBorder(master.theme(size).primaryColor),
-          focusedErrorBorder: defaultBorder(master.theme(size).primaryColor),
-          errorBorder: defaultBorder(master.theme(size).primaryColor),
-        ),
+        decoration: widget.decoration.value(context, widget.text_labol),
         inputFormatters: [
           LengthLimitingTextInputFormatter(widget.limit_char),
         ],
@@ -108,21 +84,21 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
   }
 }
 
-extension ExtFBVali on FormBuilderValidators {
-  static FormFieldValidator<String> cf({
-    String? errorText,
-  }) =>
-      (valueCandidate) => true == valueCandidate?.isCF
-          ? errorText ?? FormBuilderLocalizations.current.numericErrorText
-          : null;
-
-  static FormFieldValidator<String> pippo({
-    String? errorText,
-  }) =>
-      (valueCandidate) => true == valueCandidate?.isPIVA
-          ? errorText ?? FormBuilderLocalizations.current.numericErrorText
-          : null;
-}
+// extension ExtFBVali on FormBuilderValidators {
+//   static FormFieldValidator<String> cf({
+//     String? errorText,
+//   }) =>
+//       (valueCandidate) => true == valueCandidate?.isCF
+//           ? errorText ?? FormBuilderLocalizations.current.numericErrorText
+//           : null;
+//
+//   static FormFieldValidator<String> pippo({
+//     String? errorText,
+//   }) =>
+//       (valueCandidate) => true == valueCandidate?.isPIVA
+//           ? errorText ?? FormBuilderLocalizations.current.numericErrorText
+//           : null;
+// }
 
 enum TypeValidator {
   required,
@@ -168,30 +144,3 @@ extension ExtTypeValidator on TypeValidator {
   }
 }
 
-enum TypeDecoration { focusBord, labolBord }
-
-extension ExtTypeDecoration on TypeDecoration {
-  dynamic value(BuildContext context, String value) {
-    var master = Provider.of<Master>(context, listen: false);
-    var size = MediaQuery.of(context).size;
-    switch (this) {
-      case TypeDecoration.focusBord:
-        return InputDecoration(
-          hintText: value,
-          border: defaultBorder(master.theme(size).primaryColor),
-        );
-      case TypeDecoration.labolBord:
-        return InputDecoration(
-          border: defaultBorder(master.theme(size).primaryColor),
-          labelText: value,
-        );
-    }
-  }
-}
-
-OutlineInputBorder defaultBorder(Color color) {
-  return OutlineInputBorder(
-    borderRadius: BorderRadius.all(Radius.circular(20)),
-    borderSide: BorderSide(color: color),
-  );
-}
