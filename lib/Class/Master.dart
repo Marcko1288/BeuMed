@@ -72,11 +72,17 @@ class Master with ChangeNotifier {
   }
 
   double childGrid(Size size) {
-    if (size.width > 1000) {
-      return 8.5;
-    } else {
-      return 4.5;
-    }
+    // MediaQuery.of(context).size.width /
+    //     (MediaQuery.of(context).size.height / 1.4),
+    // mainAxisSpacing: 10.0,
+    // crossAxisSpacing: 10.0,
+    return size.width / (size.height / 3.4);
+
+    // if (size.width > 1000) {
+    //   return 8.5;
+    // } else {
+    //   return 4.5;
+    // }
   }
 
   ThemeData theme(Size size) {

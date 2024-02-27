@@ -26,11 +26,12 @@ OutlineInputBorder defaultBorder(Color color) {
   );
 }
 
-InputDecoration decorationLabolBord(BuildContext context, String text_labol){
+InputDecoration decorationLabolBord(BuildContext context, String text_labol,{Icon? icon = null}){
   var master = Provider.of<Master>(context, listen: false);
   var size = MediaQuery.of(context).size;
 
   return InputDecoration(
+    icon: icon,
     labelText: text_labol,
     focusedBorder: defaultBorder(master.theme(size).primaryColor),
     enabledBorder: defaultBorder(master.theme(size).primaryColor),

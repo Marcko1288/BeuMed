@@ -4,12 +4,13 @@ import 'package:provider/provider.dart';
 import '../Class/Master.dart';
 
 class RadioButtonCustom extends StatefulWidget {
-  RadioButtonCustom({super.key, required this.text, this.select, required this.onChanged,});
+  RadioButtonCustom({super.key, required this.text, this.select, this.enabled = true, required this.onChanged,});
 
   String text;
   bool? select;
+  bool enabled;
 
-  final ValueChanged<bool> onChanged;
+  final ValueChanged<bool?> onChanged;
 
   @override
   State<RadioButtonCustom> createState() => _RadioButtonCustomState();
@@ -38,22 +39,24 @@ class _RadioButtonCustomState extends State<RadioButtonCustom> {
             Radio(
               value: true,
               groupValue: widget.select,
-              onChanged: (value) {
+              onChanged: widget.enabled ? (value) {
                 setState(() {
-                  widget.select = value!;
-                  widget.onChanged(value);
+                  bool new_value = value as bool;
+                  widget.select = new_value;
+                  widget.onChanged(new_value);
                 });
-              },
+              } : null,
             ),
             Radio(
               value: false,
               groupValue: widget.select,
-              onChanged: (value) {
+              onChanged: widget.enabled ? (value) {
                 setState(() {
-                  widget.select = value!;
-                  widget.onChanged(value);
+                  bool new_value = value as bool;
+                  widget.select = new_value;
+                  widget.onChanged(new_value);
                 });
-              },
+              } : null,
             ),
           ],
         )

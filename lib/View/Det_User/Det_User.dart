@@ -1,6 +1,7 @@
 import 'package:beumed/Class/Model/Enum_Profile.dart';
 import 'package:beumed/Class/Model/Enum_StatoCivile.dart';
 import 'package:beumed/Class/Model/Enum_TypeDecoration.dart';
+import 'package:beumed/Library/Extension_Date.dart';
 import 'package:beumed/Library/Extension_String.dart';
 import 'package:beumed/Model/RadioButton.dart';
 import 'package:beumed/View/Det_User/BoxContatti.dart';
@@ -18,6 +19,7 @@ import 'package:beumed/Class/BUT000.dart';
 import 'package:beumed/Library/FireAuth.dart';
 import 'package:beumed/Library/FireStore.dart';
 import 'package:beumed/Model/TextFieldCustom.dart';
+import '../../Library/Enum_TypeFormatDate.dart';
 import '../Det_User/Block_Anagrafico.dart';
 
 class Det_UserView extends StatefulWidget {
@@ -50,6 +52,7 @@ class Det_UserViewState extends State<Det_UserView> {
 
   late SelectionStatoCivile stato_civile = SelectionStatoCivile.S1;
 
+  bool open_boxanamnesi = false;
   Map<String, dynamic?> anamnesi = {
     'Vaccinazione antitetanica' : null,
     'Fuma?' : null,
@@ -77,9 +80,12 @@ class Det_UserViewState extends State<Det_UserView> {
     'Malattie muscolo-scheletriche' : null,
     'Malattie tiroidee' : null,
     'Malattie psichiatriche' : null,
-    'Altro' : null,
   };
   late String other = "";
+
+  bool open_boxnote = false;
+  Map<DateTime, String> note = {};
+  bool new_note = false;
 
   late SelectionProfile profilo = SelectionProfile.paziente;
 
@@ -121,6 +127,10 @@ class Det_UserViewState extends State<Det_UserView> {
                   TextAddress(context),
                   TextContact(context),
                   TextAnamnesia(context),
+                  TextNote(context),
+                  Container(
+                    height: size_height * 0.1,
+                  )
                 ],
               )),
         ),
@@ -139,32 +149,149 @@ class Det_UserViewState extends State<Det_UserView> {
         decoration: TypeDecoration.labolBord.value(context, "Anamnesi"),
         child: Column(
           children: [
-            GridView.count(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(), // Assicurati che Container abbia una dimensione definita
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      open_boxanamnesi = !open_boxanamnesi;
+                    });
+                  },
+                  icon: open_boxanamnesi ? Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Icon(Icons.keyboard_arrow_up),
+                  ) : Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Icon(Icons.keyboard_arrow_down),
+                  ),
+                ),
+              ],
+            ),
+            if (open_boxanamnesi)
+              GridView.count(
                 shrinkWrap: true,
                 crossAxisCount: 2,
                 childAspectRatio: master.childGrid(size),
                 children: [
-                  Container(),
+                  Container(), // Assicurati che il contenuto del GridView.count abbia un'implementazione corretta
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [Text('SI'), Text('NO')],
                   ),
-                ]
+                ],
+              ),
+            if (open_boxanamnesi)
+              Column(
+                children: anamnesi.entries.map((element) {
+                  return RadioButtonCustom(
+                    text: element.key,
+                    select: element.value,
+                    enabled: widget.state == TypeState.read ? false : true,
+                    onChanged: (value) {
+                      setState(() {
+                        anamnesi[element.key] = value;
+                      });
+                    },
+                  );
+                }).toList(),
+              ),
+            if (open_boxanamnesi)
+              TextFormField(
+                initialValue: other,
+                enabled: widget.state == TypeState.read ? false : true,
+                maxLines: 10,
+                decoration: InputDecoration(
+                  labelText: "Altro",
+                  focusedBorder: defaultBorder(master.theme(size).primaryColor),
+                  enabledBorder: defaultBorder(master.theme(size).primaryColor),
+                  disabledBorder: defaultBorder(master.theme(size).primaryColor),
+                ),
+                onChanged: (String value) {
+                  setState(() {
+                    other = value;
+                  });
+                },
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget TextNote(BuildContext context) {
+    var master = Provider.of<Master>(context, listen: false);
+    var size = MediaQuery.of(context).size;
+    bool open_note = false;
+    int length_note = 10;
+
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: InputDecorator(
+        decoration: TypeDecoration.labolBord.value(context, "Note"),
+        child: Column(
+          children: [
+            Container(
+              alignment: Alignment.centerRight,
+              child: IconButton(
+                onPressed: widget.state == TypeState.read ? null : () {
+                  setState(() {
+                    print('new_note: ${new_note}');
+                    if (new_note == false) {
+                      new_note = true;
+                      note[DateTime.now()] = '';
+                      print('new_note: ${new_note}');
+                    }
+                  });
+                },
+                icon: Icon(Icons.add_circle_outline),
+              ),
             ),
             Column(
-              children: anamnesi.entries.map((element) {
-                return RadioButtonCustom(
-                  text: element.key,
-                  select: element.value,
-                  onChanged: (value){
-                    anamnesi[element.key] = value;
-                  }
-              );
+              children: note.entries.map((element) {
+                String title = element.key.changeDateToString(type: TypeFormatDate.DD_MM_AAAA_HH_MM);
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded( // Aggiunto Expanded per far sì che il TextFormField occupi lo spazio disponibile
+                        child: TextFormField(
+                          initialValue: element.value,
+                          enabled: widget.state == TypeState.read ? false : true,
+                          maxLines: length_note, // Corretto il nome della variabile 'length_note'
+                          decoration: InputDecoration(
+                            labelText: title,
+                            focusedBorder: defaultBorder(master.theme(size).primaryColor),
+                            enabledBorder: defaultBorder(master.theme(size).primaryColor),
+                            disabledBorder: defaultBorder(master.theme(size).primaryColor),
+                          ),
+                          onChanged: (String value) {
+                            setState(() {
+                              note[element.key] = value;
+                            });
+                          },
+                        ),
+                      ),
+                      if (widget.state != TypeState.insert)
+                        IconButton(
+                          onPressed: widget.state == TypeState.read ? null : () {
+                            setState(() {
+                              open_note = !open_note;
+                              length_note = open_note ? 10 : 1;
+                            });
+                          },
+                          icon: open_note ? Icon(Icons.keyboard_arrow_down) : Icon(Icons.keyboard_arrow_up),
+                        ),
+                    ],
+                  ),
+                );
               }).toList(),
             ),
           ],
-        )
+        ),
       ),
     );
   }

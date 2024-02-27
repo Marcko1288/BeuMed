@@ -76,7 +76,7 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
                     valid.toString().isCF ? null : "Codice Fiscele non valido!"
                 : element == TypeValidator.piva
                     ? (valid) =>
-                        valid.toString().isCF ? null : "Codice Fiscele non val"
+                        valid.toString().isPIVA ? null : "Partita Iva non valida!"
                     : element.value,
         ]),
       ),
