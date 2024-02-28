@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:beumed/Class/Model/Enum_Profile.dart';
 import 'package:beumed/Library/Extension_Date.dart';
@@ -20,26 +22,30 @@ class BUT000 {
   late String citta;
   late String provincia;
   late String uidBUT000;
+  late Map<String, bool> array_anamnesi;
+  late List<Note> array_note;
   late DateTime data_ins;
   late DateTime data_modify;
 
   //Costruttore
-  BUT000(
-      {String? uid,
-      String? cf,
-      String? piva,
-      SelectionProfile? profilo,
-      String? indirizzo,
-      int? cap,
-      String? citta,
-      String? provincia,
-      required this.mail,
-      required this.nome,
-      required this.cognome,
-      required this.uidBUT000,
-      DateTime? data_ins,
-      DateTime? data_modify})
-      : this.uid = uid ?? Uuid().v4().toUpperCase(),
+  BUT000({
+    String? uid,
+    String? cf,
+    String? piva,
+    SelectionProfile? profilo,
+    String? indirizzo,
+    int? cap,
+    String? citta,
+    String? provincia,
+    Map<String, bool>? array_anamnesi,
+    List<Note>? array_note,
+    required this.mail,
+    required this.nome,
+    required this.cognome,
+    required this.uidBUT000,
+    DateTime? data_ins,
+    DateTime? data_modify
+  }) : this.uid = uid ?? Uuid().v4().toUpperCase(),
         this.cf = cf ?? '',
         this.piva = piva ?? '',
         this.profilo = profilo ?? SelectionProfile.paziente,
@@ -47,6 +53,8 @@ class BUT000 {
         this.cap = cap ?? 00000,
         this.citta = citta ?? '',
         this.provincia = provincia ?? '',
+        this.array_anamnesi = array_anamnesi ?? {},
+        this.array_note = array_note ?? [],
         this.data_ins = data_ins ?? DateTime.now(),
         this.data_modify = data_modify ?? DateTime.now();
 
@@ -198,4 +206,25 @@ class BUT000 {
         uidBUT000: uidBUT000));
     return array;
   }
+}
+
+class Note {
+  late String uid;
+  late DateTime data;
+  late String nota;
+  late List<String> url_images;
+  late DateTime data_ins;
+  late DateTime data_modify;
+
+  Note({
+    String? uid,
+    required this.data,
+    required this.nota,
+    List<String>? url_images,
+    DateTime? data_ins,
+    DateTime? data_modify
+  }) : this.uid = uid ?? Uuid().v4().toUpperCase(),
+        this.url_images = url_images ?? [],
+        this.data_ins = data_ins ?? DateTime.now(),
+        this.data_modify = data_modify ?? DateTime.now();
 }
