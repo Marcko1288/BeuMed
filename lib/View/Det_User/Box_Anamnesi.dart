@@ -1,3 +1,4 @@
+import 'package:beumed/Class/BUT000.dart';
 import 'package:beumed/View/Det_User/Det_User.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -55,18 +56,19 @@ extension BoxAnamnesi on Det_UserViewState {
               ),
             if (open_boxanamnesi)
               Column(
-                children: anamnesi.entries.map((element) {
+                children: List<Widget>.generate(anamnesi.length, (index) {
+                  var element = anamnesi[index];
                   return RadioButtonCustom(
-                    text: element.key,
+                    text: element.nome,
                     select: element.value,
                     enabled: widget.state == TypeState.read ? false : true,
                     onChanged: (value) {
                       setState(() {
-                        anamnesi[element.key] = value;
+                        anamnesi[index].value = value;
                       });
                     },
                   );
-                }).toList(),
+              }),
               ),
             if (open_boxanamnesi)
               TextFormField(

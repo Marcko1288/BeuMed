@@ -55,38 +55,11 @@ class Det_UserViewState extends State<Det_UserView> {
   late SelectionStatoCivile stato_civile = SelectionStatoCivile.S1;
 
   bool open_boxanamnesi = false;
-  Map<String, dynamic?> anamnesi = {
-    'Vaccinazione antitetanica' : null,
-    'Fuma?' : null,
-    'Beve alcolici? (vino, birra, superalcolici…)' : null,
-    'Allergie' : null,
-    'Altre malattie respiratorie' : null,
-    'Anemia' : null,
-    'Svenimenti' : null,
-    'Palpitazioni' : null,
-    'Vertigini' : null,
-    'Pressione elevata' : null,
-   'Colesterolo elevato' : null,
-    'Malattie del fegato/vie biliari' : null,
-    'Malattie neurologiche' : null,
-    'Neoplasie' : null,
-    'Malattie dei reni/vie urinarie' : null,
-    'Asma bronchiale' : null,
-    'Otiti/sinusiti' : null,
-    'Epilessia' : null,
-    'Malattie di cuore' : null,
-    'Dolore toracico' : null,
-    'Disturbi visivi' : null,
-    'Diabete mellito' : null,
-    'Malattie gastro-intestinali' : null,
-    'Malattie muscolo-scheletriche' : null,
-    'Malattie tiroidee' : null,
-    'Malattie psichiatriche' : null,
-  };
+  List<Anamnesi> anamnesi = [];
   late String other = "";
 
   bool open_boxnote = false;
-  Map<DateTime, String> note = {};
+  List<Note> note = [];
   bool new_note = false;
 
   late SelectionProfile profilo = SelectionProfile.paziente;

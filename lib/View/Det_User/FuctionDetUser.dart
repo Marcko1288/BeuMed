@@ -1,3 +1,4 @@
+import 'package:beumed/Class/BUT000.dart';
 import 'package:beumed/View/Det_User/Det_User.dart';
 import 'package:beumed/View/Det_User/FireDet_User.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,8 @@ extension FuncDetUser on Det_UserViewState {
         citta = '';
         cap = '';
         provincia = '';
+        anamnesi = Anamnesi.defaultElement();
+        other = '';
       } else {
         mail = widget.user!.mail;
         cf = widget.user!.cf;
@@ -41,6 +44,10 @@ extension FuncDetUser on Det_UserViewState {
         citta = widget.user!.citta;
         cap = widget.user!.cap.toString();
         provincia = widget.user!.provincia;
+        anamnesi = widget.user!.array_anamnesi;
+        note = widget.user!.array_note;
+        var value = widget.user!.array_anamnesi.firstWhere((elem) => elem.nome == 'Altro').other;
+        other = value == null ? '' : value;
       }
     });
   }

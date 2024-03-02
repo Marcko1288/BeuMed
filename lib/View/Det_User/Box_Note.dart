@@ -1,3 +1,4 @@
+import 'package:beumed/Class/BUT000.dart';
 import 'package:beumed/Library/Extension_Date.dart';
 import 'package:beumed/View/Det_User/Det_User.dart';
 import 'package:flutter/material.dart';
@@ -26,11 +27,9 @@ extension BoxNote on Det_UserViewState {
               child: IconButton(
                 onPressed: widget.state == TypeState.read ? null : () {
                   setState(() {
-                    print('new_note: ${new_note}');
                     if (new_note == false) {
                       new_note = true;
-                      note[DateTime.now()] = '';
-                      print('new_note: ${new_note}');
+                      note.add(Note(data: DateTime.now(), nota: ''));
                     }
                   });
                 },
@@ -38,8 +37,9 @@ extension BoxNote on Det_UserViewState {
               ),
             ),
             Column(
-              children: note.entries.map((element) {
-                String title = element.key.changeDateToString(type: TypeFormatDate.DD_MM_AAAA_HH_MM);
+              children: List<Widget>.generate(note.length, (index) {
+                Note element = note[index];
+                String title = element.data.changeDateToString(type: TypeFormatDate.DD_MM_AAAA_HH_MM);
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
@@ -47,7 +47,7 @@ extension BoxNote on Det_UserViewState {
                     children: [
                       Expanded(
                         child: TextFormField(
-                          initialValue: element.value,
+                          initialValue: element.nota,
                           enabled: widget.state == TypeState.read ? false : true,
                           maxLines: length_note,
                           decoration: InputDecoration(
@@ -58,7 +58,7 @@ extension BoxNote on Det_UserViewState {
                           ),
                           onChanged: (String value) {
                             setState(() {
-                              note[element.key] = value;
+                              note[index].nota = value;
                             });
                           },
                         ),
@@ -76,7 +76,7 @@ extension BoxNote on Det_UserViewState {
                     ],
                   ),
                 );
-              }).toList(),
+              })
             ),
           ],
         ),

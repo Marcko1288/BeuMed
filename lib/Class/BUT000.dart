@@ -22,7 +22,7 @@ class BUT000 {
   late String citta;
   late String provincia;
   late String uidBUT000;
-  late Map<String, bool> array_anamnesi;
+  late List<Anamnesi> array_anamnesi;
   late List<Note> array_note;
   late DateTime data_ins;
   late DateTime data_modify;
@@ -37,7 +37,7 @@ class BUT000 {
     int? cap,
     String? citta,
     String? provincia,
-    Map<String, bool>? array_anamnesi,
+    List<Anamnesi>? array_anamnesi,
     List<Note>? array_note,
     required this.mail,
     required this.nome,
@@ -53,7 +53,7 @@ class BUT000 {
         this.cap = cap ?? 00000,
         this.citta = citta ?? '',
         this.provincia = provincia ?? '',
-        this.array_anamnesi = array_anamnesi ?? {},
+        this.array_anamnesi = array_anamnesi ?? [],
         this.array_note = array_note ?? [],
         this.data_ins = data_ins ?? DateTime.now(),
         this.data_modify = data_modify ?? DateTime.now();
@@ -228,3 +228,69 @@ class Note {
         this.data_ins = data_ins ?? DateTime.now(),
         this.data_modify = data_modify ?? DateTime.now();
 }
+
+class Anamnesi {
+  late String uid;
+  late String nome;
+  late bool? value;
+  late String other;
+  late bool enable;
+  late DateTime data_ins;
+  late DateTime data_modify;
+
+  Anamnesi({
+    String? uid,
+    required this.nome,
+    required this.value,
+    String? other,
+    bool? enable,
+    DateTime? data_ins,
+    DateTime? data_modify
+  }) : this.uid = uid ?? Uuid().v4().toUpperCase(),
+        this.other = other ?? '',
+        this.enable = enable ?? true,
+        this.data_ins = data_ins ?? DateTime.now(),
+        this.data_modify = data_modify ?? DateTime.now();
+
+  //Array Esempio
+  static List<Anamnesi> defaultElement() {
+    List<Anamnesi> array = [];
+    defaultAnamnesi.forEach((key, value) {
+      array.add(
+          Anamnesi(nome: key, value: value)
+      );
+    });
+
+    return array;
+  }
+
+}
+
+Map<String, dynamic?> defaultAnamnesi = {
+  'Vaccinazione antitetanica' : null,
+  'Fuma?' : null,
+  'Beve alcolici? (vino, birra, superalcolici…)' : null,
+  'Allergie' : null,
+  'Altre malattie respiratorie' : null,
+  'Anemia' : null,
+  'Svenimenti' : null,
+  'Palpitazioni' : null,
+  'Vertigini' : null,
+  'Pressione elevata' : null,
+  'Colesterolo elevato' : null,
+  'Malattie del fegato/vie biliari' : null,
+  'Malattie neurologiche' : null,
+  'Neoplasie' : null,
+  'Malattie dei reni/vie urinarie' : null,
+  'Asma bronchiale' : null,
+  'Otiti/sinusiti' : null,
+  'Epilessia' : null,
+  'Malattie di cuore' : null,
+  'Dolore toracico' : null,
+  'Disturbi visivi' : null,
+  'Diabete mellito' : null,
+  'Malattie gastro-intestinali' : null,
+  'Malattie muscolo-scheletriche' : null,
+  'Malattie tiroidee' : null,
+  'Malattie psichiatriche' : null,
+};
