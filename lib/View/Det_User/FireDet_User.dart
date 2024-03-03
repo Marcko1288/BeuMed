@@ -25,18 +25,36 @@ extension FireDetUser on Det_UserViewState {
       });
     }
 
+    var result_anamnesi = anamnesi.where((element) => element.value == null);
+    if (result_anamnesi.isNotEmpty){
+      insert == false;
+      setState(() {
+        master.gestion_Message('Completare l Anamnesi');
+        return;
+      });
+    }
+
     if (insert == true) {
       var user = BUT000(
           mail: mail,
-          cf: cf,
           nome: nome,
           cognome: cognome,
+          uidBUT000: master.user.uid,
+          cf: cf,
           piva: piva,
+          profilo: profilo,
+          birthday: birthday,
+          local_birthday: local_birthday,
+          phone: phone.changeStringToInt(),
+          mobile_phone: mobile_phone.changeStringToInt(),
+          stato_civile: stato_civile,
           indirizzo: indirizzo,
-          citta: citta,
           cap: cap.changeStringToInt(),
+          citta: citta,
           provincia: provincia,
-          uidBUT000: master.user.uid);
+          array_anamnesi: anamnesi,
+          array_note: note,
+      );
 
       try {
         var dirDB = FireStore()
@@ -70,15 +88,24 @@ extension FireDetUser on Det_UserViewState {
     var master = Provider.of<Master>(context, listen: false);
     var index = master.array_user
         .indexWhere((element) => element.uid == widget.user!.uid);
+
     master.array_user[index].mail = mail;
-    master.array_user[index].cf = cf;
     master.array_user[index].nome = nome;
     master.array_user[index].cognome = cognome;
+    master.array_user[index].cf = cf;
     master.array_user[index].piva = piva;
+    master.array_user[index].birthday = birthday;
+    master.array_user[index].local_birthday = local_birthday;
+    master.array_user[index].phone = phone.changeStringToInt();
+    master.array_user[index].mobile_phone = mobile_phone.changeStringToInt();
+    master.array_user[index].stato_civile = stato_civile;
     master.array_user[index].indirizzo = indirizzo;
-    master.array_user[index].citta = citta;
     master.array_user[index].cap = cap.changeStringToInt();
+    master.array_user[index].citta = citta;
     master.array_user[index].provincia = provincia;
+    master.array_user[index].array_anamnesi = anamnesi;
+    master.array_user[index].array_note = note;
+    master.array_user[index].data_modify = DateTime.now();
 
     try {
       var dirDB = FireStore()

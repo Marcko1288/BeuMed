@@ -58,7 +58,6 @@ class Det_UserViewState extends State<Det_UserView> {
   List<Anamnesi> anamnesi = [];
   late String other = "";
 
-  bool open_boxnote = false;
   List<Note> note = [];
   bool new_note = false;
 

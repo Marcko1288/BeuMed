@@ -8,11 +8,11 @@ extension WidgetDetUser on Det_UserViewState {
   Widget Title_AppBar(BuildContext context) {
     switch (widget.state) {
       case TypeState.read:
-        return Text("Appuntamento");
+        return Text("Paziente");
       case TypeState.insert:
-        return Text("Nuovo Appuntamento");
+        return Text("Nuovo Paziente");
       case TypeState.modify:
-        return Text("Modifica Appuntamento");
+        return Text("Modifica Paziente");
     }
   }
 

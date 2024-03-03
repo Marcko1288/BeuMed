@@ -58,15 +58,32 @@ extension BoxAnamnesi on Det_UserViewState {
               Column(
                 children: List<Widget>.generate(anamnesi.length, (index) {
                   var element = anamnesi[index];
-                  return RadioButtonCustom(
-                    text: element.nome,
-                    select: element.value,
-                    enabled: widget.state == TypeState.read ? false : true,
-                    onChanged: (value) {
-                      setState(() {
-                        anamnesi[index].value = value;
-                      });
-                    },
+                  return Column(
+                    children: [
+                      RadioButtonCustom(
+                        text: element.nome,
+                        select: element.value,
+                        enabled: widget.state == TypeState.read ? false : true,
+                        onChanged: (value) {
+                          setState(() {
+                            anamnesi[index].value = value;
+                          });
+                        },
+                      ),
+                      if(anamnesi[index].value == true)
+                      TextFormField(
+                        initialValue: '',
+                        enabled: widget.state == TypeState.read ? false : true,
+                        maxLines: 2,
+                        decoration: TypeDecoration.labolBord.value(context, 'Se si, indicare quali:'),
+                        onChanged: (String value) {
+                          setState(() {
+                            anamnesi[index].other = value;
+                          });
+                        },
+                      ),
+                      Padding(padding: EdgeInsets.symmetric(vertical: 8.0))
+                    ],
                   );
               }),
               ),

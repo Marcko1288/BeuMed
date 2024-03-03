@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../View/Det_Event.dart';
+import '../View/Det_Event/Det_Event.dart';
 import '../View/Det_User/Det_User.dart';
 import '../View/HomeView.dart';
 import '../View/LoginView.dart';
@@ -18,10 +18,12 @@ class Master with ChangeNotifier {
   late BUT000 user; //Utente Loggato
   late List<BUT000> array_user; //Pazienti
   late List<EVENT> array_event; //Appuntamenti
+  late List<Anamnesi> array_anamnesi;
 
   Master.standard()
       : this.array_user = [],
         this.array_event = [],
+        this.array_anamnesi = [],
         this.selectionView = SelectionView.Login;
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -72,17 +74,7 @@ class Master with ChangeNotifier {
   }
 
   double childGrid(Size size) {
-    // MediaQuery.of(context).size.width /
-    //     (MediaQuery.of(context).size.height / 1.4),
-    // mainAxisSpacing: 10.0,
-    // crossAxisSpacing: 10.0,
     return size.width / (size.height / 3.4);
-
-    // if (size.width > 1000) {
-    //   return 8.5;
-    // } else {
-    //   return 4.5;
-    // }
   }
 
   ThemeData theme(Size size) {

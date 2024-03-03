@@ -144,8 +144,49 @@ class EVENT {
 
     // // array.add(
     // //     EVENT(uidBUT000: uid, data_inizio: DateTime.now().add(Duration(days: 3)), hour: SelectionHour.H9)
-    // // );
+    // // );{
 
     return array;
   }
+}
+
+class Hours{
+  late String nome;
+  late int number;
+
+  Hours({
+    required this.nome,
+    required this.number,
+  });
+}
+
+List<Hours> createHours(int minute){
+  List<Hours> array_output = [];
+
+  DateTime data_m_da = DateTime(1990, 01, 01, 09, 00, 00);
+  DateTime data_m_a = DateTime(1990, 01, 01, 13, 00, 01);
+
+  DateTime data_p_da = DateTime(1990, 01, 01, 14, 00, 01);
+  DateTime data_p_a = DateTime(1990, 01, 01, 19, 00, 00);
+
+  int dim =  (data_p_a.difference(data_m_da).inMinutes / minute).toInt() ;
+
+  for (var i = 1; i <= dim; i++){
+    var data_now = data_m_da.add(Duration(minutes: minute));
+    if (data_now.compareTo(data_m_a) <= 0 || data_p_da.compareTo(data_now) <= 0){
+      if (data_now.compareTo(data_p_a)<= 0){
+        var nome = '${data_m_da.hour.toString().padLeft(2, '0')}:${data_m_da.minute.toString().padLeft(2, '0')} '
+            '- '
+            '${data_now.hour.toString().padLeft(2, '0')}:${data_now.minute.toString().padLeft(2, '0')}';
+        array_output.add(Hours(nome: nome, number: i));
+      }
+    }
+    data_m_da = data_now;
+  }
+
+  array_output.forEach((element) {print('${element.nome}');});
+
+  array_output.sort((a,b) => a.number.compareTo(b.number));
+
+  return array_output;
 }

@@ -44,7 +44,7 @@ extension BoxContatti on Det_UserViewState {
             onStringChanged: (String value) {
               mobile_phone = value;
             },
-            listValidator: [TypeValidator.number]),
+            listValidator: [TypeValidator.required, TypeValidator.number]),
       ],
     );
   }
