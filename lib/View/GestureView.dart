@@ -96,12 +96,6 @@ class _GestureViewState extends State<GestureView> {
       print('Estrazione OK');
       master.selectionView = SelectionView.Home;
 
-      // createHours(20);
-      // print(' ');
-      // createHours(30);
-      // print(' ');
-      createHours(60);
-
       return true;
     } on FirebaseException catch (error) {
       print('${error.toString()}');
