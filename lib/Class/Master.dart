@@ -1,3 +1,4 @@
+import 'package:beumed/Class/Model/SETTING.dart';
 import 'package:flutter/material.dart';
 
 import '../View/Det_Event/Det_Event.dart';
@@ -19,11 +20,13 @@ class Master with ChangeNotifier {
   late List<BUT000> array_user; //Pazienti
   late List<EVENT> array_event; //Appuntamenti
   late List<Anamnesi> array_anamnesi;
+  late SETTING setting;
 
   Master.standard()
       : this.array_user = [],
         this.array_event = [],
         this.array_anamnesi = [],
+        this.setting = SETTING(),
         this.selectionView = SelectionView.Login;
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -61,8 +64,10 @@ class Master with ChangeNotifier {
   void logOut() {
     this.selectionView = SelectionView.Login;
     this.user = BUT000.standard();
+    this.setting = SETTING();
     this.array_user.clear();
     this.array_event.clear();
+    this.array_anamnesi.clear();
   }
 
   int crossGrid(Size size) {

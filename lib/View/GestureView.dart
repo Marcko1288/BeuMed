@@ -1,3 +1,4 @@
+import 'package:beumed/Class/Model/SETTING.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:form_builder_validators/localization/l10n.dart';
@@ -92,6 +93,8 @@ class _GestureViewState extends State<GestureView> {
           uidBUT000: '');
       master.array_user = BUT000.arrayElement(master.user.uid);
       master.array_event = EVENT.arrayElement(master.array_user[0].uid);
+      master.array_anamnesi = Anamnesi.defaultElement();
+      master.setting = SETTING();
 
       print('Estrazione OK');
       master.selectionView = SelectionView.Home;

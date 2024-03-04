@@ -2,6 +2,8 @@ import 'package:beumed/Library/Enum_TypeDate.dart';
 import 'package:beumed/Library/Enum_TypeFormatDate.dart';
 import 'package:beumed/Library/Extension_Date.dart';
 import 'package:beumed/Library/Extension_String.dart';
+import 'package:beumed/Library/Extension_Date.dart';
+import 'package:beumed/Class/Model/Enum_TypeDecoration.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,8 +19,10 @@ class DatePickerCustom extends StatefulWidget {
       required this.min_year,
       required this.max_year,
       bool? check_date,
+      this.text_labol = '',
       List<String>? array_nodate,
-      this.modify = true,
+      this.enable = true,
+      this.decoration = TypeDecoration.labolBord,
       required this.onDateTimeChanged})
       : this.array_nodate = array_nodate ?? [],
         this.check_date = check_date ?? true;
@@ -30,9 +34,11 @@ class DatePickerCustom extends StatefulWidget {
   int min_year;
   int max_year;
   bool check_date;
+  final String text_labol;
   List<String> array_nodate;
+  final TypeDecoration decoration;
 
-  bool modify;
+  bool enable;
 
   @override
   State<DatePickerCustom> createState() => _DatePickerCustomState();
@@ -117,26 +123,50 @@ class _DatePickerCustomState extends State<DatePickerCustom>
   Widget build(BuildContext context) {
     var master = Provider.of<Master>(context, listen: false);
     var size = MediaQuery.of(context).size;
+
     return Padding(
-      padding: const EdgeInsets.only(top: 10, bottom: 10),
-      child: OutlinedButton(
-        style: OutlinedButton.styleFrom(
-            side: BorderSide(color: master.theme(size).primaryColor),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20))),
-        onPressed: widget.modify
+      padding: const EdgeInsets.all(10.0),
+      child: InkWell(
+        onTap: widget.enable
             ? () {
                 _restorableDatePickerRouteFuture.present();
               }
             : null,
-        child: Container(
-          width: double.infinity,
-          alignment: Alignment.center,
-          child: Text(
-            "${_selectedDate.value.changeDateToString(type: TypeFormatDate.DD_MM_AAAA)}",
+        child: InputDecorator(
+          decoration: widget.decoration.value(context, widget.text_labol),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "${_selectedDate.value.changeDateToString(type: TypeFormatDate.DD_MM_AAAA)}",
+              ),
+              Icon(Icons.calendar_today),
+            ],
           ),
         ),
       ),
     );
+
+    // return Padding(
+    //   padding: const EdgeInsets.only(top: 10, bottom: 10),
+    //   child: OutlinedButton(
+    //     style: OutlinedButton.styleFrom(
+    //         side: BorderSide(color: master.theme(size).primaryColor),
+    //         shape: RoundedRectangleBorder(
+    //             borderRadius: BorderRadius.circular(20))),
+    //     onPressed: widget.modify
+    //         ? () {
+    //             _restorableDatePickerRouteFuture.present();
+    //           }
+    //         : null,
+    //     child: Container(
+    //       width: double.infinity,
+    //       alignment: Alignment.center,
+    //       child: Text(
+    //         "${_selectedDate.value.changeDateToString(type: TypeFormatDate.DD_MM_AAAA)}",
+    //       ),
+    //     ),
+    //   ),
+    // );
   }
 }
