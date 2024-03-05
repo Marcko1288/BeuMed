@@ -1,5 +1,5 @@
 import 'package:beumed/Library/Extension_Date.dart';
-import 'package:beumed/View/Det_Event/Det_Event.dart';
+import 'package:beumed/View/Det_Event/0.Det_Event.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

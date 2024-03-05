@@ -5,5 +5,5 @@ class SETTING {
 
   SETTING({
     int? hour,
-  }) : this.hour = hour ?? 30;
+  }) : this.hour = hour ?? 60;
 }

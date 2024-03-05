@@ -1,8 +1,8 @@
 import 'package:beumed/Class/Model/SETTING.dart';
 import 'package:flutter/material.dart';
 
-import '../View/Det_Event/Det_Event.dart';
-import '../View/Det_User/Det_User.dart';
+import '../View/Det_Event/0.Det_Event.dart';
+import '../View/Det_User/0.Det_User.dart';
 import '../View/HomeView.dart';
 import '../View/LoginView.dart';
 import '../View/NavLink.dart';
@@ -82,7 +82,7 @@ class Master with ChangeNotifier {
     if (size.width > 1000) {
       return size.width / (size.height / 3.4);
     } else {
-      return size.width / (size.height / 10.4);
+      return size.width / (size.height / 0.4);
     }
   }
 

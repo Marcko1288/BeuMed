@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../Class/Master.dart';
-import '../View/Det_Event/Det_Event.dart';
+import '../View/Det_Event/0.Det_Event.dart';
 
 class DatePickerCustom extends StatefulWidget {
   DatePickerCustom(

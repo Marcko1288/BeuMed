@@ -1,6 +1,6 @@
 import 'package:beumed/Class/Model/Enum_TypeDecoration.dart';
 import 'package:beumed/Model/TextFieldCustom.dart';
-import 'package:beumed/View/Det_Event/Det_Event.dart';
+import 'package:beumed/View/Det_Event/0.Det_Event.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,18 +13,13 @@ extension BoxNote on Det_EventViewState {
     var master = Provider.of<Master>(context, listen: false);
     var size = MediaQuery.of(context).size;
 
-    return Expanded(
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
       child: TextFormField(
         initialValue: note,
         enabled: widget.state == TypeState.read ? false : true,
         maxLines: 10,
         decoration: TypeDecoration.labolBord.value(context, 'Note'),
-        // InputDecoration(
-        //   labelText: "Note",
-        //   focusedBorder: defaultBorder(master.theme(size).primaryColor),
-        //   enabledBorder: defaultBorder(master.theme(size).primaryColor),
-        //   disabledBorder: defaultBorder(master.theme(size).primaryColor),
-        // ),
         onChanged: (String value) {
           setState(() {
             note = value;

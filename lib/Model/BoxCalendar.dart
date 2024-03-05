@@ -41,6 +41,13 @@ class _BoxCalendarState extends State<BoxCalendar> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          if(array_hour.isEmpty)
+                            Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: Text('Nessun Appuntamento',
+                                  style: master.theme(size).textTheme.titleMedium),
+                            ),
+                          if(array_hour.isNotEmpty)
                           for (var element in array_hour)
                             Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -52,7 +59,7 @@ class _BoxCalendarState extends State<BoxCalendar> {
                                   children: [
                                     ElevatedButton(
                                         onPressed: null,
-                                        child: Text('${element.value}'),
+                                        child: Text('${element.nome}'),
                                     ),
                                     Expanded(
                                         child: Padding(
@@ -87,18 +94,26 @@ class _BoxCalendarState extends State<BoxCalendar> {
                       ),
                     ),
                   )),
-              EtichettaCard(title: 'Agenda')
+              EtichettaCard(title: 'Agenda - ${DateTime.now().changeDateToString()}')
             ],
           )),
     );
   }
 
-  List<SelectionHour> array_SelectionHour() {
-    List<SelectionHour> array_output = [];
-    var now_hour = SelectionHour.hour(DateTime.now());
-    for (var element in SelectionHour.arrayElement()) {
-      if (element.number >= now_hour.number) array_output.add(element);
-    }
+  // List<SelectionHour> array_SelectionHour() {
+  //   List<SelectionHour> array_output = [];
+  //   var now_hour = SelectionHour.hour(DateTime.now());
+  //   for (var element in SelectionHour.arrayElement()) {
+  //     if (element.number >= now_hour.number) array_output.add(element);
+  //   }
+  //   return array_output;
+  // }
+
+  List<Hours> array_SelectionHour() {
+    var master = Provider.of<Master>(context, listen: false);
+    List<Hours> array_output = createHours(minute: master.setting.hour);
+    var now_hour = detHours(minute: master.setting.hour);
+    array_output.removeWhere((element) => element.number >= now_hour);
     return array_output;
   }
 }
@@ -106,7 +121,7 @@ class _BoxCalendarState extends State<BoxCalendar> {
 class RowCalendar extends StatefulWidget {
   RowCalendar({super.key, required this.hour});
 
-  late SelectionHour hour;
+  late Hours hour;
 
   @override
   State<RowCalendar> createState() => _RowCalendarState();
@@ -131,11 +146,11 @@ class _RowCalendarState extends State<RowCalendar> {
         onPressed: user.cf == '' ? () {routeAddEvent();} : () {routeSelectUser(user);},
         child: Column(
           children: [
-            if (user.cf != '') Text('${user.nome} ${user.cognome}'),
-            if (user.cf != '')
+            if (user.uid != '') Text('${user.nome} ${user.cognome}'),
+            if (user.uid != '')
               Text('${user.cf}',
                   style: master.theme(size).textTheme.displaySmall),
-            if (user.cf == '') Text('Crea Appuntamento'),
+            if (user.uid == '') Text('Crea Appuntamento'),
           ],
         ));
   }

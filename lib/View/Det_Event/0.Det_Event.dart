@@ -1,7 +1,7 @@
 import 'package:beumed/Class/Model/Enum_Hour.dart';
-import 'package:beumed/View/Det_Event/FireDet_Event.dart';
-import 'package:beumed/View/Det_Event/FunctionDet_Event.dart';
-import 'package:beumed/View/Det_Event/WidgetDet_Event.dart';
+import 'package:beumed/View/Det_Event/3.FireDet_Event.dart';
+import 'package:beumed/View/Det_Event/2.FunctionDet_Event.dart';
+import 'package:beumed/View/Det_Event/1.1.WidgetDet_Event.dart';
 import 'package:beumed/View/Det_Event/Box_SelectUser.dart';
 import 'package:beumed/View/Det_Event/Box_SelectData.dart';
 import 'package:beumed/View/Det_Event/Box_SelectHours.dart';
@@ -44,6 +44,7 @@ class Det_EventViewState extends State<Det_EventView> {
   @override
   Widget build(BuildContext context) {
     var master = Provider.of<Master>(context, listen: false);
+    var size_height = MediaQuery.of(context).size.height;
 
     return Scaffold(
       appBar: AppBar(
@@ -60,15 +61,20 @@ class Det_EventViewState extends State<Det_EventView> {
       ),
       body: Form(
         key: formKey,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              SelectUser(context),
-              SelectDataEvent(context),
-              SelectHour(context),
-              InsertNote(context),
-            ],
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                SelectUser(context),
+                SelectDataEvent(context),
+                SelectHour(context),
+                InsertNote(context),
+                Container(
+                  height: size_height * 0.1,
+                )
+              ],
+            ),
           ),
         ),
       ),

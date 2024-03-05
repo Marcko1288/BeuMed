@@ -1,6 +1,6 @@
 import 'package:beumed/Library/Extension_String.dart';
-import 'package:beumed/View/Det_User/Det_User.dart';
-import 'package:beumed/View/Det_User/FuctionDet_User.dart';
+import 'package:beumed/View/Det_User/0.Det_User.dart';
+import 'package:beumed/View/Det_User/2.FuctionDet_User.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

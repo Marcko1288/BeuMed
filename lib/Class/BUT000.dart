@@ -81,7 +81,7 @@ class BUT000 {
     this.cognome = '',
     this.cf = '',
     this.uidBUT000 = '',
-  });
+  }) : this.uid = '';
 
   //FROM JSON
   factory BUT000.fromJson(Map<String, dynamic> json) {

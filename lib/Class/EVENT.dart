@@ -29,7 +29,10 @@ class EVENT {
         this.data_ins = data_ins ?? DateTime.now(),
         this.data_modify = data_modify ?? DateTime.now();
 
-  EVENT.standard({this.uidBUT000 = ''});
+  EVENT.standard({
+    this.uidBUT000 = '',
+  }) : this.uid = '',
+        this.hours = [];
 
   //FROM JSON
   factory EVENT.fromJson(Map<String, dynamic> json) {
@@ -196,4 +199,28 @@ List<Hours> createHours({int minute = 30}) {
   array_output.sort((a, b) => a.number.compareTo(b.number));
 
   return array_output;
+}
+
+int detHours({int minute = 30}){
+  var now = DateTime.now();
+  var output = 0;
+  DateTime data_m_da = DateTime(1990, 01, 01, 09, 00, 00);
+  DateTime data_m_a = DateTime(1990, 01, 01, 13, 00, 01);
+
+  DateTime data_p_da = DateTime(1990, 01, 01, 14, 00, 01);
+  DateTime data_p_a = DateTime(1990, 01, 01, 19, 00, 00);
+
+  int dim = (data_p_a.difference(data_m_da).inMinutes / minute).toInt();
+  for (var i = 1; i <= dim; i++) {
+    var data_now = data_m_da.add(Duration(minutes: minute));
+    if (data_now.compareTo(data_m_a) <= 0 || data_p_da.compareTo(data_now) <= 0) {
+      if (data_now.compareTo(data_p_a) <= 0) {
+        if(now.compareTo(data_m_da) <=0  && data_m_da.compareTo(now) <= 0) {
+          output = i;
+          break;
+        }
+      }
+    }
+  }
+  return output;
 }

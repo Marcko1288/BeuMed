@@ -1,4 +1,5 @@
-import 'package:beumed/View/Det_Event/Det_Event.dart';
+import 'package:beumed/View/Det_Event/0.Det_Event.dart';
+import 'package:beumed/View/Det_Event/2.FunctionDet_Event.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,7 +24,7 @@ extension BoxSelectData on Det_EventViewState {
       onDateTimeChanged: (DateTime value) {
         setState(() {
           data_inizio = value;
-          //create_arrayHour(data_inizio);
+          creatTime(data_inizio);
         });
       },
     );

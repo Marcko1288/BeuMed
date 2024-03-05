@@ -1,6 +1,6 @@
 import 'package:beumed/Class/BUT000.dart';
 import 'package:beumed/Library/Extension_Date.dart';
-import 'package:beumed/View/Det_User/Det_User.dart';
+import 'package:beumed/View/Det_User/0.Det_User.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -50,12 +50,7 @@ extension BoxNote on Det_UserViewState {
                           initialValue: element.nota,
                           enabled: widget.state == TypeState.read ? false : true,
                           maxLines: length_note,
-                          decoration: InputDecoration(
-                            labelText: title,
-                            focusedBorder: defaultBorder(master.theme(size).primaryColor),
-                            enabledBorder: defaultBorder(master.theme(size).primaryColor),
-                            disabledBorder: defaultBorder(master.theme(size).primaryColor),
-                          ),
+                          decoration: TypeDecoration.labolBord.value(context, 'Note'),
                           onChanged: (String value) {
                             setState(() {
                               note[index].nota = value;

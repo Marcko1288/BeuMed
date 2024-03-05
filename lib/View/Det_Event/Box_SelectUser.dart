@@ -1,5 +1,6 @@
 import 'package:beumed/Class/Model/Enum_TypeDecoration.dart';
-import 'package:beumed/View/Det_Event/Det_Event.dart';
+import 'package:beumed/View/Det_Event/0.Det_Event.dart';
+import 'package:beumed/View/Det_Event/2.FunctionDet_Event.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:dropdown_search/dropdown_search.dart';
@@ -41,7 +42,7 @@ extension BoxSelectUser on Det_EventViewState {
           onChanged: (value) {
             setState(() {
               userSelected = value!;
-              //create_arrayHour(data_inizio);
+              creatTime(data_inizio);
             });
           },
           selectedItem: userSelected,

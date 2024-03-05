@@ -1,5 +1,5 @@
 import 'package:beumed/Class/BUT000.dart';
-import 'package:beumed/View/Det_User/Det_User.dart';
+import 'package:beumed/View/Det_User/0.Det_User.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

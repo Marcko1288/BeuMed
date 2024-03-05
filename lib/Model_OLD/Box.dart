@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 
 import '../Class/Master.dart';
 import '../Class/BUT000.dart';
-import 'EtichettaCard.dart';
-import 'RowDetail.dart';
+import '../Model/EtichettaCard.dart';
+import '../Model/RowDetail.dart';
 
 
 class Box extends StatefulWidget {
