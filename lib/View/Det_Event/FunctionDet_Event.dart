@@ -27,9 +27,11 @@ extension FuncDetEvent on Det_EventViewState {
     setState(() {
       var state = widget.state == TypeState.insert ? true : false;
 
-      userSelected = master.array_user.firstWhere(
-          (element) => element.uid == widget.event!.uidBUT000,
-          orElse: BUT000.standard);
+      userSelected = state
+          ? BUT000.standard()
+          : master.array_user.firstWhere(
+              (element) => element.uid == widget.event!.uidBUT000,
+              orElse: BUT000.standard);
       data_inizio = state ? detSelectionDate() : widget.event!.data_inizio;
       note = state ? '' : widget.event!.note;
       array_noDate = selectionNoDate();

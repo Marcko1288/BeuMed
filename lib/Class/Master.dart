@@ -79,7 +79,11 @@ class Master with ChangeNotifier {
   }
 
   double childGrid(Size size) {
-    return size.width / (size.height / 3.4);
+    if (size.width > 1000) {
+      return size.width / (size.height / 3.4);
+    } else {
+      return size.width / (size.height / 10.4);
+    }
   }
 
   ThemeData theme(Size size) {
