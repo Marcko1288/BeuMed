@@ -9,8 +9,8 @@ import 'package:beumed/View/Det_User/Box_Anamnesi.dart';
 import 'package:beumed/View/Det_User/Box_Indirizzo.dart';
 import 'package:beumed/View/Det_User/Box_Note.dart';
 import 'package:beumed/View/Det_User/FireDet_User.dart';
-import 'package:beumed/View/Det_User/FuctionDetUser.dart';
-import 'package:beumed/View/Det_User/WidgetDetUser.dart';
+import 'package:beumed/View/Det_User/FuctionDet_User.dart';
+import 'package:beumed/View/Det_User/WidgetDet_User.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -113,5 +113,3 @@ class Det_UserViewState extends State<Det_UserView> {
     );
   }
 }
-
-

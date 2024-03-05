@@ -1,6 +1,6 @@
 import 'package:beumed/Library/Extension_String.dart';
 import 'package:beumed/View/Det_User/Det_User.dart';
-import 'package:beumed/View/Det_User/FuctionDetUser.dart';
+import 'package:beumed/View/Det_User/FuctionDet_User.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +26,7 @@ extension FireDetUser on Det_UserViewState {
     }
 
     var result_anamnesi = anamnesi.where((element) => element.value == null);
-    if (result_anamnesi.isNotEmpty){
+    if (result_anamnesi.isNotEmpty) {
       insert == false;
       setState(() {
         master.gestion_Message('Completare l Anamnesi');
@@ -36,24 +36,24 @@ extension FireDetUser on Det_UserViewState {
 
     if (insert == true) {
       var user = BUT000(
-          mail: mail,
-          nome: nome,
-          cognome: cognome,
-          uidBUT000: master.user.uid,
-          cf: cf,
-          piva: piva,
-          profilo: profilo,
-          birthday: birthday,
-          local_birthday: local_birthday,
-          phone: phone.changeStringToInt(),
-          mobile_phone: mobile_phone.changeStringToInt(),
-          stato_civile: stato_civile,
-          indirizzo: indirizzo,
-          cap: cap.changeStringToInt(),
-          citta: citta,
-          provincia: provincia,
-          array_anamnesi: anamnesi,
-          array_note: note,
+        mail: mail,
+        nome: nome,
+        cognome: cognome,
+        uidBUT000: master.user.uid,
+        cf: cf,
+        piva: piva,
+        profilo: profilo,
+        birthday: birthday,
+        local_birthday: local_birthday,
+        phone: phone.changeStringToInt(),
+        mobile_phone: mobile_phone.changeStringToInt(),
+        stato_civile: stato_civile,
+        indirizzo: indirizzo,
+        cap: cap.changeStringToInt(),
+        citta: citta,
+        provincia: provincia,
+        array_anamnesi: anamnesi,
+        array_note: note,
       );
 
       try {

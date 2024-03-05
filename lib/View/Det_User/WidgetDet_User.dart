@@ -1,5 +1,5 @@
 import 'package:beumed/View/Det_User/Det_User.dart';
-import 'package:beumed/View/Det_User/FuctionDetUser.dart';
+import 'package:beumed/View/Det_User/FuctionDet_User.dart';
 import 'package:flutter/material.dart';
 
 import '../../Class/Model/Enum_TypeState.dart';

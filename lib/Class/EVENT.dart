@@ -10,7 +10,8 @@ class EVENT {
   late String uid;
   late String uidBUT000;
   late DateTime data_inizio;
-  late List<SelectionHour> hours;
+  //late List<SelectionHour> hours;
+  late List<Hours> hours;
   late String note;
   late DateTime data_ins;
   late DateTime data_modify;
@@ -71,7 +72,7 @@ class EVENT {
   //Stampa Elementi
   String printLine() {
     String hour = '';
-    for (var element in this.hours) hour = hour + element.value + ', ';
+    for (var element in this.hours) hour = hour + element.nome + ', ';
     return '${this.uid};'
         '${this.uidBUT000};'
         '${this.data_inizio.changeDateToString()};'
@@ -105,27 +106,31 @@ class EVENT {
     array.add(EVENT(
         uidBUT000: uid,
         data_inizio: DateTime.now(),
-        hours: [SelectionHour.H1]));
+        hours: [Hours(nome: '09:00 - 09:30', number: 1)]));
 
     array.add(EVENT(
         uidBUT000: uid,
         data_inizio: DateTime.now().add(Duration(days: 1)),
-        hours: [SelectionHour.H1, SelectionHour.H2, SelectionHour.H3]));
+        hours: [
+          Hours(nome: '09:00 - 09:30', number: 1),
+          Hours(nome: '09:30 - 10:00', number: 2),
+          Hours(nome: '10:00 - 10:30', number: 3)
+        ]));
 
     array.add(EVENT(
         uidBUT000: uid,
         data_inizio: DateTime.now().add(Duration(days: 2)),
-        hours: [SelectionHour.H5]));
+        hours: [Hours(nome: '11:00 - 11:30', number: 5)]));
 
     array.add(EVENT(
         uidBUT000: uid,
         data_inizio: DateTime.now().add(Duration(days: 5)),
-        hours: [SelectionHour.H3]));
+        hours: [Hours(nome: '10:00 - 10:30', number: 3)]));
 
     array.add(EVENT(
         uidBUT000: uid,
         data_inizio: DateTime.now().add(Duration(days: 10)),
-        hours: [SelectionHour.H3]));
+        hours: [Hours(nome: '10:00 - 10:30', number: 3)]));
     // array.add(
     //     EVENT(uidBUT000: uid, data_inizio: DateTime.now().add(Duration(days: 3)), hour: SelectionHour.H4)
     // );
@@ -150,17 +155,19 @@ class EVENT {
   }
 }
 
-class Hours{
+class Hours {
   late String nome;
   late int number;
+  late String uidEVENT;
 
   Hours({
     required this.nome,
     required this.number,
-  });
+    String? uidEVENT,
+  }) : this.uidEVENT = uidEVENT ?? '';
 }
 
-List<Hours> createHours(int minute){
+List<Hours> createHours({int minute = 30}) {
   List<Hours> array_output = [];
 
   DateTime data_m_da = DateTime(1990, 01, 01, 09, 00, 00);
@@ -169,13 +176,15 @@ List<Hours> createHours(int minute){
   DateTime data_p_da = DateTime(1990, 01, 01, 14, 00, 01);
   DateTime data_p_a = DateTime(1990, 01, 01, 19, 00, 00);
 
-  int dim =  (data_p_a.difference(data_m_da).inMinutes / minute).toInt() ;
+  int dim = (data_p_a.difference(data_m_da).inMinutes / minute).toInt();
 
-  for (var i = 1; i <= dim; i++){
+  for (var i = 1; i <= dim; i++) {
     var data_now = data_m_da.add(Duration(minutes: minute));
-    if (data_now.compareTo(data_m_a) <= 0 || data_p_da.compareTo(data_now) <= 0){
-      if (data_now.compareTo(data_p_a)<= 0){
-        var nome = '${data_m_da.hour.toString().padLeft(2, '0')}:${data_m_da.minute.toString().padLeft(2, '0')} '
+    if (data_now.compareTo(data_m_a) <= 0 ||
+        data_p_da.compareTo(data_now) <= 0) {
+      if (data_now.compareTo(data_p_a) <= 0) {
+        var nome =
+            '${data_m_da.hour.toString().padLeft(2, '0')}:${data_m_da.minute.toString().padLeft(2, '0')} '
             '- '
             '${data_now.hour.toString().padLeft(2, '0')}:${data_now.minute.toString().padLeft(2, '0')}';
         array_output.add(Hours(nome: nome, number: i));
@@ -184,9 +193,7 @@ List<Hours> createHours(int minute){
     data_m_da = data_now;
   }
 
-  array_output.forEach((element) {print('${element.nome}');});
-
-  array_output.sort((a,b) => a.number.compareTo(b.number));
+  array_output.sort((a, b) => a.number.compareTo(b.number));
 
   return array_output;
 }
