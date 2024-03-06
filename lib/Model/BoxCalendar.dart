@@ -126,11 +126,16 @@ class _BoxCalendarState extends State<BoxCalendar> {
     });
     print('array_event_app: ${array_event_app.length}');
     print('array_hour_app: ${array_hour_app.length}');
+    array_hour_app.forEach((element) {
+      print('${element.nome} - ${element.uidEVENT} ');
+    });
+
     array_output.forEach((element) {
+      print('${element.nome} - ${element.number} - ${element.uidEVENT} ');
       var hour = array_hour_app.firstWhere(
           (ele) => ele.number == element.number,
           orElse: () => Hours(nome: '', number: 0));
-      print('hour: ${hour.uidEVENT}');
+      print('hour:  ${hour.nome} - ${hour.uidEVENT}');
       element.uidEVENT = hour.uidEVENT;
     });
 
@@ -156,6 +161,7 @@ class _RowCalendarState extends State<RowCalendar> {
     var event = master.array_event.firstWhere(
         (element) => element.uid == widget.hour.uidEVENT,
         orElse: EVENT.standard);
+    print('widget.hour: ${widget.hour.uidEVENT}');
     var user = master.array_user.firstWhere(
         (element) => element.uid == event.uidBUT000,
         orElse: BUT000.standard);
