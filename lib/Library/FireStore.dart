@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import 'Enum_TypeQuery.dart';
+
 //import 'Firestore.dart';
 
 //Installare il package: flutter pub add firebase_core
@@ -45,7 +47,7 @@ class FireStore {
 
   Future<List<Map<String, dynamic>>> queryFireStore(
       {required CollectionReference patch,
-      TypeQuery type = TypeQuery.NL,
+      TypeQuery type = TypeQuery.NE,
       String campo = '',
       String value = ''}) async {
     List<Map<String, dynamic>> map = [];
@@ -64,31 +66,24 @@ class FireStore {
 
   Query patchQuery(
       {required CollectionReference patch,
-      TypeQuery type = TypeQuery.NL,
+      TypeQuery type = TypeQuery.NE,
       String campo = '',
       String value = ''}) {
     switch (type) {
       case TypeQuery.EQ:
         return patch.where(campo, isEqualTo: value);
-      case TypeQuery.MI:
+      case TypeQuery.LT:
         return patch.where(campo, isLessThan: value);
-      case TypeQuery.MIU:
+      case TypeQuery.LE:
         return patch.where(campo, isLessThanOrEqualTo: value);
-      case TypeQuery.MA:
+      case TypeQuery.GT:
         return patch.where(campo, isGreaterThan: value);
-      case TypeQuery.MAU:
+      case TypeQuery.GE:
         return patch.where(campo, isGreaterThanOrEqualTo: value);
-      case TypeQuery.NL:
+      case TypeQuery.NE:
         return patch;
     }
   }
 }
 
-enum TypeQuery {
-  EQ,
-  MI,
-  MIU,
-  MA,
-  MAU,
-  NL,
-}
+

@@ -79,8 +79,9 @@ class Master with ChangeNotifier {
   }
 
   double childGrid(Size size) {
+    print('size.width: ${size.width}');
     if (size.width > 1000) {
-      return size.width / (size.height / 6.4);
+      return size.width / (size.height / 4.4);
     } else {
       return size.width / (size.height / 8.4);
     }

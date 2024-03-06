@@ -1,4 +1,5 @@
 import 'package:beumed/Class/Model/Enum_Hour.dart';
+import 'package:beumed/Library/Enum_TypeQuery.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:beumed/Library/Extension_Date.dart';
@@ -113,33 +114,60 @@ class _BoxCalendarState extends State<BoxCalendar> {
 
   List<Hours> array_SelectionHour() {
     var master = Provider.of<Master>(context, listen: false);
-    List<Hours> array_output = createHours(minute: master.setting.hour);
+
+    //Creo L'agenda
+    List<Hours> array_hours = createHours(minute: master.setting.hour);
+
+    //Determino in quale slot sono ora
     var now_hour = detHours(minute: master.setting.hour);
-    array_output.removeWhere((element) => element.number <= now_hour);
 
-    var array_event_app = master.array_event.where((element) =>
-        element.data_inizio.changeDateToString() ==
-        DateTime.now().changeDateToString());
-    List<Hours> array_hour_app = [];
-    array_event_app.forEach((element) {
-      array_hour_app.addAll(element.hours);
-    });
-    print('array_event_app: ${array_event_app.length}');
-    print('array_hour_app: ${array_hour_app.length}');
-    array_hour_app.forEach((element) {
-      print('${element.nome} - ${element.uidEVENT} ');
-    });
+    //Estraggo tutti gli eventi di oggi
+    var array_event = master.array_event.where((element) => element.data_inizio.compare(DateTime.now(), TypeQuery.EQ));
 
-    array_output.forEach((element) {
-      print('${element.nome} - ${element.number} - ${element.uidEVENT} ');
-      var hour = array_hour_app.firstWhere(
-          (ele) => ele.number == element.number,
-          orElse: () => Hours(nome: '', number: 0));
-      print('hour:  ${hour.nome} - ${hour.uidEVENT}');
-      element.uidEVENT = hour.uidEVENT;
+    //Mi estraggo tutte le ore già fissate
+    List<Hours> array_event_hours = [];
+    array_event.forEach((element) {array_event_hours.addAll(element.hours);});
+
+    //Associo lo slot con l'evento, se c'è
+    array_hours.forEach((element) {
+      var uidEVENT = array_event_hours.firstWhere((hour) => hour.number == element.number, orElse: Hours.standard).uidEVENT;
+      element.uidEVENT = uidEVENT;
     });
 
-    return array_output;
+    array_hours.removeWhere((element) => element.number <= now_hour);
+
+    array_hours.forEach((element) {print('array_hours: ${}'); });
+
+
+    return array_hours;
+
+
+    // var now_hour = detHours(minute: master.setting.hour);
+    // array_output.removeWhere((element) => element.number <= now_hour);
+    //
+    // var array_event_app = master.array_event.where((element) =>
+    //     element.data_inizio.changeDateToString() ==
+    //     DateTime.now().changeDateToString());
+    // List<Hours> array_hour_app = [];
+    // array_event_app.forEach((element) {
+    //   array_hour_app.addAll(element.hours);
+    // });
+    // print('array_event_app: ${array_event_app.length}');
+    // print('array_hour_app: ${array_hour_app.length}');
+    // array_hour_app.forEach((element) {
+    //   print('${element.nome} - ${element.uidEVENT} ');
+    // });
+    //
+    // array_output.forEach((element) {
+    //   print('${element.nome} - ${element.number} - ${element.uidEVENT} ');
+    //   var hour = array_hour_app.firstWhere(
+    //       (ele) => ele.number == element.number,
+    //       orElse: () => Hours(nome: '', number: 0));
+    //   print('hour:  ${hour.nome} - ${hour.uidEVENT}');
+    //   element.uidEVENT = hour.uidEVENT;
+    // });
+
+    //return array_output;
   }
 }
 
@@ -161,12 +189,9 @@ class _RowCalendarState extends State<RowCalendar> {
     var event = master.array_event.firstWhere(
         (element) => element.uid == widget.hour.uidEVENT,
         orElse: EVENT.standard);
-    print('widget.hour: ${widget.hour.uidEVENT}');
     var user = master.array_user.firstWhere(
         (element) => element.uid == event.uidBUT000,
         orElse: BUT000.standard);
-
-    print('event: ${event.uid}');
 
     return ElevatedButton(
         onPressed: user.cf == ''

@@ -1,4 +1,5 @@
 import 'package:beumed/Class/Model/Enum_Hour.dart';
+import 'package:beumed/Library/Enum_TypeQuery.dart';
 import 'package:beumed/Library/Extension_Date.dart';
 import 'package:beumed/Library/Extension_String.dart';
 import 'package:flutter/material.dart';
@@ -173,6 +174,11 @@ class Hours {
     required this.number,
     String? uidEVENT,
   }) : this.uidEVENT = uidEVENT ?? '';
+
+  Hours.standard()
+      : this.nome = '',
+        this.number = 0,
+        this.uidEVENT = '';
 }
 
 List<Hours> createHours({int minute = 30}) {
@@ -188,9 +194,9 @@ List<Hours> createHours({int minute = 30}) {
 
   for (var i = 1; i <= dim; i++) {
     var data_now = data_m_da.add(Duration(minutes: minute));
-    if (data_now.compareTo(data_m_a) <= 0 ||
-        data_p_da.compareTo(data_now) <= 0) {
-      if (data_now.compareTo(data_p_a) <= 0) {
+    if (data_now.compareTo(data_m_a) <= 0 ||            //data_now <= data_m_a
+        data_p_da.compareTo(data_now) <= 0) {           //data_p_da <= data_now
+      if (data_now.compareTo(data_p_a) <= 0) {          //data_now <= data_p_a
         var nome =
             '${data_m_da.hour.toString().padLeft(2, '0')}:${data_m_da.minute.toString().padLeft(2, '0')} '
             '- '
@@ -216,16 +222,17 @@ int detHours({int minute = 30}) {
   DateTime data_p_a = DateTime(now.year, now.month, now.day, 19, 00, 00);
 
   int dim = (data_p_a.difference(data_m_da).inMinutes / minute).toInt();
-  for (var i = 0; i <= dim; i++) {
+  for (var i = 1; i <= dim; i++) {
     var data_now = data_m_da.add(Duration(minutes: i * minute));
-    if ((data_now.compareTo(data_m_a) >= 0 ||
-            data_p_da.compareTo(data_now) <= 0) &&
-        data_now.compareTo(data_p_a) <= 0 &&
-        now.compareTo(data_now) >= 0 &&
-        now.compareTo(data_p_a) <= 0) {
-      output = i + 1;
-      break;
+    if(data_now.compare(data_p_da, TypeQuery.GE) || data_now.compare(data_m_a, TypeQuery.LE)){
+      if(data_now.compare(data_p_a, TypeQuery.LE)) {
+        if(now.compare(data_m_da, TypeQuery.GE) && now.compare(data_now, TypeQuery.LE)){
+          output = i;
+          break;
+        }
+      }
     }
+    data_m_da = data_now;
   }
   return output;
 }

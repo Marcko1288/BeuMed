@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 
 import 'Enum_TypeDate.dart';
 import 'Enum_TypeFormatDate.dart';
+import 'Enum_TypeQuery.dart';
 
 
 extension ExtDate on DateTime {
@@ -39,6 +40,28 @@ extension ExtDate on DateTime {
 
   DateTime endMonth(){
     return DateTime(year, month + 1, 0);
+  }
+
+  bool compare(DateTime data, TypeQuery type){
+    bool output = false;
+    switch (type){
+      case TypeQuery.EQ:
+        if(this.changeDateToString() == data.changeDateToString()) output = true;
+        //if(this.compareTo(data) == 0) output = true;
+      case TypeQuery.LT:
+        if(this.compareTo(data) < 0) output = true;
+      case TypeQuery.LE:
+        if(this.compareTo(data) <= 0) output = true;
+      case TypeQuery.GT:
+        if(this.compareTo(data) > 0) output = true;
+      case TypeQuery.GE:
+        if(this.compareTo(data) >= 0) output = true;
+      case TypeQuery.NE:
+        if(this.changeDateToString() != data.changeDateToString()) output = true;
+        //if(this.compareTo(data) != 0) output = true;
+    }
+
+    return output;
   }
 }
 
