@@ -29,9 +29,9 @@ class EVENT {
         this.data_ins = data_ins ?? DateTime.now(),
         this.data_modify = data_modify ?? DateTime.now();
 
-  EVENT.standard({
-    this.uidBUT000 = '',
-  })  : this.uid = '',
+  EVENT.standard()
+      : this.uidBUT000 = '',
+        this.uid = '',
         this.hours = [];
 
   //FROM JSON
@@ -110,6 +110,11 @@ class EVENT {
         uidBUT000: uid,
         data_inizio: DateTime.now(),
         hours: [Hours(nome: '09:00 - 09:30', number: 1)]));
+
+    array.add(EVENT(
+        uidBUT000: uid,
+        data_inizio: DateTime.now(),
+        hours: [Hours(nome: '17:00 - 18:00', number: 5)]));
 
     array.add(EVENT(
         uidBUT000: uid,
@@ -207,23 +212,20 @@ int detHours({int minute = 30}) {
   DateTime data_m_da = DateTime(now.year, now.month, now.day, 09, 00, 00);
   DateTime data_m_a = DateTime(now.year, now.month, now.day, 13, 00, 01);
 
-  DateTime data_p_da = DateTime(now.year, now.month, now.day, 14, 00, 01);
+  DateTime data_p_da = DateTime(now.year, now.month, now.day, 14, 00, 00);
   DateTime data_p_a = DateTime(now.year, now.month, now.day, 19, 00, 00);
 
   int dim = (data_p_a.difference(data_m_da).inMinutes / minute).toInt();
-  for (var i = 1; i <= dim; i++) {
-    var data_now = data_m_da.add(Duration(minutes: minute));
-    if (data_now.compareTo(data_m_a) <= 0 ||
-        data_p_da.compareTo(data_now) <= 0) {
-      if (data_now.compareTo(data_p_a) <= 0) {
-        print('data_now: ${data_now}, data_p_a: {data_p_a}, now: ${now}');
-        if (now.compareTo(data_m_da) <= 0 && data_m_da.compareTo(now) <= 0) {
-          output = i;
-          break;
-        }
-      }
+  for (var i = 0; i <= dim; i++) {
+    var data_now = data_m_da.add(Duration(minutes: i * minute));
+    if ((data_now.compareTo(data_m_a) >= 0 ||
+            data_p_da.compareTo(data_now) <= 0) &&
+        data_now.compareTo(data_p_a) <= 0 &&
+        now.compareTo(data_now) >= 0 &&
+        now.compareTo(data_p_a) <= 0) {
+      output = i + 1;
+      break;
     }
-    data_m_da = data_now;
   }
   return output;
 }

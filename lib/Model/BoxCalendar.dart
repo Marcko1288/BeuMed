@@ -115,9 +115,25 @@ class _BoxCalendarState extends State<BoxCalendar> {
     var master = Provider.of<Master>(context, listen: false);
     List<Hours> array_output = createHours(minute: master.setting.hour);
     var now_hour = detHours(minute: master.setting.hour);
-    print('PRE now_hour: ${now_hour}, array_output: ${array_output.length}');
     array_output.removeWhere((element) => element.number <= now_hour);
-    print('PRE now_hour: ${now_hour}, array_output: ${array_output.length}');
+
+    var array_event_app = master.array_event.where((element) =>
+        element.data_inizio.changeDateToString() ==
+        DateTime.now().changeDateToString());
+    List<Hours> array_hour_app = [];
+    array_event_app.forEach((element) {
+      array_hour_app.addAll(element.hours);
+    });
+    print('array_event_app: ${array_event_app.length}');
+    print('array_hour_app: ${array_hour_app.length}');
+    array_output.forEach((element) {
+      var hour = array_hour_app.firstWhere(
+          (ele) => ele.number == element.number,
+          orElse: () => Hours(nome: '', number: 0));
+      print('hour: ${hour.uidEVENT}');
+      element.uidEVENT = hour.uidEVENT;
+    });
+
     return array_output;
   }
 }
@@ -138,13 +154,13 @@ class _RowCalendarState extends State<RowCalendar> {
     var size = MediaQuery.of(context).size;
 
     var event = master.array_event.firstWhere(
-        (element) =>
-            element.data_inizio.changeDateToString() ==
-            DateTime.now().changeDateToString(),
+        (element) => element.uid == widget.hour.uidEVENT,
         orElse: EVENT.standard);
     var user = master.array_user.firstWhere(
         (element) => element.uid == event.uidBUT000,
         orElse: BUT000.standard);
+
+    print('event: ${event.uid}');
 
     return ElevatedButton(
         onPressed: user.cf == ''
