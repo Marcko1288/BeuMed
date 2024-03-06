@@ -41,42 +41,43 @@ class _BoxCalendarState extends State<BoxCalendar> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          if(array_hour.isEmpty)
+                          if (array_hour.isEmpty)
                             Padding(
                               padding: const EdgeInsets.all(15.0),
                               child: Text('Nessun Appuntamento',
-                                  style: master.theme(size).textTheme.titleMedium),
+                                  style:
+                                      master.theme(size).textTheme.titleMedium),
                             ),
-                          if(array_hour.isNotEmpty)
-                          for (var element in array_hour)
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                padding: EdgeInsets.all(10),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    ElevatedButton(
+                          if (array_hour.isNotEmpty)
+                            for (var element in array_hour)
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  padding: EdgeInsets.all(10),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      ElevatedButton(
                                         onPressed: null,
                                         child: Text('${element.nome}'),
-                                    ),
-                                    Expanded(
-                                        child: Padding(
-                                      padding:
-                                          EdgeInsets.only(left: 50, right: 10),
-                                      child: RowCalendar(hour: element),
-                                    )),
-                                  ],
-                                ),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  border: Border.all(
-                                      color: master.theme(size).primaryColor),
-                                  borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      Expanded(
+                                          child: Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 50, right: 10),
+                                        child: RowCalendar(hour: element),
+                                      )),
+                                    ],
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    border: Border.all(
+                                        color: master.theme(size).primaryColor),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
                                 ),
                               ),
-                            ),
                           Container(
                             width: size.width * 0.5,
                             child: ElevatedButton(
@@ -94,7 +95,8 @@ class _BoxCalendarState extends State<BoxCalendar> {
                       ),
                     ),
                   )),
-              EtichettaCard(title: 'Agenda - ${DateTime.now().changeDateToString()}')
+              EtichettaCard(
+                  title: 'Agenda - ${DateTime.now().changeDateToString()}')
             ],
           )),
     );
@@ -113,7 +115,9 @@ class _BoxCalendarState extends State<BoxCalendar> {
     var master = Provider.of<Master>(context, listen: false);
     List<Hours> array_output = createHours(minute: master.setting.hour);
     var now_hour = detHours(minute: master.setting.hour);
-    array_output.removeWhere((element) => element.number >= now_hour);
+    print('PRE now_hour: ${now_hour}, array_output: ${array_output.length}');
+    array_output.removeWhere((element) => element.number <= now_hour);
+    print('PRE now_hour: ${now_hour}, array_output: ${array_output.length}');
     return array_output;
   }
 }
@@ -143,7 +147,13 @@ class _RowCalendarState extends State<RowCalendar> {
         orElse: BUT000.standard);
 
     return ElevatedButton(
-        onPressed: user.cf == '' ? () {routeAddEvent();} : () {routeSelectUser(user);},
+        onPressed: user.cf == ''
+            ? () {
+                routeAddEvent();
+              }
+            : () {
+                routeSelectUser(user);
+              },
         child: Column(
           children: [
             if (user.uid != '') Text('${user.nome} ${user.cognome}'),
@@ -157,22 +167,13 @@ class _RowCalendarState extends State<RowCalendar> {
 
   void routeAddEvent() {
     setState(() {
-      Navigator.pushNamed(
-          context,
-          SelectionView.Event.route,
-          arguments: RouteElement(SelectionView.Event.value, null)
-      );
+      Navigator.pushNamed(context, SelectionView.Event.route,
+          arguments: RouteElement(SelectionView.Event.value, null));
     });
   }
 
-  void routeSelectUser(BUT000 element){
-    Navigator.pushNamed(
-        context,
-        SelectionView.User.route,
-        arguments: RouteElement(
-            SelectionView.User.value,
-            element
-        )
-    );
+  void routeSelectUser(BUT000 element) {
+    Navigator.pushNamed(context, SelectionView.User.route,
+        arguments: RouteElement(SelectionView.User.value, element));
   }
 }
