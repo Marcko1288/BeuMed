@@ -1,18 +1,18 @@
-import 'package:beumed/View/Det_Event/0.Det_Event.dart';
-import 'package:beumed/View/Det_Event/2.FunctionDet_Event.dart';
+import 'package:beumed/View/Det_User/0.Det_User.dart';
+import 'package:beumed/View/Det_User/2.Fuction_Det_User.dart';
 import 'package:flutter/material.dart';
 
 import '../../Class/Model/Enum_TypeState.dart';
 
-extension WidgetDetEvent on Det_EventViewState {
+extension WidgetDetUser on Det_UserViewState {
   Widget Title_AppBar(BuildContext context) {
     switch (widget.state) {
       case TypeState.read:
-        return Text("Appuntamento");
+        return Text("Paziente");
       case TypeState.insert:
-        return Text("Nuovo Appuntamento");
+        return Text("Nuovo Paziente");
       case TypeState.modify:
-        return Text("Modifica Appuntamento");
+        return Text("Modifica Paziente");
     }
   }
 

@@ -1,6 +1,6 @@
 import 'package:beumed/Class/BUT000.dart';
 import 'package:beumed/View/Det_User/0.Det_User.dart';
-import 'package:beumed/View/Det_User/3.FireDet_User.dart';
+import 'package:beumed/View/Det_User/3.Fire_Det_User.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -110,7 +110,6 @@ extension FuncDetUser on Det_UserViewState {
   Future<void> actionElement() async {
     var master = Provider.of<Master>(context, listen: false);
 
-    print('widget.state: ${widget.state}');
     if (formKey.currentState!.validate()) {
       if (widget.state == TypeState.read) {
         setState(() {

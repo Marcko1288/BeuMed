@@ -32,7 +32,7 @@ extension ExtSelectionView on SelectionView {
         return 'Appuntamento';
 
       case SelectionView.History:
-        return 'Storico';
+        return 'Agenda';
 
       default:
         return '';

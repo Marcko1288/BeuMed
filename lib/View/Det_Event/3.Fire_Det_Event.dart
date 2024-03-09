@@ -1,5 +1,5 @@
 import 'package:beumed/View/Det_Event/0.Det_Event.dart';
-import 'package:beumed/View/Det_Event/2.FunctionDet_Event.dart';
+import 'package:beumed/View/Det_Event/2.Function_Det_Event.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +21,8 @@ extension FireDetEvent on Det_EventViewState {
           data_inizio: data_inizio,
           hours: isTimeSelection,
           note: note);
+
+      event.hours.forEach((element) {element.uidEVENT = event.uid;});
 
       try {
         var dirDB = FireStore()
@@ -56,6 +58,7 @@ extension FireDetEvent on Det_EventViewState {
         .indexWhere((element) => element.uid == widget.event!.uid);
     master.array_event[index].data_inizio = data_inizio;
     master.array_event[index].hours = isTimeSelection;
+    master.array_event[index].hours.forEach((element) {element.uidEVENT = master.array_event[index].uid;});
     master.array_event[index].note = note;
 
     try {

@@ -8,21 +8,16 @@ import 'package:beumed/View/Det_User/1.4.BoxContatti.dart';
 import 'package:beumed/View/Det_User/1.5.Box_Anamnesi.dart';
 import 'package:beumed/View/Det_User/1.3.Box_Indirizzo.dart';
 import 'package:beumed/View/Det_User/1.6.Box_Note.dart';
-import 'package:beumed/View/Det_User/3.FireDet_User.dart';
-import 'package:beumed/View/Det_User/2.FuctionDet_User.dart';
-import 'package:beumed/View/Det_User/1.1.WidgetDet_User.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:beumed/View/Det_User/3.Fire_Det_User.dart';
+import 'package:beumed/View/Det_User/2.Fuction_Det_User.dart';
+import 'package:beumed/View/Det_User/1.1.Widget_Det_User.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:beumed/Class/Master.dart';
 import 'package:beumed/Class/Model/Enum_TypeState.dart';
 import 'package:beumed/Class/BUT000.dart';
-import 'package:beumed/Library/FireAuth.dart';
-import 'package:beumed/Library/FireStore.dart';
-import 'package:beumed/Model/TextFieldCustom.dart';
-import '../../Library/Enum_TypeFormatDate.dart';
-import '../Det_User/1.2.Block_Anagrafico.dart';
+import '../Det_User/1.2.Box_Anagrafico.dart';
 
 class Det_UserView extends StatefulWidget {
   Det_UserView({super.key, this.state = TypeState.read, this.user});
@@ -74,8 +69,7 @@ class Det_UserViewState extends State<Det_UserView> {
   @override
   Widget build(BuildContext context) {
     var master = Provider.of<Master>(context, listen: false);
-    var size_width = MediaQuery.of(context).size.width;
-    var size_height = MediaQuery.of(context).size.height;
+    var size = MediaQuery.of(context).size;
 
     return Scaffold(
       appBar: AppBar(
@@ -103,7 +97,7 @@ class Det_UserViewState extends State<Det_UserView> {
                   TextAnamnesia(context),
                   TextNote(context),
                   Container(
-                    height: size_height * 0.1,
+                    height: size.height * 0.1,
                   )
                 ],
               )),

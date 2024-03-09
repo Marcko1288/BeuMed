@@ -1,11 +1,11 @@
 import 'package:beumed/Class/Model/Enum_Hour.dart';
-import 'package:beumed/View/Det_Event/3.FireDet_Event.dart';
-import 'package:beumed/View/Det_Event/2.FunctionDet_Event.dart';
-import 'package:beumed/View/Det_Event/1.1.WidgetDet_Event.dart';
-import 'package:beumed/View/Det_Event/Box_SelectUser.dart';
-import 'package:beumed/View/Det_Event/Box_SelectData.dart';
-import 'package:beumed/View/Det_Event/Box_SelectHours.dart';
-import 'package:beumed/View/Det_Event/Box_Note.dart';
+import 'package:beumed/View/Det_Event/3.Fire_Det_Event.dart';
+import 'package:beumed/View/Det_Event/2.Function_Det_Event.dart';
+import 'package:beumed/View/Det_Event/1.1.Widget_Det_Event.dart';
+import 'package:beumed/View/Det_Event/1.2.Box_SelectUser.dart';
+import 'package:beumed/View/Det_Event/1.3.Box_SelectData.dart';
+import 'package:beumed/View/Det_Event/1.4.Box_SelectHours.dart';
+import 'package:beumed/View/Det_Event/1.5.Box_Note.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

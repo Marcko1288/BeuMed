@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../Class/Master.dart';
 import '../Class/Model/Enum_SelectionView.dart';
-import '../View/HomeView.dart';
+import '../View/HomeView/0.HomeView.dart';
 
 class DrawerMenu extends StatefulWidget {
   const DrawerMenu({super.key});

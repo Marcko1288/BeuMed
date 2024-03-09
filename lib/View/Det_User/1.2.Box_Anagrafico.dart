@@ -13,7 +13,6 @@ extension BlockAnagrafico on Det_UserViewState {
   Widget TextFiscalDate(BuildContext context) {
     var master = Provider.of<Master>(context, listen: false);
     var size = MediaQuery.of(context).size;
-    var size_width = MediaQuery.of(context).size.width;
 
     return GridView.count(
         shrinkWrap: true,

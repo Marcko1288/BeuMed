@@ -1,9 +1,10 @@
 import 'package:beumed/Class/Model/SETTING.dart';
+import 'package:beumed/View/CalendarView/0.CalendarView.dart';
 import 'package:flutter/material.dart';
 
 import '../View/Det_Event/0.Det_Event.dart';
 import '../View/Det_User/0.Det_User.dart';
-import '../View/HomeView.dart';
+import '../View/HomeView/0.HomeView.dart';
 import '../View/LoginView.dart';
 import '../View/NavLink.dart';
 import '../View/ResetPasswordView.dart';
@@ -50,7 +51,7 @@ class Master with ChangeNotifier {
         return MaterialPageRoute(
             builder: (context) => Det_EventView(state: state, event: element));
       case '/history':
-        return MaterialPageRoute(builder: (context) => NavLink());
+        return MaterialPageRoute(builder: (context) => CalendarView());
       default:
         return MaterialPageRoute(builder: (context) => NavLink());
     }
@@ -79,7 +80,6 @@ class Master with ChangeNotifier {
   }
 
   double childGrid(Size size) {
-    print('size.width: ${size.width}');
     if (size.width > 1000) {
       return size.width / (size.height / 4.4);
     } else {

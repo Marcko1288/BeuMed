@@ -107,39 +107,73 @@ class EVENT {
   //Array Esempio
   static List<EVENT> arrayElement(String uid) {
     List<EVENT> array = [];
-    array.add(EVENT(
+
+    var event = EVENT(
         uidBUT000: uid,
         data_inizio: DateTime.now(),
-        hours: [Hours(nome: '09:00 - 09:30', number: 1)]));
+        hours: [Hours(nome: '16:00 - 17:00', number: 8)]
+    );
+    event.hours.forEach((element) {element.uidEVENT = event.uid;});
 
-    array.add(EVENT(
-        uidBUT000: uid,
-        data_inizio: DateTime.now(),
-        hours: [Hours(nome: '17:00 - 18:00', number: 5)]));
+    array.add(event);
 
-    array.add(EVENT(
+    event = EVENT(
         uidBUT000: uid,
         data_inizio: DateTime.now().add(Duration(days: 1)),
         hours: [
           Hours(nome: '09:00 - 09:30', number: 1),
           Hours(nome: '09:30 - 10:00', number: 2),
           Hours(nome: '10:00 - 10:30', number: 3)
-        ]));
+        ]);
+    event.hours.forEach((element) {element.uidEVENT = event.uid;});
 
-    array.add(EVENT(
+    array.add(event);
+
+    event = EVENT(
         uidBUT000: uid,
         data_inizio: DateTime.now().add(Duration(days: 2)),
-        hours: [Hours(nome: '11:00 - 11:30', number: 5)]));
+        hours: [Hours(nome: '11:00 - 11:30', number: 5)]);
+    event.hours.forEach((element) {element.uidEVENT = event.uid;});
 
-    array.add(EVENT(
+    array.add(event);
+
+    event = EVENT(
         uidBUT000: uid,
         data_inizio: DateTime.now().add(Duration(days: 5)),
-        hours: [Hours(nome: '10:00 - 10:30', number: 3)]));
+        hours: [Hours(nome: '10:00 - 10:30', number: 3)]);
 
-    array.add(EVENT(
+    array.add(event);
+
+    event = EVENT(
         uidBUT000: uid,
         data_inizio: DateTime.now().add(Duration(days: 10)),
-        hours: [Hours(nome: '10:00 - 10:30', number: 3)]));
+        hours: [Hours(nome: '10:00 - 10:30', number: 3)]);
+
+    array.add(event);
+    //
+    // array.add(EVENT(
+    //     uidBUT000: uid,
+    //     data_inizio: DateTime.now().add(Duration(days: 1)),
+    //     hours: [
+    //       Hours(nome: '09:00 - 09:30', number: 1, uidEVENT: ),
+    //       Hours(nome: '09:30 - 10:00', number: 2),
+    //       Hours(nome: '10:00 - 10:30', number: 3)
+    //     ]));
+    //
+    // array.add(EVENT(
+    //     uidBUT000: uid,
+    //     data_inizio: DateTime.now().add(Duration(days: 2)),
+    //     hours: [Hours(nome: '11:00 - 11:30', number: 5)]));
+    //
+    // array.add(EVENT(
+    //     uidBUT000: uid,
+    //     data_inizio: DateTime.now().add(Duration(days: 5)),
+    //     hours: [Hours(nome: '10:00 - 10:30', number: 3)]));
+    //
+    // array.add(EVENT(
+    //     uidBUT000: uid,
+    //     data_inizio: DateTime.now().add(Duration(days: 10)),
+    //     hours: [Hours(nome: '10:00 - 10:30', number: 3)]));
     // array.add(
     //     EVENT(uidBUT000: uid, data_inizio: DateTime.now().add(Duration(days: 3)), hour: SelectionHour.H4)
     // );
@@ -216,23 +250,32 @@ int detHours({int minute = 30}) {
   var now = DateTime.now();
   var output = 0;
   DateTime data_m_da = DateTime(now.year, now.month, now.day, 09, 00, 00);
-  DateTime data_m_a = DateTime(now.year, now.month, now.day, 13, 00, 01);
+  DateTime data_m_a = DateTime(now.year, now.month, now.day, 13, 00, 00);
 
   DateTime data_p_da = DateTime(now.year, now.month, now.day, 14, 00, 00);
   DateTime data_p_a = DateTime(now.year, now.month, now.day, 19, 00, 00);
 
   int dim = (data_p_a.difference(data_m_da).inMinutes / minute).toInt();
-  for (var i = 1; i <= dim; i++) {
+  int sub = (data_p_da.difference(data_m_a).inMinutes / minute).toInt();
+
+  for (var i = 0; i <= dim; i++) {
     var data_now = data_m_da.add(Duration(minutes: i * minute));
-    if(data_now.compare(data_p_da, TypeQuery.GE) || data_now.compare(data_m_a, TypeQuery.LE)){
-      if(data_now.compare(data_p_a, TypeQuery.LE)) {
-        if(now.compare(data_m_da, TypeQuery.GE) && now.compare(data_now, TypeQuery.LE)){
-          output = i;
+
+    if(now.compare(data_m_da, TypeQuery.GE) && now.compare(data_p_a, TypeQuery.LE)){
+      if(now.compare(data_m_da, TypeQuery.GE) && now.compare(data_m_a, TypeQuery.LE)){
+        if(now.compare(data_m_da, TypeQuery.LE) && now.compare(data_now, TypeQuery.GE)){
+          output = i - sub;
           break;
         }
+        if(data_now.compare(data_m_da, TypeQuery.GT)) data_m_da = data_now;
+      } else if(now.compare(data_p_da, TypeQuery.GE) && now.compare(data_p_a, TypeQuery.LE)){
+        if(now.compare(data_p_da, TypeQuery.GE) && now.compare(data_now, TypeQuery.LE)){
+          output = i - sub;
+          break;
+        }
+        if(data_now.compare(data_p_da, TypeQuery.GT)) data_p_da = data_now;
       }
     }
-    data_m_da = data_now;
   }
   return output;
 }

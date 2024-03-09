@@ -1,6 +1,6 @@
 import 'package:beumed/Class/EVENT.dart';
 import 'package:beumed/View/Det_Event/0.Det_Event.dart';
-import 'package:beumed/View/Det_Event/3.FireDet_Event.dart';
+import 'package:beumed/View/Det_Event/3.Fire_Det_Event.dart';
 import 'package:beumed/Library/Extension_Date.dart';
 import 'package:beumed/Library/Extension_String.dart';
 import 'package:flutter/material.dart';

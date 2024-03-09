@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../Class/Master.dart';
+import '../../Class/Master.dart';
 
 class EtichettaCard extends StatefulWidget {
   EtichettaCard({super.key, required this.title});
