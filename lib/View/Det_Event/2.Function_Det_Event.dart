@@ -26,6 +26,7 @@ extension FuncDetEvent on Det_EventViewState {
     var master = Provider.of<Master>(context, listen: false);
     setState(() {
       var state = widget.state == TypeState.insert ? true : false;
+      print('State: ${state}');
 
       userSelected = state
           ? BUT000.standard()
@@ -98,11 +99,16 @@ extension FuncDetEvent on Det_EventViewState {
     return array_output;
   }
 
-  void creatTime(DateTime selectData){
+  void creatTime(DateTime selectData) {
     var master = Provider.of<Master>(context, listen: false);
 
     var hours = createHours(minute: master.setting.hour);
-    var events = master.array_event.where((element) => element.data_inizio.changeDateToString() == selectData.changeDateToString()).toList();
+    var now = detHours(minute: master.setting.hour) + 1;
+    var events = master.array_event
+        .where((element) =>
+            element.data_inizio.changeDateToString() ==
+            selectData.changeDateToString())
+        .toList();
 
     List<Hours> uidApp = [];
     isTime.clear();
@@ -116,10 +122,19 @@ extension FuncDetEvent on Det_EventViewState {
     });
 
     isTime = hours.where((element) => element.uidEVENT == '').toList();
+
+    if (selectData.changeDateToString() ==
+        DateTime.now().changeDateToString()) {
+      isTime.removeWhere((element) => element.number < now);
+    }
+
     if (userSelected.uid != '') {
-      var event = events.firstWhere((element) => element.uidBUT000 == userSelected.uid, orElse: EVENT.standard);
-      if(event.uid != ''){
-        isTimeSelection = hours.where((element) => element.uidEVENT == event.uid).toList();
+      var event = events.firstWhere(
+          (element) => element.uidBUT000 == userSelected.uid,
+          orElse: EVENT.standard);
+      if (event.uid != '') {
+        isTimeSelection =
+            hours.where((element) => element.uidEVENT == event.uid).toList();
         isTime.addAll(isTimeSelection);
       }
     }

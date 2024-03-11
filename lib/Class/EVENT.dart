@@ -111,9 +111,10 @@ class EVENT {
     var event = EVENT(
         uidBUT000: uid,
         data_inizio: DateTime.now(),
-        hours: [Hours(nome: '16:00 - 17:00', number: 8)]
-    );
-    event.hours.forEach((element) {element.uidEVENT = event.uid;});
+        hours: [Hours(nome: '16:00 - 17:00', number: 8)]);
+    event.hours.forEach((element) {
+      element.uidEVENT = event.uid;
+    });
 
     array.add(event);
 
@@ -125,7 +126,9 @@ class EVENT {
           Hours(nome: '09:30 - 10:00', number: 2),
           Hours(nome: '10:00 - 10:30', number: 3)
         ]);
-    event.hours.forEach((element) {element.uidEVENT = event.uid;});
+    event.hours.forEach((element) {
+      element.uidEVENT = event.uid;
+    });
 
     array.add(event);
 
@@ -133,7 +136,9 @@ class EVENT {
         uidBUT000: uid,
         data_inizio: DateTime.now().add(Duration(days: 2)),
         hours: [Hours(nome: '11:00 - 11:30', number: 5)]);
-    event.hours.forEach((element) {element.uidEVENT = event.uid;});
+    event.hours.forEach((element) {
+      element.uidEVENT = event.uid;
+    });
 
     array.add(event);
 
@@ -228,9 +233,11 @@ List<Hours> createHours({int minute = 30}) {
 
   for (var i = 1; i <= dim; i++) {
     var data_now = data_m_da.add(Duration(minutes: minute));
-    if (data_now.compareTo(data_m_a) <= 0 ||            //data_now <= data_m_a
-        data_p_da.compareTo(data_now) <= 0) {           //data_p_da <= data_now
-      if (data_now.compareTo(data_p_a) <= 0) {          //data_now <= data_p_a
+    if (data_now.compareTo(data_m_a) <= 0 || //data_now <= data_m_a
+        data_p_da.compareTo(data_now) <= 0) {
+      //data_p_da <= data_now
+      if (data_now.compareTo(data_p_a) <= 0) {
+        //data_now <= data_p_a
         var nome =
             '${data_m_da.hour.toString().padLeft(2, '0')}:${data_m_da.minute.toString().padLeft(2, '0')} '
             '- '
@@ -248,7 +255,7 @@ List<Hours> createHours({int minute = 30}) {
 
 int detHours({int minute = 30}) {
   var now = DateTime.now();
-  var output = 0;
+  var output = 12;
   DateTime data_m_da = DateTime(now.year, now.month, now.day, 09, 00, 00);
   DateTime data_m_a = DateTime(now.year, now.month, now.day, 13, 00, 00);
 
@@ -261,19 +268,24 @@ int detHours({int minute = 30}) {
   for (var i = 0; i <= dim; i++) {
     var data_now = data_m_da.add(Duration(minutes: i * minute));
 
-    if(now.compare(data_m_da, TypeQuery.GE) && now.compare(data_p_a, TypeQuery.LE)){
-      if(now.compare(data_m_da, TypeQuery.GE) && now.compare(data_m_a, TypeQuery.LE)){
-        if(now.compare(data_m_da, TypeQuery.LE) && now.compare(data_now, TypeQuery.GE)){
+    if (now.compare(data_m_da, TypeQuery.GE) &&
+        now.compare(data_p_a, TypeQuery.LE)) {
+      if (now.compare(data_m_da, TypeQuery.GE) &&
+          now.compare(data_m_a, TypeQuery.LE)) {
+        if (now.compare(data_m_da, TypeQuery.LE) &&
+            now.compare(data_now, TypeQuery.GE)) {
           output = i - sub;
           break;
         }
-        if(data_now.compare(data_m_da, TypeQuery.GT)) data_m_da = data_now;
-      } else if(now.compare(data_p_da, TypeQuery.GE) && now.compare(data_p_a, TypeQuery.LE)){
-        if(now.compare(data_p_da, TypeQuery.GE) && now.compare(data_now, TypeQuery.LE)){
+        if (data_now.compare(data_m_da, TypeQuery.GT)) data_m_da = data_now;
+      } else if (now.compare(data_p_da, TypeQuery.GE) &&
+          now.compare(data_p_a, TypeQuery.LE)) {
+        if (now.compare(data_p_da, TypeQuery.GE) &&
+            now.compare(data_now, TypeQuery.LE)) {
           output = i - sub;
           break;
         }
-        if(data_now.compare(data_p_da, TypeQuery.GT)) data_p_da = data_now;
+        if (data_now.compare(data_p_da, TypeQuery.GT)) data_p_da = data_now;
       }
     }
   }
