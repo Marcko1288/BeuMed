@@ -70,22 +70,6 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                           ),
                         ),
                       ),
-                      // TextFieldCustom(
-                      //   text: 'Mail',
-                      //   modify_text: widget.mail,
-                      //   keyboardType: TextInputType.emailAddress,
-                      //   decoration: TypeDecoration.focusBord,
-                      //   onStringChanged: (String value) {
-                      //     setState(() {
-                      //       widget.mail = value;
-                      //     });
-                      //   },
-                      //   listValidator: [
-                      //     TypeValidator.required,
-                      //     TypeValidator.email
-                      //   ],
-                      // ),
-
                     ],
                   ),
 

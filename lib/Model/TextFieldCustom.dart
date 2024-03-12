@@ -84,22 +84,6 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
   }
 }
 
-// extension ExtFBVali on FormBuilderValidators {
-//   static FormFieldValidator<String> cf({
-//     String? errorText,
-//   }) =>
-//       (valueCandidate) => true == valueCandidate?.isCF
-//           ? errorText ?? FormBuilderLocalizations.current.numericErrorText
-//           : null;
-//
-//   static FormFieldValidator<String> pippo({
-//     String? errorText,
-//   }) =>
-//       (valueCandidate) => true == valueCandidate?.isPIVA
-//           ? errorText ?? FormBuilderLocalizations.current.numericErrorText
-//           : null;
-// }
-
 enum TypeValidator {
   required,
   email,

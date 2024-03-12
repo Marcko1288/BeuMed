@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../Class/EVENT.dart';
+import '../../Class/HOURS.dart';
 import '../../Class/Master.dart';
 import '../../Model/DrawerMenu.dart';
 
@@ -16,8 +17,7 @@ class HomeView extends StatefulWidget {
 }
 
 class HomeViewState extends State<HomeView> {
-  //late List<BUT000> array_user = BUT000.arrayElement(); //widget.extractSubContract(context, type: SelectionSubContractStor.DaRinnovare)
-  late List<Hours> array_hours = [];
+  late List<Hours> array_hours = array_SelectionHour();
 
   @override
   void initState() {

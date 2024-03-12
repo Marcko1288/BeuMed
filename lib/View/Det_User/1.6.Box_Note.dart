@@ -50,7 +50,7 @@ extension BoxNote on Det_UserViewState {
                           initialValue: element.nota,
                           enabled: widget.state == TypeState.read ? false : true,
                           maxLines: length_note,
-                          decoration: TypeDecoration.labolBord.value(context, 'Note'),
+                          decoration: TypeDecoration.labolBord.value(context, title),
                           onChanged: (String value) {
                             setState(() {
                               note[index].nota = value;

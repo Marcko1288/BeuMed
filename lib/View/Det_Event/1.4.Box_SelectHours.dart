@@ -21,7 +21,6 @@ extension BoxSelectHours on Det_EventViewState {
           children: List<Widget>.generate(isTime.length, (index) {
             var state = widget.state == TypeState.read ? false : isTime[index].uidEVENT == '' ? true : false;
             var indexSelect = isTimeSelection!.contains(isTime[index]) ? 1 : 0;
-            // var indexSelect = isTimeSelection.indexWhere((element) => element.number == isTime[index].number ) >= 0 ? 1 : 0;
             return MultiRadioButton(
                 index: indexSelect,
                 text: isTime[index].nome,
@@ -44,60 +43,6 @@ extension BoxSelectHours on Det_EventViewState {
                   });
                 }
             );
-            //   Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: Stack(children: [
-            //     InkWell(
-            //       onTap: widget.state == TypeState.read
-            //           ? null
-            //           : () {
-            //               setState(() {
-            //                 if (!isTimeSelection!.contains(isTime[index])) {
-            //                   if (isTimeSelection!.length < 3) {
-            //                     isTimeSelection!.add(isTime[index]);
-            //                     indexSelect = 1;
-            //                   } else {
-            //                     master.gestion_Message(
-            //                         'Non è possibile selezionare più di tre slot');
-            //                   }
-            //                 } else {
-            //                   isTimeSelection!.removeWhere(
-            //                       (element) => element == isTime[index]);
-            //                   indexSelect = 0;
-            //                   setState(() {});
-            //                 }
-            //               });
-            //             },
-            //       child: Container(
-            //         alignment: Alignment.center,
-            //         decoration: BoxDecoration(
-            //             color: indexSelect == 1
-            //                 ? master.theme(size).primaryColorLight //.shade100
-            //                 : null,
-            //             border:
-            //                 Border.all(color: master.theme(size).primaryColor),
-            //             borderRadius: BorderRadius.circular(20)),
-            //         child: Row(
-            //           mainAxisAlignment: MainAxisAlignment.center,
-            //           children: <Widget>[
-            //             Radio(
-            //               focusColor: Colors.white,
-            //               groupValue: indexSelect,
-            //               onChanged: null,
-            //               value: 1,
-            //             ),
-            //             Padding(
-            //               padding: const EdgeInsets.only(left: 10, right: 20),
-            //               child: Text(
-            //                 isTime[index].nome,
-            //               ),
-            //             ),
-            //           ],
-            //         ),
-            //       ),
-            //     ),
-            //   ]),
-            // );
           })),
     );
   }

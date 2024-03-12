@@ -8,6 +8,7 @@ import 'package:beumed/View/HomeView/2.Function_Home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../Class/HOURS.dart';
 import '../../Class/Master.dart';
 
 extension BoxCalendar on HomeViewState {

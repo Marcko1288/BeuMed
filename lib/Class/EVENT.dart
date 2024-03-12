@@ -6,11 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
 import '../Library/Enum_TypeExtraction.dart';
+import 'HOURS.dart';
 
 class EVENT {
   late String uid;
   late String uidBUT000;
   late DateTime data_inizio;
+
   //late List<SelectionHour> hours;
   late List<Hours> hours;
   late String note;
@@ -122,9 +124,9 @@ class EVENT {
         uidBUT000: uid,
         data_inizio: DateTime.now().add(Duration(days: 1)),
         hours: [
-          Hours(nome: '09:00 - 09:30', number: 1),
-          Hours(nome: '09:30 - 10:00', number: 2),
-          Hours(nome: '10:00 - 10:30', number: 3)
+          Hours(nome: '09:00 - 10:00', number: 1),
+          Hours(nome: '10:00 - 11:00', number: 2),
+          Hours(nome: '11:00 - 12:00', number: 3)
         ]);
     event.hours.forEach((element) {
       element.uidEVENT = event.uid;
@@ -135,7 +137,7 @@ class EVENT {
     event = EVENT(
         uidBUT000: uid,
         data_inizio: DateTime.now().add(Duration(days: 2)),
-        hours: [Hours(nome: '11:00 - 11:30', number: 5)]);
+        hours: [Hours(nome: '14:00 - 15:00', number: 6)]);
     event.hours.forEach((element) {
       element.uidEVENT = event.uid;
     });
@@ -145,217 +147,17 @@ class EVENT {
     event = EVENT(
         uidBUT000: uid,
         data_inizio: DateTime.now().add(Duration(days: 5)),
-        hours: [Hours(nome: '10:00 - 10:30', number: 3)]);
+        hours: [Hours(nome: '11:00 - 12:00', number: 3)]);
 
     array.add(event);
 
     event = EVENT(
         uidBUT000: uid,
         data_inizio: DateTime.now().add(Duration(days: 10)),
-        hours: [Hours(nome: '10:00 - 10:30', number: 3)]);
+        hours: [Hours(nome: '11:00 - 12:00', number: 3)]);
 
     array.add(event);
-    //
-    // array.add(EVENT(
-    //     uidBUT000: uid,
-    //     data_inizio: DateTime.now().add(Duration(days: 1)),
-    //     hours: [
-    //       Hours(nome: '09:00 - 09:30', number: 1, uidEVENT: ),
-    //       Hours(nome: '09:30 - 10:00', number: 2),
-    //       Hours(nome: '10:00 - 10:30', number: 3)
-    //     ]));
-    //
-    // array.add(EVENT(
-    //     uidBUT000: uid,
-    //     data_inizio: DateTime.now().add(Duration(days: 2)),
-    //     hours: [Hours(nome: '11:00 - 11:30', number: 5)]));
-    //
-    // array.add(EVENT(
-    //     uidBUT000: uid,
-    //     data_inizio: DateTime.now().add(Duration(days: 5)),
-    //     hours: [Hours(nome: '10:00 - 10:30', number: 3)]));
-    //
-    // array.add(EVENT(
-    //     uidBUT000: uid,
-    //     data_inizio: DateTime.now().add(Duration(days: 10)),
-    //     hours: [Hours(nome: '10:00 - 10:30', number: 3)]));
-    // array.add(
-    //     EVENT(uidBUT000: uid, data_inizio: DateTime.now().add(Duration(days: 3)), hour: SelectionHour.H4)
-    // );
-    // array.add(
-    //     EVENT(uidBUT000: uid, data_inizio: DateTime.now().add(Duration(days: 3)), hour: SelectionHour.H5)
-    // );
-    // array.add(
-    //     EVENT(uidBUT000: uid, data_inizio: DateTime.now().add(Duration(days: 3)), hour: SelectionHour.H6)
-    // );
-    // array.add(
-    //     EVENT(uidBUT000: uid, data_inizio: DateTime.now().add(Duration(days: 3)), hour: SelectionHour.H7)
-    // );
-    // array.add(
-    //     EVENT(uidBUT000: uid, data_inizio: DateTime.now().add(Duration(days: 3)), hour: SelectionHour.H8)
-    // );
-
-    // // array.add(
-    // //     EVENT(uidBUT000: uid, data_inizio: DateTime.now().add(Duration(days: 3)), hour: SelectionHour.H9)
-    // // );{
 
     return array;
   }
-}
-
-class Hours {
-  late String nome;
-  late int number;
-  late String uidEVENT;
-
-  Hours({
-    required this.nome,
-    required this.number,
-    String? uidEVENT,
-  }) : this.uidEVENT = uidEVENT ?? '';
-
-  Hours.standard()
-      : this.nome = '',
-        this.number = 0,
-        this.uidEVENT = '';
-}
-
-// List<Hours> createHours({int minute = 30}) {
-//   List<Hours> array_output = [];
-
-//   DateTime data_m_da = DateTime(1990, 01, 01, 09, 00, 00);
-//   DateTime data_m_a = DateTime(1990, 01, 01, 13, 00, 01);
-
-//   DateTime data_p_da = DateTime(1990, 01, 01, 14, 00, 01);
-//   DateTime data_p_a = DateTime(1990, 01, 01, 19, 00, 00);
-
-//   int dim = (data_p_a.difference(data_m_da).inMinutes / minute).toInt();
-
-//   for (var i = 1; i <= dim; i++) {
-//     var data_now = data_m_da.add(Duration(minutes: minute));
-//     if (data_now.compareTo(data_m_a) <= 0 || //data_now <= data_m_a
-//         data_p_da.compareTo(data_now) <= 0) {
-//       //data_p_da <= data_now
-//       if (data_now.compareTo(data_p_a) <= 0) {
-//         //data_now <= data_p_a
-//         var nome =
-//             '${data_m_da.hour.toString().padLeft(2, '0')}:${data_m_da.minute.toString().padLeft(2, '0')} '
-//             '- '
-//             '${data_now.hour.toString().padLeft(2, '0')}:${data_now.minute.toString().padLeft(2, '0')}';
-//         array_output.add(Hours(nome: nome, number: i));
-//       }
-//     }
-//     data_m_da = data_now;
-//   }
-
-//   array_output.sort((a, b) => a.number.compareTo(b.number));
-
-//   return array_output;
-// }
-//
-List<Hours> createHours({int minute = 30}) {
-  List<Hours> array_output = [];
-
-  DateTime hour_min = DateTime(1990, 01, 01, 09, 00, 00);
-  DateTime hour_max = DateTime(1990, 01, 01, 19, 00, 00);
-
-  DateTime hour_da = DateTime(1990, 01, 01, 13, 00, 00);
-  DateTime hour_a = DateTime(1990, 01, 01, 13, 59, 59);
-
-  int dim = (hour_max.difference(hour_min).inMinutes / minute).toInt();
-
-  for (var i = 1; i <= dim; i++) {
-    var det_hour = hour_min.add(Duration(minutes: minute));
-
-    if (det_hour.compare(hour_min, TypeQuery.GE) &&
-        det_hour.compare(hour_max, TypeQuery.LE)) {
-      if (det_hour.compare(hour_da, TypeQuery.LE) ||
-          det_hour.compare(hour_a, TypeQuery.GE)) {
-        var nome =
-            '${hour_min.hour.toString().padLeft(2, '0')}:${hour_min.minute.toString().padLeft(2, '0')} '
-            '- '
-            '${det_hour.hour.toString().padLeft(2, '0')}:${det_hour.minute.toString().padLeft(2, '0')}';
-        array_output.add(Hours(nome: nome, number: i));
-      }
-    }
-    hour_min = det_hour;
-  }
-
-  array_output.forEach((element) {
-    print('${element.nome} - ${element.number}');
-  });
-
-  array_output.sort((a, b) => a.number.compareTo(b.number));
-
-  return array_output;
-}
-
-// int detHours({int minute = 30}) {
-//   var now = DateTime.now();
-//   var output = 12;
-//   DateTime data_m_da = DateTime(now.year, now.month, now.day, 09, 00, 00);
-//   DateTime data_m_a = DateTime(now.year, now.month, now.day, 13, 00, 00);
-
-//   DateTime data_p_da = DateTime(now.year, now.month, now.day, 14, 00, 00);
-//   DateTime data_p_a = DateTime(now.year, now.month, now.day, 19, 00, 00);
-
-//   int dim = (data_p_a.difference(data_m_da).inMinutes / minute).toInt();
-//   int sub = (data_p_da.difference(data_m_a).inMinutes / minute).toInt();
-
-//   for (var i = 0; i <= dim; i++) {
-//     var data_now = data_m_da.add(Duration(minutes: i * minute));
-
-//     if (now.compare(data_m_da, TypeQuery.GE) &&
-//         now.compare(data_p_a, TypeQuery.LE)) {
-//       if (now.compare(data_m_da, TypeQuery.GE) &&
-//           now.compare(data_m_a, TypeQuery.LE)) {
-//         if (now.compare(data_m_da, TypeQuery.LE) &&
-//             now.compare(data_now, TypeQuery.GE)) {
-//           output = i - sub;
-//           break;
-//         }
-//         if (data_now.compare(data_m_da, TypeQuery.GT)) data_m_da = data_now;
-//       } else if (now.compare(data_p_da, TypeQuery.GE) &&
-//           now.compare(data_p_a, TypeQuery.LE)) {
-//         if (now.compare(data_p_da, TypeQuery.GE) &&
-//             now.compare(data_now, TypeQuery.LE)) {
-//           output = i - sub;
-//           break;
-//         }
-//         if (data_now.compare(data_p_da, TypeQuery.GT)) data_p_da = data_now;
-//       }
-//     }
-//   }
-//   return output;
-// }
-//
-int detHours({int minute = 30}) {
-  var now = DateTime.now();
-  var output = 24;
-
-  DateTime hour_min = DateTime(now.year, now.month, now.day, 09, 00, 00);
-  DateTime hour_max = DateTime(now.year, now.month, now.day, 19, 00, 00);
-
-  DateTime hour_da = DateTime(now.year, now.month, now.day, 13, 00, 00);
-  DateTime hour_a = DateTime(now.year, now.month, now.day, 13, 59, 59);
-
-  int dim = (hour_max.difference(hour_min).inMinutes / minute).toInt();
-
-  for (var i = 1; i <= dim; i++) {
-    var det_hour = hour_min.add(Duration(minutes: minute));
-    if (det_hour.compare(hour_min, TypeQuery.GE) &&
-        det_hour.compare(hour_max, TypeQuery.LE)) {
-      if (det_hour.compare(hour_da, TypeQuery.LE) ||
-          det_hour.compare(hour_a, TypeQuery.GE)) {
-        if (now.compare(hour_min, TypeQuery.GE) &&
-            now.compare(det_hour, TypeQuery.LE)) {
-          output = i;
-          break;
-        }
-      }
-    }
-    hour_min = det_hour;
-  }
-  print('output: ${output}');
-  return output;
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 
+import '../../Class/HOURS.dart';
 import '../../Class/Master.dart';
 import '../../Class/EVENT.dart';
 import '../../Library/FireAuth.dart';
@@ -19,11 +20,12 @@ extension FireDetEvent on Det_EventViewState {
       var event = EVENT(
           uidBUT000: userSelected.uid,
           data_inizio: data_inizio,
-          hours: isTimeSelection,
+          hours: [],
           note: note);
 
-      event.hours.forEach((element) {
-        element.uidEVENT = event.uid;
+      isTimeSelection.forEach((element) {
+        var hour = Hours(nome: element.nome, number: element.number, uidEVENT: event.uid);
+        event.hours.add(hour);
       });
 
       try {

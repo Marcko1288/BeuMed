@@ -18,7 +18,7 @@ extension WidgetHome on HomeViewState {
       style: master
           .theme(size)
           .textTheme
-          .titleLarge, //const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+          .titleLarge,
     );
   }
 

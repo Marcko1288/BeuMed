@@ -34,24 +34,5 @@ extension ExtSelectionProfile on SelectionProfile {
         return '';
     }
   }
-
-  // static SelectionProfile code (String string) {
-  //   switch (string) {
-  //     case 'ADMIN':
-  //       return SelectionProfile.admin;
-  //
-  //     case 'DOT':
-  //       return SelectionProfile.doc;
-  //
-  //     case 'PAZ':
-  //       return SelectionProfile.paziente;
-  //
-  //     case 'SEGR':
-  //       return SelectionProfile.segretaria;
-  //
-  //     default:
-  //       return SelectionProfile.paziente;
-  //   }
-  // }
 }
 

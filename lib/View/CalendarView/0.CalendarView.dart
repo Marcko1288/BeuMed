@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../Class/EVENT.dart';
+import '../../Class/HOURS.dart';
 import '../../Class/Master.dart';
 
 class CalendarView extends StatefulWidget {

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../Class/EVENT.dart';
+import '../../Class/HOURS.dart';
 import '../../Class/Master.dart';
 import '../../Class/Model/Enum_SelectionView.dart';
 import '../../Library/Enum_TypeQuery.dart';
@@ -30,19 +31,11 @@ extension FuncHome on HomeViewState {
     var array_event = master.array_event.where(
         (element) => element.data_inizio.compare(DateTime.now(), TypeQuery.EQ));
 
-    //Mi estraggo tutte le ore già fissate
-    List<Hours> array_event_hours = [];
     array_event.forEach((element) {
-      array_event_hours.addAll(element.hours);
-    });
-
-    //Associo lo slot con l'evento, se c'è
-    array_hours.forEach((element) {
-      var uidEVENT = array_event_hours
-          .firstWhere((hour) => hour.number == element.number,
-              orElse: Hours.standard)
-          .uidEVENT;
-      element.uidEVENT = uidEVENT;
+      element.hours.forEach((elem) {
+        var index = array_hours.indexWhere((hour) => hour.number == elem.number);
+        if (index >= 0) array_hours[index].uidEVENT = element.uid;
+      });
     });
 
     array_hours.removeWhere((element) => element.number < now_hour);

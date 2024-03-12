@@ -146,27 +146,5 @@ class _DatePickerCustomState extends State<DatePickerCustom>
         ),
       ),
     );
-
-    // return Padding(
-    //   padding: const EdgeInsets.only(top: 10, bottom: 10),
-    //   child: OutlinedButton(
-    //     style: OutlinedButton.styleFrom(
-    //         side: BorderSide(color: master.theme(size).primaryColor),
-    //         shape: RoundedRectangleBorder(
-    //             borderRadius: BorderRadius.circular(20))),
-    //     onPressed: widget.modify
-    //         ? () {
-    //             _restorableDatePickerRouteFuture.present();
-    //           }
-    //         : null,
-    //     child: Container(
-    //       width: double.infinity,
-    //       alignment: Alignment.center,
-    //       child: Text(
-    //         "${_selectedDate.value.changeDateToString(type: TypeFormatDate.DD_MM_AAAA)}",
-    //       ),
-    //     ),
-    //   ),
-    // );
   }
 }

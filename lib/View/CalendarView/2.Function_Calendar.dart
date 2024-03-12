@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../Class/EVENT.dart';
+import '../../Class/HOURS.dart';
 import '../../Class/Master.dart';
 import '../../Class/Model/Enum_SelectionView.dart';
 import '../../Library/Enum_TypeQuery.dart';
@@ -12,7 +13,6 @@ import '0.CalendarView.dart';
 extension FuncCalendar on CalendarViewState {
   void refreshDate() {
     setState(() {
-      print('FuncCalendar, refreshDate');
       array_hours = array_SelectionHour();
     });
   }

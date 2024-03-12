@@ -46,7 +46,7 @@ extension BoxAnamnesi on Det_UserViewState {
                 crossAxisCount: 2,
                 childAspectRatio: master.childGrid(size),
                 children: [
-                  Container(), // Assicurati che il contenuto del GridView.count abbia un'implementazione corretta
+                  Container(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,

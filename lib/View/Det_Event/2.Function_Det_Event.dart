@@ -6,6 +6,7 @@ import 'package:beumed/Library/Extension_String.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../Class/HOURS.dart';
 import '../../Class/Model/Enum_TypeState.dart';
 import '../../Class/Master.dart';
 import '../../Class/BUT000.dart';
@@ -36,22 +37,6 @@ extension FuncDetEvent on Det_EventViewState {
       note = state ? '' : widget.event!.note;
       array_noDate = selectionNoDate();
       creatTime(data_inizio);
-      // isTime = createIsTime(data_inizio);
-      // isTimeSelection =
-      //     state ? [] : createIsSelectionTime(data_inizio, userSelected);
-
-      // if (widget.state == TypeState.insert) {
-      //   data_inizio = detSelectionDate();
-      //   note = '';
-      // } else {
-      //   userSelected = master.array_user.firstWhere(
-      //       (element) => element.uid == widget.event!.uidBUT000,
-      //       orElse: BUT000.standard);
-      //   data_inizio = widget.event!.data_inizio;
-      //   note = widget.event!.note;
-      // }
-      // create_arrayHour(data_inizio);
-      // array_noDate = selectionNoDate();
     });
   }
 
@@ -111,7 +96,6 @@ extension FuncDetEvent on Det_EventViewState {
     List<Hours> uidApp = [];
     isTime.clear();
     isTimeSelection.clear();
-    print('PRE -> hours: ${hours.length} - events: ${events.length}  ');
 
     events.forEach((element) {
       element.hours.forEach((elem) {
@@ -120,11 +104,8 @@ extension FuncDetEvent on Det_EventViewState {
       });
     });
 
-    print('POST -> hours: ${hours.length} - events: ${events.length}  ');
-
     isTime = hours.where((element) => element.uidEVENT == '').toList();
 
-    print('isTime: ${isTime.length} - now: ${now}  ');
     if (selectData.changeDateToString() ==
         DateTime.now().changeDateToString()) {
       isTime.removeWhere((element) => element.number < now);
@@ -144,43 +125,6 @@ extension FuncDetEvent on Det_EventViewState {
     isTime.sort((a, b) => a.number.compareTo(b.number));
     isTimeSelection.sort((a, b) => a.number.compareTo(b.number));
   }
-
-  // List<Hours> createIsTime(DateTime selectData) {
-  //   var master = Provider.of<Master>(context, listen: false);
-  //
-  //   var hours = createHours(minute: master.setting.hour);
-  //   var events = master.array_event
-  //       .where((element) =>
-  //           element.data_inizio.changeDateToString() ==
-  //           selectData.changeDateToString())
-  //       .toList();
-  //
-  //   events.forEach((element) {
-  //     element.hours.forEach((elem) {
-  //       var index = hours.indexWhere((hour) => hour.number == elem.number);
-  //       if (index >= 0) hours[index].uidEVENT = element.uid;
-  //     });
-  //   });
-  //   hours.forEach((element) {print('createIsTime: ${element.nome} - ${element.uidEVENT}');});
-  //   return hours;
-  // }
-  //
-  // List<Hours> createIsSelectionTime(DateTime selectData, BUT000 user) {
-  //   var master = Provider.of<Master>(context, listen: false);
-  //
-  //   var hours = master.array_event
-  //       .firstWhere(
-  //           (element) =>
-  //               element.data_inizio.changeDateToString() ==
-  //                   selectData.changeDateToString() &&
-  //               element.uidBUT000 == user.uid,
-  //           orElse: EVENT.standard)
-  //       .hours;
-  //
-  //   hours.forEach((element) {print('createIsSelectionTime: ${element.nome} - ${element.uidEVENT}');});
-  //
-  //   return hours;
-  // }
 
   Future<void> actionElement() async {
     var master = Provider.of<Master>(context, listen: false);

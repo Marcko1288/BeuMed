@@ -1,7 +1,6 @@
 import 'package:beumed/Class/BUT000.dart';
 import 'package:beumed/View/Det_User/0.Det_User.dart';
 import 'package:beumed/View/Det_User/3.Fire_Det_User.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../Class/Master.dart';
@@ -40,70 +39,15 @@ extension FuncDetUser on Det_UserViewState {
       phone = state ? "" : user.phone.toString();
       mobile_phone = state ? "" : user.mobile_phone.toString();
       stato_civile = state ? SelectionStatoCivile.S1 : user.stato_civile;
-      open_boxanamnesi = false;
+      open_boxanamnesi = state ? true : false;
       anamnesi = state ? master.array_anamnesi : user.array_anamnesi;
       other = state ? "" : user.array_anamnesi.firstWhere((elem) => elem.nome == 'Altro',
           orElse: () => Anamnesi.standard()).other;
       note = state ? [] : user.array_note;
       profilo = state ? SelectionProfile.paziente : user.profilo;
 
-      // if (widget.state == TypeState.insert) {
-      //   nome = "";
-      //   cognome = "";
-      //   cf = "";
-      //   piva = "";
-      //   birthday = DateTime.now();
-      //   local_birthday = "";
-      //   indirizzo = "";
-      //   citta = "";
-      //   cap = "";
-      //   provincia = "";
-      //   mail = "";
-      //   phone = "";
-      //   mobile_phone = "";
-      //   stato_civile = SelectionStatoCivile.S1;
-      //   open_boxanamnesi = true;
-      //   anamnesi = Anamnesi.defaultElement();;
-      //   other = "";
-      //   note = [];
-      //   profilo = SelectionProfile.paziente;
-      // } else {
-      //   nome = "";
-      //   cognome = "";
-      //   cf = "";
-      //   piva = "";
-      //   birthday = DateTime.now();
-      //   local_birthday = "";
-      //   indirizzo = "";
-      //   citta = "";
-      //   cap = "";
-      //   provincia = "";
-      //   mail = "";
-      //   phone = "";
-      //   mobile_phone = "";
-      //   stato_civile = SelectionStatoCivile.S1;
-      //   open_boxanamnesi = true;
-      //   anamnesi = Anamnesi.defaultElement();;
-      //   other = "";
-      //   note = [];
-      //   profilo = SelectionProfile.paziente;
-      //   mail = widget.user!.mail;
-      //   cf = widget.user!.cf;
-      //   nome = widget.user!.nome;
-      //   cognome = widget.user!.cognome;
-      //   profilo = widget.user!.profilo;
-      //   indirizzo = widget.user!.indirizzo;
-      //   citta = widget.user!.citta;
-      //   cap = widget.user!.cap.toString();
-      //   provincia = widget.user!.provincia;
-      //   anamnesi = widget.user!.array_anamnesi;
-      //   note = widget.user!.array_note;
-      //   print('value: PRE');
-      //   other = widget.user!.array_anamnesi.firstWhere((elem) => elem.nome == 'Altro',
-      //       orElse: () => Anamnesi.standard()
-      //   ).other;
-      //   open_boxanamnesi = false;
-      // }
+      note.sort((a,b) =>(b.data.compareTo(a.data)));
+
     });
   }
 

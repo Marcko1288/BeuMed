@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../Class/BUT000.dart';
 import '../../Class/EVENT.dart';
+import '../../Class/HOURS.dart';
 import '../../Class/Master.dart';
 import '../../Model/RowCalendar.dart';
 

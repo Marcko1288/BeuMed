@@ -12,8 +12,8 @@ import '../Model/TextFieldCustom.dart';
 class LoginView extends StatefulWidget {
   LoginView({super.key});
 
-  String mail = "";
-  String password = "";
+  String mail = "marc.costigliola@gmail.com";
+  String password = "Pippo001";
   bool secure = true;
 
   @override
@@ -98,34 +98,6 @@ class _LoginViewState extends State<LoginView> {
 
                         ],
                       ),
-
-
-                      // Padding(
-                      //   padding: const EdgeInsets.only(left: 40),
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.center,
-                      //     children: [
-                      //       TextFieldCustom(
-                      //         text_labol: 'Password',
-                      //         text_default: widget.password,
-                      //         secure: widget.secure,
-                      //         onStringChanged: (String value) {
-                      //           setState(() {
-                      //             widget.password = value;
-                      //           });
-                      //         },
-                      //         autofill: [AutofillHints.password],
-                      //         decoration: TypeDecoration.labolBord,
-                      //       ),
-                      //
-                      //       IconButton(
-                      //           onPressed: changeSecure,
-                      //           icon: widget.secure
-                      //               ? const Icon(Icons.visibility)
-                      //               : const Icon(Icons.visibility_off)),
-                      //     ],
-                      //   ),
-                      // ),
 
                       TextButton(
                           onPressed: () {

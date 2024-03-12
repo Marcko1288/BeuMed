@@ -12,7 +12,7 @@ extension WidgetCalendar on CalendarViewState {
 
     return Text(
       'Agenda',
-      style: master.theme(size).textTheme.titleLarge,//const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+      style: master.theme(size).textTheme.titleLarge,
     );
   }
 }
