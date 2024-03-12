@@ -26,7 +26,6 @@ extension FuncDetEvent on Det_EventViewState {
     var master = Provider.of<Master>(context, listen: false);
     setState(() {
       var state = widget.state == TypeState.insert ? true : false;
-      print('State: ${state}');
 
       userSelected = state
           ? BUT000.standard()
@@ -101,9 +100,8 @@ extension FuncDetEvent on Det_EventViewState {
 
   void creatTime(DateTime selectData) {
     var master = Provider.of<Master>(context, listen: false);
-
     var hours = createHours(minute: master.setting.hour);
-    var now = detHours(minute: master.setting.hour) + 1;
+    var now = detHours(minute: master.setting.hour);
     var events = master.array_event
         .where((element) =>
             element.data_inizio.changeDateToString() ==
@@ -113,6 +111,7 @@ extension FuncDetEvent on Det_EventViewState {
     List<Hours> uidApp = [];
     isTime.clear();
     isTimeSelection.clear();
+    print('PRE -> hours: ${hours.length} - events: ${events.length}  ');
 
     events.forEach((element) {
       element.hours.forEach((elem) {
@@ -121,8 +120,11 @@ extension FuncDetEvent on Det_EventViewState {
       });
     });
 
+    print('POST -> hours: ${hours.length} - events: ${events.length}  ');
+
     isTime = hours.where((element) => element.uidEVENT == '').toList();
 
+    print('isTime: ${isTime.length} - now: ${now}  ');
     if (selectData.changeDateToString() ==
         DateTime.now().changeDateToString()) {
       isTime.removeWhere((element) => element.number < now);

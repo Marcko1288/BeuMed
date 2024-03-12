@@ -8,15 +8,17 @@ import '../../Library/FireAuth.dart';
 import '../../Model/ExpandableFab.dart';
 import '0.HomeView.dart';
 
-extension WidgetHome on HomeViewState{
-
+extension WidgetHome on HomeViewState {
   Widget Title_AppBar(BuildContext context) {
     var master = Provider.of<Master>(context, listen: false);
     var size = MediaQuery.of(context).size;
 
     return Text(
       master.selectionView.value,
-      style: master.theme(size).textTheme.titleLarge,//const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+      style: master
+          .theme(size)
+          .textTheme
+          .titleLarge, //const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
     );
   }
 
@@ -34,8 +36,7 @@ extension WidgetHome on HomeViewState{
                 },
                 icon: Icon(Icons.logout)),
           ],
-        )
-    );
+        ));
   }
 
   Widget FloatingActionButton_Home(BuildContext context) {
@@ -48,7 +49,7 @@ extension WidgetHome on HomeViewState{
         FloatingActionButton(
           heroTag: 'btn1',
           onPressed: () {
-            routeAddUser();
+            routeAddUser(null);
           },
           tooltip: 'Nuovo Paziente',
           child: const Icon(Icons.add_reaction_outlined),
@@ -64,10 +65,4 @@ extension WidgetHome on HomeViewState{
       ],
     );
   }
-
-
-
-
-
-
 }
