@@ -98,15 +98,20 @@ extension FuncDetEvent on Det_EventViewState {
     return array_output;
   }
 
-  void creatTime(DateTime selectData){
+  void creatTime(DateTime selectData) {
     var master = Provider.of<Master>(context, listen: false);
-
     var hours = createHours(minute: master.setting.hour);
-    var events = master.array_event.where((element) => element.data_inizio.changeDateToString() == selectData.changeDateToString()).toList();
+    var now = detHours(minute: master.setting.hour);
+    var events = master.array_event
+        .where((element) =>
+            element.data_inizio.changeDateToString() ==
+            selectData.changeDateToString())
+        .toList();
 
     List<Hours> uidApp = [];
     isTime.clear();
     isTimeSelection.clear();
+    print('PRE -> hours: ${hours.length} - events: ${events.length}  ');
 
     events.forEach((element) {
       element.hours.forEach((elem) {
@@ -115,11 +120,23 @@ extension FuncDetEvent on Det_EventViewState {
       });
     });
 
+    print('POST -> hours: ${hours.length} - events: ${events.length}  ');
+
     isTime = hours.where((element) => element.uidEVENT == '').toList();
+
+    print('isTime: ${isTime.length} - now: ${now}  ');
+    if (selectData.changeDateToString() ==
+        DateTime.now().changeDateToString()) {
+      isTime.removeWhere((element) => element.number < now);
+    }
+
     if (userSelected.uid != '') {
-      var event = events.firstWhere((element) => element.uidBUT000 == userSelected.uid, orElse: EVENT.standard);
-      if(event.uid != ''){
-        isTimeSelection = hours.where((element) => element.uidEVENT == event.uid).toList();
+      var event = events.firstWhere(
+          (element) => element.uidBUT000 == userSelected.uid,
+          orElse: EVENT.standard);
+      if (event.uid != '') {
+        isTimeSelection =
+            hours.where((element) => element.uidEVENT == event.uid).toList();
         isTime.addAll(isTimeSelection);
       }
     }

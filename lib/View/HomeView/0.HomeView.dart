@@ -30,32 +30,30 @@ class HomeViewState extends State<HomeView> {
     var master = Provider.of<Master>(context, listen: false);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Padding(
-          padding: const EdgeInsets.only(left: 60),
-          child: Align(
-            alignment: Alignment.center,
-            child: Title_AppBar(context),
-          ),
-        ),
-        actions: [ Action_AppBar(context)],
-      ),
-      drawer: DrawerMenu(),
-      body: Container(
-          alignment: Alignment.center,
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 50),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  BoxAgenda(context),
-                ],
-              ),
+        appBar: AppBar(
+          title: Padding(
+            padding: const EdgeInsets.only(left: 60),
+            child: Align(
+              alignment: Alignment.center,
+              child: Title_AppBar(context),
             ),
-          )
-      ),
-      floatingActionButton: FloatingActionButton_Home(context)
-    );
+          ),
+          actions: [Action_AppBar(context)],
+        ),
+        drawer: DrawerMenu(),
+        body: Container(
+            alignment: Alignment.center,
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 50),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    BoxAgenda(context),
+                  ],
+                ),
+              ),
+            )),
+        floatingActionButton: FloatingActionButton_Home(context));
   }
 }

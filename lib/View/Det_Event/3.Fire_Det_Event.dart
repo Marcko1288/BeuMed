@@ -22,7 +22,9 @@ extension FireDetEvent on Det_EventViewState {
           hours: isTimeSelection,
           note: note);
 
-      event.hours.forEach((element) {element.uidEVENT = event.uid;});
+      event.hours.forEach((element) {
+        element.uidEVENT = event.uid;
+      });
 
       try {
         var dirDB = FireStore()
@@ -39,6 +41,7 @@ extension FireDetEvent on Det_EventViewState {
           refreshDate(context);
           return;
         });
+
         return;
       } on FirebaseException catch (error) {
         print('${error.toString()}');
@@ -58,7 +61,9 @@ extension FireDetEvent on Det_EventViewState {
         .indexWhere((element) => element.uid == widget.event!.uid);
     master.array_event[index].data_inizio = data_inizio;
     master.array_event[index].hours = isTimeSelection;
-    master.array_event[index].hours.forEach((element) {element.uidEVENT = master.array_event[index].uid;});
+    master.array_event[index].hours.forEach((element) {
+      element.uidEVENT = master.array_event[index].uid;
+    });
     master.array_event[index].note = note;
 
     try {

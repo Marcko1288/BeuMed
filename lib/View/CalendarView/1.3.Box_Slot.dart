@@ -15,49 +15,57 @@ extension BoxSlot on CalendarViewState {
 
     return Column(
       children: List<Widget>.generate(array_hours.length, (index) {
-      Hours hour = array_hours[index];
-      EVENT event = master.array_event.firstWhere((element) => element.uid == hour.uidEVENT, orElse: EVENT.standard);
-      BUT000 user = master.array_user.firstWhere((element) => element.uid == event.uidBUT000, orElse: BUT000.standard);
+        Hours hour = array_hours[index];
+        EVENT event = master.array_event.firstWhere(
+            (element) => element.uid == hour.uidEVENT,
+            orElse: EVENT.standard);
+        BUT000 user = master.array_user.firstWhere(
+            (element) => element.uid == event.uidBUT000,
+            orElse: BUT000.standard);
 
-      String title = user.uid != '' ? '${user.nome} ${user.cognome}' : 'Crea Appuntamento';
-      String? body = user.uid != '' ? '${user.cf}' : null;
-      var funct = user.uid != '' ? () {routeAddUser();} : () {routeAddEvent();};
+        String title = user.uid != ''
+            ? '${user.nome} ${user.cognome}'
+            : 'Crea Appuntamento';
+        String? body = user.uid != '' ? '${user.cf}' : null;
+        var funct = user.uid != ''
+            ? () {
+                routeAddUser(user);
+              }
+            : () {
+                routeAddEvent();
+              };
 
-      return Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          padding: EdgeInsets.all(10),
-          child: Row(
-            mainAxisAlignment:
-            MainAxisAlignment.spaceBetween,
-            children: [
-              ElevatedButton(
-                onPressed: null,
-                child: Text('${hour.nome}'),
-              ),
-              Expanded(
-                  child: Padding(
-                      padding: EdgeInsets.only(left: 50, right: 10),
-                      child: ElevatedButton(
-                        onPressed: funct,
-                        child: RowCalendar(
-                          title_text: title,
-                          body_text: body,
-                        ),
-                      )
-                  )
-              ),
-            ],
+        return Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Container(
+            padding: EdgeInsets.all(10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  onPressed: null,
+                  child: Text('${hour.nome}'),
+                ),
+                Expanded(
+                    child: Padding(
+                        padding: EdgeInsets.only(left: 50, right: 10),
+                        child: ElevatedButton(
+                          onPressed: funct,
+                          child: RowCalendar(
+                            title_text: title,
+                            body_text: body,
+                          ),
+                        ))),
+              ],
+            ),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(color: master.theme(size).primaryColor),
+              borderRadius: BorderRadius.circular(8),
+            ),
           ),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(
-                color: master.theme(size).primaryColor),
-            borderRadius: BorderRadius.circular(8),
-          ),
-        ),
-      );
-    }),
+        );
+      }),
     );
   }
 }

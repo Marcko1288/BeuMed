@@ -111,9 +111,10 @@ class EVENT {
     var event = EVENT(
         uidBUT000: uid,
         data_inizio: DateTime.now(),
-        hours: [Hours(nome: '16:00 - 17:00', number: 8)]
-    );
-    event.hours.forEach((element) {element.uidEVENT = event.uid;});
+        hours: [Hours(nome: '16:00 - 17:00', number: 8)]);
+    event.hours.forEach((element) {
+      element.uidEVENT = event.uid;
+    });
 
     array.add(event);
 
@@ -125,7 +126,9 @@ class EVENT {
           Hours(nome: '09:30 - 10:00', number: 2),
           Hours(nome: '10:00 - 10:30', number: 3)
         ]);
-    event.hours.forEach((element) {element.uidEVENT = event.uid;});
+    event.hours.forEach((element) {
+      element.uidEVENT = event.uid;
+    });
 
     array.add(event);
 
@@ -133,7 +136,9 @@ class EVENT {
         uidBUT000: uid,
         data_inizio: DateTime.now().add(Duration(days: 2)),
         hours: [Hours(nome: '11:00 - 11:30', number: 5)]);
-    event.hours.forEach((element) {element.uidEVENT = event.uid;});
+    event.hours.forEach((element) {
+      element.uidEVENT = event.uid;
+    });
 
     array.add(event);
 
@@ -215,67 +220,142 @@ class Hours {
         this.uidEVENT = '';
 }
 
+// List<Hours> createHours({int minute = 30}) {
+//   List<Hours> array_output = [];
+
+//   DateTime data_m_da = DateTime(1990, 01, 01, 09, 00, 00);
+//   DateTime data_m_a = DateTime(1990, 01, 01, 13, 00, 01);
+
+//   DateTime data_p_da = DateTime(1990, 01, 01, 14, 00, 01);
+//   DateTime data_p_a = DateTime(1990, 01, 01, 19, 00, 00);
+
+//   int dim = (data_p_a.difference(data_m_da).inMinutes / minute).toInt();
+
+//   for (var i = 1; i <= dim; i++) {
+//     var data_now = data_m_da.add(Duration(minutes: minute));
+//     if (data_now.compareTo(data_m_a) <= 0 || //data_now <= data_m_a
+//         data_p_da.compareTo(data_now) <= 0) {
+//       //data_p_da <= data_now
+//       if (data_now.compareTo(data_p_a) <= 0) {
+//         //data_now <= data_p_a
+//         var nome =
+//             '${data_m_da.hour.toString().padLeft(2, '0')}:${data_m_da.minute.toString().padLeft(2, '0')} '
+//             '- '
+//             '${data_now.hour.toString().padLeft(2, '0')}:${data_now.minute.toString().padLeft(2, '0')}';
+//         array_output.add(Hours(nome: nome, number: i));
+//       }
+//     }
+//     data_m_da = data_now;
+//   }
+
+//   array_output.sort((a, b) => a.number.compareTo(b.number));
+
+//   return array_output;
+// }
+//
 List<Hours> createHours({int minute = 30}) {
   List<Hours> array_output = [];
 
-  DateTime data_m_da = DateTime(1990, 01, 01, 09, 00, 00);
-  DateTime data_m_a = DateTime(1990, 01, 01, 13, 00, 01);
+  DateTime hour_min = DateTime(1990, 01, 01, 09, 00, 00);
+  DateTime hour_max = DateTime(1990, 01, 01, 19, 00, 00);
 
-  DateTime data_p_da = DateTime(1990, 01, 01, 14, 00, 01);
-  DateTime data_p_a = DateTime(1990, 01, 01, 19, 00, 00);
+  DateTime hour_da = DateTime(1990, 01, 01, 13, 00, 00);
+  DateTime hour_a = DateTime(1990, 01, 01, 13, 59, 59);
 
-  int dim = (data_p_a.difference(data_m_da).inMinutes / minute).toInt();
+  int dim = (hour_max.difference(hour_min).inMinutes / minute).toInt();
 
   for (var i = 1; i <= dim; i++) {
-    var data_now = data_m_da.add(Duration(minutes: minute));
-    if (data_now.compareTo(data_m_a) <= 0 ||            //data_now <= data_m_a
-        data_p_da.compareTo(data_now) <= 0) {           //data_p_da <= data_now
-      if (data_now.compareTo(data_p_a) <= 0) {          //data_now <= data_p_a
+    var det_hour = hour_min.add(Duration(minutes: minute));
+
+    if (det_hour.compare(hour_min, TypeQuery.GE) &&
+        det_hour.compare(hour_max, TypeQuery.LE)) {
+      if (det_hour.compare(hour_da, TypeQuery.LE) ||
+          det_hour.compare(hour_a, TypeQuery.GE)) {
         var nome =
-            '${data_m_da.hour.toString().padLeft(2, '0')}:${data_m_da.minute.toString().padLeft(2, '0')} '
+            '${hour_min.hour.toString().padLeft(2, '0')}:${hour_min.minute.toString().padLeft(2, '0')} '
             '- '
-            '${data_now.hour.toString().padLeft(2, '0')}:${data_now.minute.toString().padLeft(2, '0')}';
+            '${det_hour.hour.toString().padLeft(2, '0')}:${det_hour.minute.toString().padLeft(2, '0')}';
         array_output.add(Hours(nome: nome, number: i));
       }
     }
-    data_m_da = data_now;
+    hour_min = det_hour;
   }
+
+  array_output.forEach((element) {
+    print('${element.nome} - ${element.number}');
+  });
 
   array_output.sort((a, b) => a.number.compareTo(b.number));
 
   return array_output;
 }
 
+// int detHours({int minute = 30}) {
+//   var now = DateTime.now();
+//   var output = 12;
+//   DateTime data_m_da = DateTime(now.year, now.month, now.day, 09, 00, 00);
+//   DateTime data_m_a = DateTime(now.year, now.month, now.day, 13, 00, 00);
+
+//   DateTime data_p_da = DateTime(now.year, now.month, now.day, 14, 00, 00);
+//   DateTime data_p_a = DateTime(now.year, now.month, now.day, 19, 00, 00);
+
+//   int dim = (data_p_a.difference(data_m_da).inMinutes / minute).toInt();
+//   int sub = (data_p_da.difference(data_m_a).inMinutes / minute).toInt();
+
+//   for (var i = 0; i <= dim; i++) {
+//     var data_now = data_m_da.add(Duration(minutes: i * minute));
+
+//     if (now.compare(data_m_da, TypeQuery.GE) &&
+//         now.compare(data_p_a, TypeQuery.LE)) {
+//       if (now.compare(data_m_da, TypeQuery.GE) &&
+//           now.compare(data_m_a, TypeQuery.LE)) {
+//         if (now.compare(data_m_da, TypeQuery.LE) &&
+//             now.compare(data_now, TypeQuery.GE)) {
+//           output = i - sub;
+//           break;
+//         }
+//         if (data_now.compare(data_m_da, TypeQuery.GT)) data_m_da = data_now;
+//       } else if (now.compare(data_p_da, TypeQuery.GE) &&
+//           now.compare(data_p_a, TypeQuery.LE)) {
+//         if (now.compare(data_p_da, TypeQuery.GE) &&
+//             now.compare(data_now, TypeQuery.LE)) {
+//           output = i - sub;
+//           break;
+//         }
+//         if (data_now.compare(data_p_da, TypeQuery.GT)) data_p_da = data_now;
+//       }
+//     }
+//   }
+//   return output;
+// }
+//
 int detHours({int minute = 30}) {
   var now = DateTime.now();
-  var output = 0;
-  DateTime data_m_da = DateTime(now.year, now.month, now.day, 09, 00, 00);
-  DateTime data_m_a = DateTime(now.year, now.month, now.day, 13, 00, 00);
+  var output = 24;
 
-  DateTime data_p_da = DateTime(now.year, now.month, now.day, 14, 00, 00);
-  DateTime data_p_a = DateTime(now.year, now.month, now.day, 19, 00, 00);
+  DateTime hour_min = DateTime(now.year, now.month, now.day, 09, 00, 00);
+  DateTime hour_max = DateTime(now.year, now.month, now.day, 19, 00, 00);
 
-  int dim = (data_p_a.difference(data_m_da).inMinutes / minute).toInt();
-  int sub = (data_p_da.difference(data_m_a).inMinutes / minute).toInt();
+  DateTime hour_da = DateTime(now.year, now.month, now.day, 13, 00, 00);
+  DateTime hour_a = DateTime(now.year, now.month, now.day, 13, 59, 59);
 
-  for (var i = 0; i <= dim; i++) {
-    var data_now = data_m_da.add(Duration(minutes: i * minute));
+  int dim = (hour_max.difference(hour_min).inMinutes / minute).toInt();
 
-    if(now.compare(data_m_da, TypeQuery.GE) && now.compare(data_p_a, TypeQuery.LE)){
-      if(now.compare(data_m_da, TypeQuery.GE) && now.compare(data_m_a, TypeQuery.LE)){
-        if(now.compare(data_m_da, TypeQuery.LE) && now.compare(data_now, TypeQuery.GE)){
-          output = i - sub;
+  for (var i = 1; i <= dim; i++) {
+    var det_hour = hour_min.add(Duration(minutes: minute));
+    if (det_hour.compare(hour_min, TypeQuery.GE) &&
+        det_hour.compare(hour_max, TypeQuery.LE)) {
+      if (det_hour.compare(hour_da, TypeQuery.LE) ||
+          det_hour.compare(hour_a, TypeQuery.GE)) {
+        if (now.compare(hour_min, TypeQuery.GE) &&
+            now.compare(det_hour, TypeQuery.LE)) {
+          output = i;
           break;
         }
-        if(data_now.compare(data_m_da, TypeQuery.GT)) data_m_da = data_now;
-      } else if(now.compare(data_p_da, TypeQuery.GE) && now.compare(data_p_a, TypeQuery.LE)){
-        if(now.compare(data_p_da, TypeQuery.GE) && now.compare(data_now, TypeQuery.LE)){
-          output = i - sub;
-          break;
-        }
-        if(data_now.compare(data_p_da, TypeQuery.GT)) data_p_da = data_now;
       }
     }
+    hour_min = det_hour;
   }
+  print('output: ${output}');
   return output;
 }
