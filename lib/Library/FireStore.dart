@@ -22,7 +22,8 @@ class FireStore {
       required Map<String, dynamic> map}) async {
     var route = patch.doc(map['uid']);
     if (!Uri.base.toString().contains('localhost')) {
-      // await route.set(map).onError((error, stackTrace) => print('$error'));
+      print('object');
+      await route.set(map).onError((error, stackTrace) => print('$error'));
     }
   }
 
@@ -85,5 +86,3 @@ class FireStore {
     }
   }
 }
-
-

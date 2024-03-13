@@ -24,9 +24,12 @@ extension FireDetEvent on Det_EventViewState {
           note: note);
 
       isTimeSelection.forEach((element) {
-        var hour = Hours(nome: element.nome, number: element.number, uidEVENT: event.uid);
+        var hour = Hours(
+            nome: element.nome, number: element.number, uidEVENT: event.uid);
         event.hours.add(hour);
       });
+
+      print('Type: ${event.runtimeType.toString().replaceAll('\$', '')}');
 
       try {
         var dirDB = FireStore()
